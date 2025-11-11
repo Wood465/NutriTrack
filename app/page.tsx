@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from "@/app/ui/navbar";
 
+
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col pt-20 p-6">
@@ -40,7 +41,7 @@ export default function Page() {
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           <Image
             src="/Solata2.png"
-            alt="Healthy food and tracking app"
+            alt="Healthy food"
             width={500}
             height={400}
             className="rounded-lg object-cover"
