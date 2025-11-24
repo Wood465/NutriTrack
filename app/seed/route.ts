@@ -4,9 +4,6 @@ import { users, meals } from "../lib/placeholder-data";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-/* -------------------------------------------- *
- * USERS TABLE + SEED
- * -------------------------------------------- */
 async function seedUsers() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -19,15 +16,10 @@ async function seedUsers() {
       password_hash TEXT NOT NULL
     );
   `;
-  
+
   const insertedUsers = await Promise.all(
     users.map(async (user) => {
-      if (!user.password) {
-       throw new Error(`User ${user.email} has no password`);
-}
-
       const hashed = await bcrypt.hash(user.password, 10);
-
       return sql`
         INSERT INTO users (id, ime, priimek, email, password_hash)
         VALUES (${user.id}, ${user.ime}, ${user.priimek}, ${user.email}, ${hashed})
@@ -39,9 +31,6 @@ async function seedUsers() {
   return insertedUsers;
 }
 
-/* -------------------------------------------- *
- * MEALS TABLE + SEED
- * -------------------------------------------- */
 async function seedMeals() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -76,9 +65,6 @@ async function seedMeals() {
   return insertedMeals;
 }
 
-/* -------------------------------------------- *
- * API HANDLER / CLI ENTRY
- * -------------------------------------------- */
 export async function GET() {
   try {
     await sql.begin((sql) => [
