@@ -6,25 +6,33 @@ export default function AboutPage() {
       <h1 className="text-3xl font-semibold">O aplikaciji</h1>
 
       <p className="text-gray-700">
-        NutriTrack spremlja tvojo prehrano in ti pomaga razumeti, kaj poješ čez dan. 
-        Cilj je jasen pregled nad obroki brez zapletenih nastavitev.
+        NutriTrack pomaga spremljati, kaj poješ vsak dan.  
+        Aplikacija ostane preprosta, da hitro vidiš obroke, kalorije in napredek.
       </p>
 
       <section className="space-y-2">
-        <h2 className="text-xl font-medium">Kaj omogoča</h2>
+        <h2 className="text-xl font-medium">Kaj lahko delaš</h2>
         <ul className="list-disc list-inside space-y-1 text-gray-700">
-          <li>Beleženje obrokov in živil.</li>
-          <li>Prikaz kalorij in hranil.</li>
-          <li>Pregled zgodovine prehrane.</li>
-          <li>Preprosto dodajanje in urejanje vnosev.</li>
+          <li>Dodajaš obroke in hrano.</li>
+          <li>Vidiš kalorije in osnovna hranila.</li>
+          <li>Pregledaš pretekle dneve.</li>
+          <li>Urediš že dodane vnose.</li>
         </ul>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-xl font-medium">Zakaj NutriTrack</h2>
+        <h2 className="text-xl font-medium">Kaj želi doseči</h2>
         <p className="text-gray-700">
-          Aplikacija ostane lahka in pregledna.  
-          S tem se izogneš preveč zapletenim zaslonom in hitreje najdeš podatke, ki te zanimajo.
+          NutriTrack ti da pregled nad prehrano brez nepotrebnih menijev.  
+          Ideja je, da hitro vneseš obrok in takoj vidiš, kaj to pomeni za tvoj dan.
+        </p>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-xl font-medium">Komu je namenjena</h2>
+        <p className="text-gray-700">
+          Uporabna je za vsakogar, ki želi razumeti svoje prehranske navade  
+          in imeti osnovne podatke na enem mestu – brez kompliciranja.
         </p>
       </section>
 

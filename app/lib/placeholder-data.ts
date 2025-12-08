@@ -14,9 +14,12 @@ const meals = [
     user_id: "11111111-1111-1111-1111-111111111111",
     naziv: "Piščanec z rižem",
     kalorije: 650,
-    energijska_vrednost: 2500,
+    beljakovine: 45,
+    ogljikovi_hidrati: 70,
+    mascobe: 10,
     cas: "2025-01-01T12:00:00Z"
   },
 ];
+
 
 export { users, meals };

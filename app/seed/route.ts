@@ -33,34 +33,43 @@ async function seedUsers() {
 
 async function seedMeals() {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+//await sql`DROP TABLE IF EXISTS meals;`;
+ await sql`
+  CREATE TABLE IF NOT EXISTS meals (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    naziv TEXT NOT NULL,
+    kalorije INT NOT NULL,
+    beljakovine INT NOT NULL,
+    ogljikovi_hidrati INT NOT NULL,
+    mascobe INT NOT NULL,
+    cas TIMESTAMP DEFAULT NOW()
+  );
+`;
 
-  await sql`
-    CREATE TABLE IF NOT EXISTS meals (
-      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-      naziv TEXT NOT NULL,
-      kalorije INT NOT NULL,
-      energijska_vrednost INT NOT NULL,
-      cas TIMESTAMP DEFAULT NOW()
-    );
-  `;
 
   const insertedMeals = await Promise.all(
-    meals.map(
-      (meal) => sql`
-        INSERT INTO meals (id, user_id, naziv, kalorije, energijska_vrednost, cas)
-        VALUES (
-          ${meal.id},
-          ${meal.user_id},
-          ${meal.naziv},
-          ${meal.kalorije},
-          ${meal.energijska_vrednost},
-          ${meal.cas}
-        )
-        ON CONFLICT (id) DO NOTHING;
-      `
-    )
-  );
+  meals.map(
+    (meal) => sql`
+      INSERT INTO meals (
+        id, user_id, naziv, kalorije,
+        beljakovine, ogljikovi_hidrati, mascobe, cas
+      )
+      VALUES (
+        ${meal.id},
+        ${meal.user_id},
+        ${meal.naziv},
+        ${meal.kalorije},
+        ${meal.beljakovine},
+        ${meal.ogljikovi_hidrati},
+        ${meal.mascobe},
+        ${meal.cas}
+      )
+      ON CONFLICT (id) DO NOTHING;
+    `
+  )
+);
+
 
   return insertedMeals;
 }
