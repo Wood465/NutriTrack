@@ -2,11 +2,11 @@ import postgres from "postgres";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const rows = await sql`
       SELECT id, naziv, kalorije, beljakovine, ogljikovi_hidrati, mascobe, cas 
-      FROM meals 
+      FROM meals where user_id = ${new URL(request.url).searchParams.get("user_id")}
       ORDER BY cas DESC
     `;
     return Response.json(rows);
