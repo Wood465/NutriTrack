@@ -10,8 +10,11 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
+    // 1. Preverimo uporabnika + role
     const users = await sql`
-      SELECT * FROM users WHERE email = ${email}
+      SELECT id, ime, priimek, email, password_hash, role 
+      FROM users 
+      WHERE email = ${email}
     `;
 
     if (users.length === 0) {
@@ -20,18 +23,26 @@ export async function POST(request: Request) {
 
     const user = users[0];
 
+    // 2. Preverimo geslo
     const match = await bcrypt.compare(password, user.password_hash);
     if (!match) {
       return NextResponse.json({ error: "Napačno geslo" }, { status: 400 });
     }
 
-    // JWT token
+    // 3. JWT token z ROLO
     const token = jwt.sign(
-      { id: user.id, ime: user.ime, priimek: user.priimek, email: user.email },
+      {
+        id: user.id,
+        ime: user.ime,
+        priimek: user.priimek,
+        email: user.email,
+        role: user.role,       // <-- DODANO
+      },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
 
+    // 4. Odgovor + session cookie
     const response = NextResponse.json({ success: true });
 
     response.cookies.set("session", token, {

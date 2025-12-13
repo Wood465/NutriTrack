@@ -22,12 +22,14 @@ export async function POST(request: Request) {
 
     const hashed = await bcrypt.hash(password, 10);
 
+    // 🔹 DODANO: role = 'user'
     await sql`
-      INSERT INTO users (ime, priimek, email, password_hash)
-      VALUES (${ime}, ${priimek}, ${email}, ${hashed})
+      INSERT INTO users (ime, priimek, email, password_hash, role)
+      VALUES (${ime}, ${priimek}, ${email}, ${hashed}, 'user')
     `;
 
     return NextResponse.json({ success: true });
+
   } catch (err) {
     console.error("Register error:", err);
     return NextResponse.json({ error: "Napaka pri registraciji" }, { status: 500 });

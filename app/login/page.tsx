@@ -4,6 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import BackButton from '../ui/BackButton';
 
+import { signIn } from "next-auth/react";
+
+
+
+
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -83,6 +89,12 @@ export default function LoginPage() {
 
           <BackButton />
         </form>
+          <button
+      onClick={() => signIn("google")}
+      className="w-full border rounded p-2"
+    >
+      Prijava z Google
+    </button>
       </div>
     </main>
   );
