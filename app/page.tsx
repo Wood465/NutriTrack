@@ -3,51 +3,27 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from "@/app/ui/navbar";
-
+ import StatsOverview from './ui/StatsOverview';
 
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col pt-20 p-6">
-      {/* Navigacija na vrhu */}
       <Navbar />
 
       {/* Glava strani */}
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        {/* <AcmeLogo /> */}
+      <div className="flex h-10 shrink-0 items-end rounded-lg bg-blue-500 p-2 md:h-52">
       </div>
 
-      {/* Glavna vsebina */}
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <h1 className="text-3xl font-bold text-blue-600 md:text-4xl">
-            NutriTrack
-          </h1>
-          <p className="text-gray-700 md:text-lg leading-relaxed">
-            Aplikacija za beleženje obrokov, kalorij in spremljanje prehrane skozi dan ali teden.
-            Uporabnik ima možnost dodajanja obrokov (ime, količina, kalorije), prikaza vnosa v grafu,
-            ogleda zgodovine, dodajanja slik, urejanja profila. Admin lahko dodaja živila v bazo,
-            ureja podatke in pregleduje uporabnike ter njihove dnevnike.
-          </p>
+      <section>
+        <h1 className="text-gray-600 mt-1">
+          Pregled tvojega prehranjevanja.
+        </h1>
+      </section>
 
-         {/* <Link
-            href="/login"
-            className="flex items-center gap-2 self-start rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-500 transition-colors"
-          >
-            <span>Log in</span>
-          </Link> */}
-        </div>
-
-        {/* Slika na desni strani */}
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          <Image
-            src="/Solata2.png"
-            alt="Healthy food"
-            width={500}
-            height={400}
-            className="rounded-lg object-cover"
-          />
-        </div>
-      </div>
+      <StatsOverview />
+      
     </main>
+   
+
   );
 }
