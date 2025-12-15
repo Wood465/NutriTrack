@@ -89,14 +89,8 @@ useEffect(() => {
         Spremeni geslo
         </Link>
 
+  
 
-      <section className="space-y-3">
-        <h2 className="text-xl font-medium">Cilji</h2>
-        <div className="rounded-lg border p-4 bg-white shadow-sm space-y-1">
-          <p><span className="font-medium">Dnevni vnos kalorij:</span> —</p>
-          <p><span className="font-medium">Status:</span> —</p>
-        </div>
-      </section>
 
       <section className="space-y-3">
         <h2 className="text-xl font-medium">Statistika</h2>
