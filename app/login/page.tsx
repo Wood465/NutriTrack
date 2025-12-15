@@ -1,37 +1,33 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import BackButton from '../ui/BackButton';
+import { useState } from "react";
+import Link from "next/link";
+import BackButton from "../ui/BackButton";
 
 import { signIn } from "next-auth/react";
 
-
-
-
-
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function handleLogin() {
-    setError('');
+    setError("");
 
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error || 'Nepričakovana napaka');
+      setError(data.error || "Nepričakovana napaka");
       return;
     }
 
-    window.location.href = '/'; // preusmeri na glavno stran
+    window.location.href = "/"; // preusmeri na glavno stran
   }
 
   return (
@@ -81,7 +77,7 @@ export default function LoginPage() {
           </button>
 
           <div className="text-center text-sm text-gray-600">
-            Nimaš računa?{' '}
+            Nimaš računa?{" "}
             <Link href="/register" className="text-blue-600 hover:underline">
               Registracija
             </Link>
@@ -89,12 +85,12 @@ export default function LoginPage() {
 
           <BackButton />
         </form>
-          <button
-      onClick={() => signIn("google")}
-      className="w-full border rounded p-2"
-    >
-      Prijava z Google
-    </button>
+        <button
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="w-full border rounded p-2"
+        >
+          Prijava z Googlom
+        </button>
       </div>
     </main>
   );

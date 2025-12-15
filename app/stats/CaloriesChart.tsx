@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Chart as ChartJS,
@@ -6,8 +6,8 @@ import {
   LinearScale,
   BarElement,
   Tooltip,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
@@ -15,11 +15,11 @@ export default function CaloriesChart({ data }: { data: any[] }) {
   return (
     <Bar
       data={{
-        labels: data.map(d => d.date),
+        labels: data.map((d) => new Date(d.date).toLocaleDateString("sl-SI")),
         datasets: [
           {
-            label: 'Kalorije',
-            data: data.map(d => d.calories),
+            label: "Kalorije",
+            data: data.map((d) => d.calories),
           },
         ],
       }}
