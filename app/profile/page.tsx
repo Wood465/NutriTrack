@@ -26,8 +26,10 @@ useEffect(() => {
     }
 
     // skupne kalorije
-    const total = meals.reduce((sum: number, meal: any) => sum + meal.kalorije, 0);
-
+ const total = meals.reduce(
+  (sum: number, meal: any) => sum + parseFloat(meal.kalorije || 0),
+  0
+);
     // unikatni dnevi vnosa
     const days = new Set(
       meals.map((m: any) => new Date(m.cas).toISOString().slice(0, 10))
