@@ -25,6 +25,25 @@ export default function MealsPage() {
 
     loadUser();
   }, []);
+const handleDeleteMeal = async (id: number) => {
+  const ok = confirm("Res želiš izbrisati ta obrok?");
+  if (!ok) return;
+
+  const res = await fetch(`/api/meals/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    alert("Brisanje ni uspelo");
+    return;
+  }
+
+  // ❌ NE KLIČI res.json()
+  setMeals((prev) => prev.filter((m) => m.id !== id));
+};
+
+
+
 
   // Load meals when user is known
   useEffect(() => {
@@ -62,8 +81,7 @@ export default function MealsPage() {
 
     const saved = await res.json();
 
-   setMeals((prev) => Array.isArray(prev) ? [saved, ...prev] : [saved]);
-
+    setMeals([saved, ...meals]);
     setName("");
     setCalories("");
     setProtein("");
@@ -201,6 +219,13 @@ export default function MealsPage() {
                       Opis: {meal.note}
                     </p>
                   )}
+                  <button
+  onClick={() => handleDeleteMeal(meal.id)}
+  className="mt-2 text-sm text-red-600"
+>
+  Izbriši
+</button>
+
                 </li>
               ))}
             </ul>
