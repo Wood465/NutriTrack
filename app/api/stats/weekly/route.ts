@@ -28,6 +28,7 @@ export async function GET() {
   const today = rows.at(-1) || { calories: 0, protein: 0, meals: 0 };
 
   const totalCalories = rows.reduce((s, r) => s + Number(r.calories), 0);
+  const totalProtein = rows.reduce((s, r) => s + Number(r.protein), 0);
 
   return NextResponse.json({
     today: {
@@ -37,10 +38,8 @@ export async function GET() {
     },
     week: {
       totalCalories,
-      avgCalories: Math.round(totalCalories / rows.length || 0),
-      avgProtein: Math.round(
-        rows.reduce((s, r) => s + Number(r.protein), 0) / rows.length || 0
-      ),
+      avgCalories: Math.round(totalCalories / 7),
+      avgProtein: Math.round(totalProtein / 7),
       days: rows.length,
     },
     chart: rows.map(r => ({

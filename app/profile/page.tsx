@@ -39,7 +39,7 @@ export default function ProfilePage() {
       );
 
       setLoggedDays(days.size);
-      setAverageCalories(Math.round(total / days.size));
+      setAverageCalories(Math.round(total / 7));
     }
 
     loadUserAndStats();
