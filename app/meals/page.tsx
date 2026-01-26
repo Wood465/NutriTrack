@@ -1,7 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useState, useEffect } from "react";
-import BackButton from "../ui/BackButton";
+import { useEffect, useState } from "react";
 import Navbar from "@/app/ui/navbar";
 
 export default function MealsPage() {
@@ -14,38 +13,32 @@ export default function MealsPage() {
   const [fat, setFat] = useState("0");
   const [user, setUser] = useState<any>(null);
 
-  // Load logged-in user from API session
   useEffect(() => {
     async function loadUser() {
       const res = await fetch("/api/session", { cache: "no-cache" });
       const data = await res.json();
-      console.log("Session user:", data.user);
       setUser(data.user);
     }
 
     loadUser();
   }, []);
-const handleDeleteMeal = async (id: number) => {
-  const ok = confirm("Res želiš izbrisati ta obrok?");
-  if (!ok) return;
 
-  const res = await fetch(`/api/meals/${id}`, {
-    method: "DELETE",
-  });
+  const handleDeleteMeal = async (id: number) => {
+    const ok = confirm("Res želiš izbrisati ta obrok?");
+    if (!ok) return;
 
-  if (!res.ok) {
-    alert("Brisanje ni uspelo");
-    return;
-  }
+    const res = await fetch(`/api/meals/${id}`, {
+      method: "DELETE",
+    });
 
-  // ❌ NE KLIČI res.json()
-  setMeals((prev) => prev.filter((m) => m.id !== id));
-};
+    if (!res.ok) {
+      alert("Brisanje ni uspelo");
+      return;
+    }
 
+    setMeals((prev) => prev.filter((m) => m.id !== id));
+  };
 
-
-
-  // Load meals when user is known
   useEffect(() => {
     if (!user) return;
 
@@ -58,7 +51,6 @@ const handleDeleteMeal = async (id: number) => {
     loadMeals();
   }, [user]);
 
-  // Dodaj nov obrok
   const handleAddMeal = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !calories.trim()) return;
@@ -87,153 +79,188 @@ const handleDeleteMeal = async (id: number) => {
     setProtein("");
     setCarbs("");
     setFat("");
-
     setNote("");
   };
 
   return (
-    <main className="flex min-h-screen flex-col pt-20 p-6">
-      {/* Navigacija na vrhu */}
+    <main className="relative min-h-screen bg-slate-50 text-slate-900">
+      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
+
       <Navbar />
 
-      {/* Glava strani */}
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        {/* <AcmeLogo /> */}
-      </div>
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-2xl font-semibold mb-6 text-center">Moji obroki</h1>
+      <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12">
+        <section className="relative overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 px-6 py-10 text-white shadow-2xl shadow-blue-200/70 md:px-10 md:py-14">
+          <div className="pointer-events-none absolute -left-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
 
-        <form onSubmit={handleAddMeal} className="space-y-4">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Ime obroka
-            </label>
-            <input
-              id="name"
-              type="text"
-              placeholder="npr. Zajtrk"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
+          <div className="relative max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-100">
+              Moji obroki
+            </div>
+            <h1 className="text-3xl font-semibold md:text-5xl">Dodaj obroke</h1>
+            <p className="text-blue-100">
+              Hitro dodaj obrok, spremljaj kalorije in hranila ter ohrani pregled.
+            </p>
           </div>
+        </section>
 
-          <div>
-            <label
-              htmlFor="calories"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Kalorije
-            </label>
-            <input
-              id="calories"
-              type="number"
-              placeholder="npr. 350"
-              value={calories}
-              onChange={(e) => setCalories(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Beljakovine (g)
-            </label>
-            <input
-              type="number"
-              value={protein}
-              onChange={(e) => setProtein(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
-          </div>
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1.4fr]">
+          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+            <h2 className="text-xl font-semibold">Dodaj obrok</h2>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Ogljikovi hidrati (g)
-            </label>
-            <input
-              type="number"
-              value={carbs}
-              onChange={(e) => setCarbs(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
-          </div>
+            <form onSubmit={handleAddMeal} className="mt-6 space-y-4">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-slate-700"
+                >
+                  Ime obroka
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="npr. Zajtrk"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Maščobe (g)
-            </label>
-            <input
-              type="number"
-              value={fat}
-              onChange={(e) => setFat(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
-          </div>
+              <div>
+                <label
+                  htmlFor="calories"
+                  className="block text-sm font-medium text-slate-700"
+                >
+                  Kalorije
+                </label>
+                <input
+                  id="calories"
+                  type="number"
+                  placeholder="npr. 350"
+                  value={calories}
+                  onChange={(e) => setCalories(e.target.value)}
+                  className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                />
+              </div>
 
-          <div>
-            <label
-              htmlFor="note"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Opis (neobvezno)
-            </label>
-            <textarea
-              id="note"
-              placeholder="kratek opis obroka"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            />
-          </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700">
+                    Beljakovine (g)
+                  </label>
+                  <input
+                    type="number"
+                    value={protein}
+                    onChange={(e) => setProtein(e.target.value)}
+                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  />
+                </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md"
-          >
-            Dodaj obrok
-          </button>
-        </form>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700">
+                    Ogljikovi hidrati (g)
+                  </label>
+                  <input
+                    type="number"
+                    value={carbs}
+                    onChange={(e) => setCarbs(e.target.value)}
+                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  />
+                </div>
 
-        {meals.length > 0 && (
-          <div className="mt-6">
-            <h2 className="text-lg font-semibold mb-2">Dodani obroki:</h2>
-            <ul className="space-y-2">
-              {meals.map((meal) => (
-                <li key={meal.id} className="border p-3 rounded-md">
-                  <p className="font-medium">{meal.naziv}</p>
-                  <p>{meal.kalorije} kcal</p>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700">
+                    Maščobe (g)
+                  </label>
+                  <input
+                    type="number"
+                    value={fat}
+                    onChange={(e) => setFat(e.target.value)}
+                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  />
+                </div>
+              </div>
 
-                  <p>Beljakovine: {meal.beljakovine} g</p>
-                  <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
-                  <p>Maščobe: {meal.mascobe} g</p>
+              <div>
+                <label
+                  htmlFor="note"
+                  className="block text-sm font-medium text-slate-700"
+                >
+                  Opis (neobvezno)
+                </label>
+                <textarea
+                  id="note"
+                  placeholder="kratek opis obroka"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  className="mt-1 block min-h-[96px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                />
+              </div>
 
-                  <p className="text-sm text-gray-600">
-                    Čas vnosa: {new Date(meal.cas).toLocaleString()}
-                  </p>
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700"
+              >
+                Dodaj obrok
+              </button>
+            </form>
+          </section>
 
-                  {meal.note && (
-                    <p className="text-sm text-gray-600 mt-1">
-                      Opis: {meal.note}
+          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold">Dodani obroki</h2>
+              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                {meals.length} skupaj
+              </span>
+            </div>
+
+            {meals.length === 0 ? (
+              <div className="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
+                Še nimaš dodanih obrokov. Ko dodaš novega, se bo prikazal tukaj.
+              </div>
+            ) : (
+              <ul className="mt-6 space-y-3">
+                {meals.map((meal) => (
+                  <li
+                    key={meal.id}
+                    className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-base font-semibold text-slate-900">
+                          {meal.naziv}
+                        </p>
+                        <p className="text-sm text-slate-600">{meal.kalorije} kcal</p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteMeal(meal.id)}
+                        className="rounded-full border border-rose-200 px-3 py-1 text-xs font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700"
+                      >
+                        Izbriši
+                      </button>
+                    </div>
+
+                    <div className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-3">
+                      <p>Beljakovine: {meal.beljakovine} g</p>
+                      <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
+                      <p>Maščobe: {meal.mascobe} g</p>
+                    </div>
+
+                    <p className="mt-3 text-xs text-slate-500">
+                      Čas vnosa: {new Date(meal.cas).toLocaleString()}
                     </p>
-                  )}
-                  <button
-  onClick={() => handleDeleteMeal(meal.id)}
-  className="mt-2 text-sm text-red-600"
->
-  Izbriši
-</button>
 
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                    {meal.note && (
+                      <p className="mt-2 text-sm text-slate-600">Opis: {meal.note}</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
       </div>
-
-      <BackButton />
     </main>
   );
 }
