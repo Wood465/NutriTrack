@@ -1,49 +1,90 @@
 ﻿'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Navbar from "@/app/ui/navbar";
+import Navbar from '@/app/ui/navbar';
 
 export default function RegisterPage() {
-  const [ime, setIme] = useState('');
-  const [priimek, setPriimek] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  // Controlled inputs
+  const [ime, setIme] = useState<string>('');
+  const [priimek, setPriimek] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirm, setConfirm] = useState<string>('');
+
+  // UI state
+  const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  // Da lahko varno prekličemo timeout ob unmountu (da ne ostane "leaking" timer)
+  const redirectTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    // Cleanup timeouta ob unmountu
+    return () => {
+      if (redirectTimerRef.current !== null) {
+        window.clearTimeout(redirectTimerRef.current);
+      }
+    };
+  }, []);
 
   async function handleRegister() {
+    // Reset sporočil ob vsakem poskusu registracije
     setError('');
     setSuccess('');
+
+    // Minimalna validacija (ne spreminja backend funkcionalnosti, samo prepreči očitne napake)
+    if (!ime || !priimek || !email || !password || !confirm) {
+      setError('Prosimo, izpolni vsa polja.');
+      return;
+    }
 
     if (password !== confirm) {
       setError('Gesli se ne ujemata.');
       return;
     }
 
-    const res = await fetch('/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ime,
-        priimek,
-        email,
-        password
-      })
-    });
+    setIsSubmitting(true);
 
-    const data = await res.json();
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ime,
+          priimek,
+          email,
+          password,
+        }),
+      });
 
-    if (!res.ok) {
-      setError(data.error || 'Napaka pri registraciji.');
-      return;
+      // Backend naj vrača JSON; če ne, ne crashamo
+      const data = await res.json().catch(() => ({} as any));
+
+      if (!res.ok) {
+        setError(data?.error || 'Napaka pri registraciji.');
+        return;
+      }
+
+      // Uspeh: ohranimo tvojo logiko preusmeritve po 1500ms
+      setSuccess('Registracija uspešna. Preusmerjam...');
+
+      redirectTimerRef.current = window.setTimeout(() => {
+        window.location.href = '/login';
+      }, 1500);
+    } catch {
+      setError('Napaka pri registraciji.');
+    } finally {
+      setIsSubmitting(false);
     }
+  }
 
-    setSuccess('Registracija uspešna. Preusmerjam...');
-    setTimeout(() => {
-      window.location.href = '/login';
-    }, 1500);
+  // Optional: Enter na kateremkoli inputu sproži registracijo (isti handleRegister)
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      void handleRegister();
+    }
   }
 
   return (
@@ -69,18 +110,22 @@ export default function RegisterPage() {
                 </p>
               </div>
 
+              {/* Error box */}
               {error && (
                 <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                   {error}
                 </div>
               )}
 
+              {/* Success box */}
               {success && (
                 <div className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
                   {success}
                 </div>
               )}
 
+              {/* Form: onSubmit preprečimo default, ker ti uporabljaš button type="button"
+                  (funkcionalnost ostane enaka) */}
               <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
@@ -89,8 +134,10 @@ export default function RegisterPage() {
                       type="text"
                       value={ime}
                       onChange={(e) => setIme(e.target.value)}
+                      onKeyDown={onKeyDown}
                       className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                       placeholder="vnesi ime"
+                      autoComplete="given-name"
                     />
                   </div>
 
@@ -100,8 +147,10 @@ export default function RegisterPage() {
                       type="text"
                       value={priimek}
                       onChange={(e) => setPriimek(e.target.value)}
+                      onKeyDown={onKeyDown}
                       className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                       placeholder="vnesi priimek"
+                      autoComplete="family-name"
                     />
                   </div>
                 </div>
@@ -112,8 +161,10 @@ export default function RegisterPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={onKeyDown}
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                     placeholder="vnesi e-pošto"
+                    autoComplete="email"
                   />
                 </div>
 
@@ -123,8 +174,10 @@ export default function RegisterPage() {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={onKeyDown}
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                     placeholder="vnesi geslo"
+                    autoComplete="new-password"
                   />
                 </div>
 
@@ -134,17 +187,20 @@ export default function RegisterPage() {
                     type="password"
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
+                    onKeyDown={onKeyDown}
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                     placeholder="ponovno vnesi geslo"
+                    autoComplete="new-password"
                   />
                 </div>
 
                 <button
                   type="button"
-                  onClick={handleRegister}
-                  className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700"
+                  onClick={() => void handleRegister()}
+                  disabled={isSubmitting}
+                  className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Registracija
+                  {isSubmitting ? 'Registriram...' : 'Registracija'}
                 </button>
 
                 <div className="text-center text-sm text-slate-600">
@@ -153,7 +209,6 @@ export default function RegisterPage() {
                     Prijava
                   </Link>
                 </div>
-
               </form>
             </div>
           </div>
