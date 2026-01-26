@@ -116,6 +116,7 @@ npx playwright test e2e/success/pack4
 ▶️ Zagon vseh uspešnih testov z grafičnim prikazom
 npx playwright test e2e/success --headed
 
+npm test -- app/ui/navbar.test.tsx
 
 Testi preverjajo:
 
