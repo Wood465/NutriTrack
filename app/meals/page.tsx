@@ -5,17 +5,33 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/app/ui/navbar";
 
+/**
+ * MealsPage
+ *
+ * Namen:
+ * - uporabnik doda nov obrok (POST /api/meals)
+ * - prikaže seznam obrokov (GET /api/meals?user_id=...)
+ * - omogoča brisanje obroka (DELETE /api/meals/[id])
+ * - omogoča link do urejanja obroka (/meals/[id])
+ */
 export default function MealsPage() {
   const router = useRouter();
+
+  // Seznam obrokov
   const [meals, setMeals] = useState<any[]>([]);
+
+  // Polja forme za dodajanje obroka
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("0");
   const [note, setNote] = useState("");
   const [protein, setProtein] = useState("0");
   const [carbs, setCarbs] = useState("0");
   const [fat, setFat] = useState("0");
+
+  // Trenutno prijavljen uporabnik (iz /api/session)
   const [user, setUser] = useState<any>(null);
 
+  // 1) Ob odprtju strani naložimo userja iz sessiona
   useEffect(() => {
     async function loadUser() {
       const res = await fetch("/api/session", { cache: "no-cache" });
@@ -26,6 +42,12 @@ export default function MealsPage() {
     loadUser();
   }, []);
 
+  /**
+   * Brisanje obroka:
+   * - vpraša za potrditev (confirm)
+   * - pošlje DELETE na /api/meals/[id]
+   * - odstrani obrok iz UI seznama
+   */
   const handleDeleteMeal = async (id: number) => {
     const ok = confirm("Res želiš izbrisati ta obrok?");
     if (!ok) return;
@@ -39,28 +61,46 @@ export default function MealsPage() {
       return;
     }
 
+    // odstrani iz UI
     setMeals((prev) => prev.filter((m) => m.id !== id));
   };
 
+  /**
+   * Naloži vse obroke za določenega uporabnika
+   * - kliče GET /api/meals?user_id=...
+   */
   const loadMeals = async (userId: string) => {
     const res = await fetch(`/api/meals?user_id=${userId}`);
     const data = await res.json();
     setMeals(data);
   };
 
+  // 2) Ko je user naložen, naložimo še njegove obroke
   useEffect(() => {
     if (!user) return;
     loadMeals(user.id);
   }, [user]);
 
+  /**
+   * Dodajanje obroka:
+   * - preveri, če je user prijavljen
+   * - pripravi payload (pretvori stringe v številke)
+   * - pošlje POST /api/meals
+   * - doda novo shranjen obrok na vrh seznama
+   */
   const handleAddMeal = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Če user ni prijavljen, ga pošljemo na registracijo
     if (!user) {
       router.push("/register");
       return;
     }
+
+    // Minimalna validacija
     if (!name.trim() || !calories.trim()) return;
 
+    // Podatki za API
     const newMeal = {
       user_id: user.id,
       naziv: name,
@@ -71,6 +111,7 @@ export default function MealsPage() {
       note,
     };
 
+    // Pošlji POST request
     const res = await fetch("/api/meals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -79,11 +120,15 @@ export default function MealsPage() {
 
     const saved = await res.json();
 
+    // Če API ne vrne ID-ja, za vsak slučaj ponovno naložimo vse obroke
     if (!saved?.id) {
       await loadMeals(user.id);
     } else {
+      // Če vrne ID, dodamo obrok direktno v UI (najnovejši na vrh)
       setMeals((prev) => [saved, ...prev]);
     }
+
+    // Pobrišemo inpute
     setName("");
     setCalories("");
     setProtein("");
@@ -233,7 +278,10 @@ export default function MealsPage() {
               <ul className="mt-6 space-y-3">
                 {meals.map((meal, index) => (
                   <li
-                    key={meal.id ?? `${meal.naziv ?? "meal"}-${meal.cas ?? index}-${index}`}
+                    key={
+                      meal.id ??
+                      `${meal.naziv ?? "meal"}-${meal.cas ?? index}-${index}`
+                    }
                     className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
                   >
                     <div className="flex items-start justify-between gap-4">
@@ -241,15 +289,21 @@ export default function MealsPage() {
                         <p className="text-base font-semibold text-slate-900">
                           {meal.naziv}
                         </p>
-                        <p className="text-sm text-slate-600">{meal.kalorije} kcal</p>
+                        <p className="text-sm text-slate-600">
+                          {meal.kalorije} kcal
+                        </p>
                       </div>
+
                       <div className="flex flex-wrap gap-2">
+                        {/* Link na urejanje obroka */}
                         <Link
                           href={`/meals/${meal.id}`}
                           className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
                         >
                           Uredi
                         </Link>
+
+                        {/* Brisanje obroka */}
                         <button
                           onClick={() => handleDeleteMeal(meal.id)}
                           className="rounded-full border border-rose-200 px-3 py-1 text-xs font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700"
@@ -265,12 +319,16 @@ export default function MealsPage() {
                       <p>Maščobe: {meal.mascobe} g</p>
                     </div>
 
+                    {/* Datum/čas vnosa */}
                     <p className="mt-3 text-xs text-slate-500">
                       Čas vnosa: {new Date(meal.cas).toLocaleString()}
                     </p>
 
+                    {/* Opis obroka (če obstaja) */}
                     {meal.note && (
-                      <p className="mt-2 text-sm text-slate-600">Opis: {meal.note}</p>
+                      <p className="mt-2 text-sm text-slate-600">
+                        Opis: {meal.note}
+                      </p>
                     )}
                   </li>
                 ))}
