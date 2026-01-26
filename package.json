@@ -9,17 +9,18 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-
     "lint": "next lint",
-
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:report": "playwright show-report",
-
     "test:e2e:public": "playwright test e2e/public",
     "test:e2e:auth": "playwright test e2e/auth",
-    "test:e2e:api": "playwright test e2e/api"
+    "test:e2e:api": "playwright test e2e/api",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -42,16 +43,25 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "22.10.7",
     "@types/react": "^19.0.7",
     "@types/react-dom": "19.0.3",
+    "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.21",
+    "jsdom": "^27.4.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.18"
+    "tailwindcss": "^3.4.18",
+    "vitest": "^4.0.18"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["bcrypt", "sharp"]
+    "onlyBuiltDependencies": [
+      "bcrypt",
+      "sharp"
+    ]
   }
 }

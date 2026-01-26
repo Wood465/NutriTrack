@@ -1,6 +1,6 @@
 ﻿import { test, expect } from '@playwright/test';
 
-// 20 stable smoke tests (public pages + API endpoints)
+
 
 test('home loads', async ({ page }) => {
   await page.goto('/');
