@@ -1,70 +1,137 @@
 ﻿'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import Navbar from "@/app/ui/navbar";
+import Navbar from '@/app/ui/navbar';
+
+// Tipizirajmo obliko user-ja, da se znebimo `any` (brez spreminjanja funkcionalnosti)
+type SessionUser = {
+  id: string | number;
+  ime?: string | null;
+  priimek?: string | null;
+  email?: string | null;
+};
+
+// Tip za meal (v kodi uporabljaš `kalorije` in `cas`)
+type Meal = {
+  kalorije?: string | number | null;
+  cas: string | Date;
+};
 
 export default function ProfilePage() {
-  const [avatarKey, setAvatarKey] = useState(0);
-  const [user, setUser] = useState<any>(null);
+  // `avatarKey` uporabljamo kot "cache buster" za URL avatarja (da se slika po uploadu osveži)
+  const [avatarKey, setAvatarKey] = useState<number>(0);
+
+  // Session user iz /api/session
+  const [user, setUser] = useState<SessionUser | null>(null);
+
+  // Statistika
   const [averageCalories, setAverageCalories] = useState<number | null>(null);
   const [loggedDays, setLoggedDays] = useState<number | null>(null);
-  const [avatarSrc, setAvatarSrc] = useState("/default-avatar.svg");
+
+  // Trenutni src za avatar (privzeto fallback)
+  const [avatarSrc, setAvatarSrc] = useState<string>('/default-avatar.svg');
+
+  // Avatar URL izračunamo iz `avatarKey` (enako kot tvoj useEffect, samo bolj čisto)
+  const avatarUrl = useMemo(() => `/api/profile/avatar/view?key=${avatarKey}`, [avatarKey]);
 
   useEffect(() => {
+    let isMounted = true; // prepreči setState po unmountu (npr. ob hitrem navigiranju)
+
     async function loadUserAndStats() {
-      const sessionRes = await fetch('/api/session', { cache: 'no-store' });
-      const sessionData = await sessionRes.json();
-      const sessionUser = sessionData.user;
-      setUser(sessionUser);
+      try {
+        // 1) Preberi session
+        const sessionRes = await fetch('/api/session', { cache: 'no-store' });
+        const sessionData = await sessionRes.json();
+        const sessionUser: SessionUser | null = sessionData?.user ?? null;
 
-      if (!sessionUser) return;
+        if (!isMounted) return;
+        setUser(sessionUser);
 
-      const res = await fetch(`/api/meals?user_id=${sessionUser.id}`, { cache: 'no-store' });
-      const meals = await res.json();
+        // Če ni user-ja, nima smisla nadaljevati
+        if (!sessionUser) return;
 
-      if (meals.length === 0) {
+        // 2) Preberi meals za userja
+        const res = await fetch(`/api/meals?user_id=${sessionUser.id}`, { cache: 'no-store' });
+        const meals: Meal[] = await res.json();
+
+        if (!isMounted) return;
+
+        // Če ni vnosov, statiko nastavimo na 0
+        if (!Array.isArray(meals) || meals.length === 0) {
+          setAverageCalories(0);
+          setLoggedDays(0);
+          return;
+        }
+
+        // Skupne kalorije (varno pretvorimo v number)
+        const total = meals.reduce((sum, meal) => {
+          const kcal = Number(meal?.kalorije ?? 0);
+          return sum + (Number.isFinite(kcal) ? kcal : 0);
+        }, 0);
+
+        // Unikatni dnevi po datumu (YYYY-MM-DD)
+        const days = new Set(
+          meals.map((m) => {
+            const d = new Date(m.cas);
+            // če je datum invalid, da ne vrže errorja:
+            if (Number.isNaN(d.getTime())) return 'invalid';
+            return d.toISOString().slice(0, 10);
+          }),
+        );
+
+        // Če je "invalid" v setu, ga ignoriramo pri štetju dni
+        days.delete('invalid');
+
+        setLoggedDays(days.size);
+
+        // Ohranimo tvojo logiko: povprečje računaš kot total / 7
+        setAverageCalories(Math.round(total / 7));
+      } catch (err) {
+        // Ne spreminjamo UI-ja, samo poskrbimo da ne crasha in nastavimo smiselne fallbacke
+        if (!isMounted) return;
         setAverageCalories(0);
         setLoggedDays(0);
-        return;
       }
-
-      const total = meals.reduce(
-        (sum: number, meal: any) => sum + parseFloat(meal.kalorije || 0),
-        0
-      );
-
-      const days = new Set(
-        meals.map((m: any) => new Date(m.cas).toISOString().slice(0, 10))
-      );
-
-      setLoggedDays(days.size);
-      setAverageCalories(Math.round(total / 7));
     }
 
     loadUserAndStats();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
-    setAvatarSrc(`/api/profile/avatar/view?key=${avatarKey}`);
-  }, [avatarKey]);
+    // Ko se avatarKey spremeni (po uspešnem uploadu), osvežimo src
+    setAvatarSrc(avatarUrl);
+  }, [avatarUrl]);
 
   async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    // File input lahko sproži event tudi brez file-a (npr. cancel)
     const file = e.target.files?.[0];
     if (!file) return;
 
     const formData = new FormData();
     formData.append('avatar', file);
 
-    const res = await fetch('/api/profile/avatar', {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const res = await fetch('/api/profile/avatar', {
+        method: 'POST',
+        body: formData,
+      });
 
-    if (res.ok) {
-      setAvatarKey(Date.now());
-    } else {
+      if (res.ok) {
+        // Date.now() spremeni key in s tem URL → browser ne uporabi cache
+        setAvatarKey(Date.now());
+      } else {
+        alert('Upload ni uspel');
+      }
+    } catch {
       alert('Upload ni uspel');
+    } finally {
+      // Reset inputa, da lahko user naloži isti file še enkrat (onChange se sicer ne sproži)
+      e.target.value = '';
     }
   }
 
@@ -98,6 +165,7 @@ export default function ProfilePage() {
                 <h2 className="text-xl font-semibold">Osebni podatki</h2>
                 <p className="text-sm text-slate-600">Osnovni podatki tvojega računa.</p>
               </div>
+
               <Link
                 href="/profile/change-password"
                 className="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
@@ -112,8 +180,10 @@ export default function ProfilePage() {
                   src={avatarSrc}
                   alt="Profilna slika"
                   className="h-24 w-24 rounded-2xl object-cover border border-slate-200"
-                  onError={() => setAvatarSrc("/default-avatar.svg")}
+                  // Fallback, če avatar endpoint vrne napako ali ni slike
+                  onError={() => setAvatarSrc('/default-avatar.svg')}
                 />
+
                 <label className="cursor-pointer rounded-full border border-blue-200 px-3 py-1 text-sm text-blue-700 transition hover:bg-blue-50">
                   Spremeni sliko
                   <input

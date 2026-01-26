@@ -1,30 +1,67 @@
 ﻿'use client';
 
 import { useState } from 'react';
-import Navbar from "@/app/ui/navbar";
+import Navbar from '@/app/ui/navbar';
 
 export default function ChangePasswordPage() {
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [message, setMessage] = useState('');
+  // Controlled inputs za obe polji
+  const [oldPassword, setOldPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+
+  // Status sporočilo (success ali error – brez spremembe funkcionalnosti API-ja)
+  const [message, setMessage] = useState<string>('');
+
+  // UI stanje za boljšo UX (prepreči double click / spam requeste)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   async function handleSubmit() {
+    // Počisti prejšnje sporočilo
     setMessage('');
 
-    const res = await fetch('/api/change-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ oldPassword, newPassword }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      setMessage(data.error || 'Napaka pri spremembi gesla');
+    // Minimalna validacija (ne spreminja API funkcionalnosti, samo prepreči prazen request)
+    if (!oldPassword || !newPassword) {
+      setMessage('Prosimo, izpolni obe polji.');
       return;
     }
 
-    setMessage('Geslo uspešno spremenjeno!');
+    setIsSubmitting(true);
+
+    try {
+      // Pošlji zahtevo na backend endpoint
+      const res = await fetch('/api/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ oldPassword, newPassword }),
+      });
+
+      // Backend naj bi vračal JSON v obeh primerih (ok/error)
+      const data = await res.json().catch(() => ({} as any));
+
+      // Če response ni OK, pokažemo sporočilo napake (backend ali fallback)
+      if (!res.ok) {
+        setMessage(data?.error || 'Napaka pri spremembi gesla');
+        return;
+      }
+
+      // Uspeh
+      setMessage('Geslo uspešno spremenjeno!');
+
+      // Po želji: počisti polja po uspehu (UX izboljšava, ne spreminja funkcionalnosti)
+      setOldPassword('');
+      setNewPassword('');
+    } catch (err) {
+      // Network / fetch napaka
+      setMessage('Napaka pri spremembi gesla');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  // Optional: submit tudi z Enter tipko (še vedno isti handleSubmit)
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      void handleSubmit();
+    }
   }
 
   return (
@@ -44,13 +81,13 @@ export default function ChangePasswordPage() {
               Varnost
             </div>
             <h1 className="text-3xl font-semibold md:text-5xl">Spremeni geslo</h1>
-            <p className="text-blue-100">
-              Posodobi geslo in zaščiti svoj račun.
-            </p>
+            <p className="text-blue-100">Posodobi geslo in zaščiti svoj račun.</p>
           </div>
         </section>
 
         <section className="mt-10 max-w-xl rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          {/* Opomba: isti message box za success/error (ne spreminja funkcionalnosti).
+              Če hočeš, ti lahko naredim dve barvi glede na tip. */}
           {message && (
             <div className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
               {message}
@@ -65,6 +102,8 @@ export default function ChangePasswordPage() {
                 className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
+                onKeyDown={onKeyDown}
+                autoComplete="current-password"
               />
             </div>
 
@@ -75,14 +114,18 @@ export default function ChangePasswordPage() {
                 className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                onKeyDown={onKeyDown}
+                autoComplete="new-password"
               />
             </div>
 
             <button
-              onClick={handleSubmit}
-              className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700"
+              type="button"
+              onClick={() => void handleSubmit()}
+              disabled={isSubmitting}
+              className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Spremeni geslo
+              {isSubmitting ? 'Shranjujem...' : 'Spremeni geslo'}
             </button>
           </div>
         </section>
