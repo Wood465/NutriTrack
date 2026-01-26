@@ -23,12 +23,12 @@ export default function StatsOverview() {
   }, []);
 
   if (!daily || !weekly) {
-    return <p>Nalaganje statistike …</p>;
+    return <p className="text-slate-600 dark:text-slate-300">Nalaganje statistike …</p>;
   }
 
   return (
     <section className="space-y-6">
-      <h2 className="text-2xl font-semibold">Pregled</h2>
+      <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Pregled</h2>
 
       {/* Dnevno */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -39,7 +39,7 @@ export default function StatsOverview() {
 
       {/* Tedensko */}
       <div>
-        <h3 className="text-lg font-medium mb-3">Zadnjih 7 dni</h3>
+        <h3 className="text-lg font-medium mb-3 text-slate-900 dark:text-white">Zadnjih 7 dni</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatBox title="Povp. kalorije" value={`${weekly.avgCalories} kcal`} />
           <StatBox title="Skupaj kalorij" value={`${weekly.totalCalories} kcal`} />
@@ -50,7 +50,7 @@ export default function StatsOverview() {
 
       {/* Graf */}
       <div>
-        <h3 className="text-lg font-medium mb-2">Kalorije po dnevih</h3>
+        <h3 className="text-lg font-medium mb-2 text-slate-900 dark:text-white">Kalorije po dnevih</h3>
         <CaloriesChart data={chart} />
       </div>
     </section>
@@ -59,9 +59,9 @@ export default function StatsOverview() {
 
 function StatBox({ title, value }: { title: string; value: any }) {
   return (
-    <div className="rounded-lg border p-4 bg-white shadow-sm">
-      <p className="text-sm text-gray-500">{title}</p>
-      <p className="text-xl font-semibold">{value}</p>
+    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/20">
+      <p className="text-sm text-slate-500 dark:text-slate-300">{title}</p>
+      <p className="text-xl font-semibold text-slate-900 dark:text-white">{value}</p>
     </div>
   );
 }

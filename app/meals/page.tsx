@@ -138,19 +138,19 @@ export default function MealsPage() {
   };
 
   return (
-    <main className="relative min-h-screen bg-slate-50 text-slate-900">
-      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
+    <main className="relative min-h-screen bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white dark:bg-slate-950 dark:text-white">
+      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl dark:opacity-0 dark:opacity-0" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl dark:opacity-0 dark:opacity-0" />
 
       <Navbar />
 
       <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12">
-        <section className="relative overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 px-6 py-10 text-white shadow-2xl shadow-blue-200/70 md:px-10 md:py-14">
-          <div className="pointer-events-none absolute -left-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
+        <section className="relative overflow-hidden rounded-3xl border border-white/70 dark:border-slate-800 bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 px-6 py-10 text-white shadow-2xl shadow-blue-200/70 dark:shadow-black/40 md:px-10 md:py-14 dark:border-slate-800 dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 dark:shadow-black/40">
+          <div className="pointer-events-none absolute -left-16 -top-20 h-64 w-64 rounded-full bg-white dark:bg-slate-900/10 blur-3xl dark:opacity-0" />
+          <div className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl dark:opacity-0" />
 
           <div className="relative max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-100">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white dark:bg-slate-900/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-100">
               Moji obroki
             </div>
             <h1 className="text-3xl font-semibold md:text-5xl">Dodaj obroke</h1>
@@ -161,14 +161,14 @@ export default function MealsPage() {
         </section>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1.4fr]">
-          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          <section className="rounded-3xl border border-white/70 dark:border-slate-800 bg-white dark:bg-slate-900/90 dark:bg-slate-900/80 p-6 shadow-xl shadow-slate-200/70 dark:shadow-black/30 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-black/30">
             <h2 className="text-xl font-semibold">Dodaj obrok</h2>
 
             <form onSubmit={handleAddMeal} className="mt-6 space-y-4">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-slate-700"
+                  className="block text-sm font-medium text-slate-700 dark:text-slate-200"
                 >
                   Ime obroka
                 </label>
@@ -178,14 +178,14 @@ export default function MealsPage() {
                   placeholder="npr. Zajtrk"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="calories"
-                  className="block text-sm font-medium text-slate-700"
+                  className="block text-sm font-medium text-slate-700 dark:text-slate-200"
                 >
                   Kalorije
                 </label>
@@ -195,44 +195,44 @@ export default function MealsPage() {
                   placeholder="npr. 350"
                   value={calories}
                   onChange={(e) => setCalories(e.target.value)}
-                  className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 />
               </div>
 
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                     Beljakovine (g)
                   </label>
                   <input
                     type="number"
                     value={protein}
                     onChange={(e) => setProtein(e.target.value)}
-                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                     Ogljikovi hidrati (g)
                   </label>
                   <input
                     type="number"
                     value={carbs}
                     onChange={(e) => setCarbs(e.target.value)}
-                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                     Maščobe (g)
                   </label>
                   <input
                     type="number"
                     value={fat}
                     onChange={(e) => setFat(e.target.value)}
-                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
               </div>
@@ -240,7 +240,7 @@ export default function MealsPage() {
               <div>
                 <label
                   htmlFor="note"
-                  className="block text-sm font-medium text-slate-700"
+                  className="block text-sm font-medium text-slate-700 dark:text-slate-200"
                 >
                   Opis (neobvezno)
                 </label>
@@ -249,7 +249,7 @@ export default function MealsPage() {
                   placeholder="kratek opis obroka"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  className="mt-1 block min-h-[96px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  className="mt-1 block min-h-[96px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 />
               </div>
 
@@ -262,16 +262,16 @@ export default function MealsPage() {
             </form>
           </section>
 
-          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          <section className="rounded-3xl border border-white/70 dark:border-slate-800 bg-white dark:bg-slate-900/90 dark:bg-slate-900/80 p-6 shadow-xl shadow-slate-200/70 dark:shadow-black/30 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-black/30">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold">Dodani obroki</h2>
-              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              <span className="rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-200">
                 {meals.length} skupaj
               </span>
             </div>
 
             {meals.length === 0 ? (
-              <div className="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
+              <div className="mt-6 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 p-6 text-sm text-slate-600 dark:text-slate-300 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
                 Še nimaš dodanih obrokov. Ko dodaš novega, se bo prikazal tukaj.
               </div>
             ) : (
@@ -282,14 +282,14 @@ export default function MealsPage() {
                       meal.id ??
                       `${meal.naziv ?? "meal"}-${meal.cas ?? index}-${index}`
                     }
-                    className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                    className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/20"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-base font-semibold text-slate-900">
+                        <p className="text-base font-semibold text-slate-900 dark:text-white">
                           {meal.naziv}
                         </p>
-                        <p className="text-sm text-slate-600">
+                        <p className="text-sm text-slate-600 dark:text-slate-300">
                           {meal.kalorije} kcal
                         </p>
                       </div>
@@ -298,7 +298,7 @@ export default function MealsPage() {
                         {/* Link na urejanje obroka */}
                         <Link
                           href={`/meals/${meal.id}`}
-                          className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                          className="rounded-full border border-slate-200 dark:border-slate-700 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 transition hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-900 dark:text-white dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
                         >
                           Uredi
                         </Link>
@@ -306,27 +306,27 @@ export default function MealsPage() {
                         {/* Brisanje obroka */}
                         <button
                           onClick={() => handleDeleteMeal(meal.id)}
-                          className="rounded-full border border-rose-200 px-3 py-1 text-xs font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700"
+                          className="rounded-full border border-rose-200 px-3 py-1 text-xs font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700 dark:border-rose-400/40 dark:text-rose-200 dark:hover:bg-rose-500/10"
                         >
                           Izbriši
                         </button>
                       </div>
                     </div>
 
-                    <div className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-3">
+                    <div className="mt-3 grid gap-2 text-sm text-slate-600 dark:text-slate-300 sm:grid-cols-3">
                       <p>Beljakovine: {meal.beljakovine} g</p>
                       <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
                       <p>Maščobe: {meal.mascobe} g</p>
                     </div>
 
                     {/* Datum/čas vnosa */}
-                    <p className="mt-3 text-xs text-slate-500">
+                    <p className="mt-3 text-xs text-slate-500 dark:text-slate-300">
                       Čas vnosa: {new Date(meal.cas).toLocaleString()}
                     </p>
 
                     {/* Opis obroka (če obstaja) */}
                     {meal.note && (
-                      <p className="mt-2 text-sm text-slate-600">
+                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                         Opis: {meal.note}
                       </p>
                     )}
@@ -340,3 +340,4 @@ export default function MealsPage() {
     </main>
   );
 }
+

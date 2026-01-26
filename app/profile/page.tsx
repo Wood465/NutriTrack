@@ -136,19 +136,19 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="relative min-h-screen bg-slate-50 text-slate-900">
-      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
+    <main className="relative min-h-screen bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white dark:bg-slate-950 dark:text-white">
+      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl dark:opacity-0" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl dark:opacity-0" />
 
       <Navbar />
 
       <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12">
-        <section className="relative overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 px-6 py-10 text-white shadow-2xl shadow-blue-200/70 md:px-10 md:py-14">
-          <div className="pointer-events-none absolute -left-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <section className="relative overflow-hidden rounded-3xl border border-white/70 dark:border-slate-800 bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 px-6 py-10 text-white shadow-2xl shadow-blue-200/70 dark:shadow-black/40 md:px-10 md:py-14">
+          <div className="pointer-events-none absolute -left-16 -top-20 h-64 w-64 rounded-full bg-white dark:bg-slate-900/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
 
           <div className="relative max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-100">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white dark:bg-slate-900/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-100">
               Profil
             </div>
             <h1 className="text-3xl font-semibold md:text-5xl">Tvoji podatki</h1>
@@ -159,16 +159,16 @@ export default function ProfilePage() {
         </section>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          <section className="rounded-3xl border border-white/70 dark:border-slate-800 bg-white dark:bg-slate-900/90 dark:bg-slate-900/80 p-6 shadow-xl shadow-slate-200/70 dark:shadow-black/30 backdrop-blur">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-xl font-semibold">Osebni podatki</h2>
-                <p className="text-sm text-slate-600">Osnovni podatki tvojega računa.</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300">Osnovni podatki tvojega računa.</p>
               </div>
 
               <Link
                 href="/profile/change-password"
-                className="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                className="rounded-full border border-slate-200 dark:border-slate-700 px-3 py-1 text-sm text-slate-600 dark:text-slate-300 transition hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-900 dark:text-white"
               >
                 Spremeni geslo
               </Link>
@@ -179,7 +179,7 @@ export default function ProfilePage() {
                 <img
                   src={avatarSrc}
                   alt="Profilna slika"
-                  className="h-24 w-24 rounded-2xl object-cover border border-slate-200"
+                  className="h-24 w-24 rounded-2xl object-cover border border-slate-200 dark:border-slate-700"
                   // Fallback, če avatar endpoint vrne napako ali ni slike
                   onError={() => setAvatarSrc('/default-avatar.svg')}
                 />
@@ -196,33 +196,33 @@ export default function ProfilePage() {
                 </label>
               </div>
 
-              <div className="grid gap-2 text-sm text-slate-700">
+              <div className="grid gap-2 text-sm text-slate-700 dark:text-slate-200">
                 <p>
-                  <span className="font-medium text-slate-900">Ime:</span> {user?.ime ?? '—'}
+                  <span className="font-medium text-slate-900 dark:text-white">Ime:</span> {user?.ime ?? '—'}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-900">Priimek:</span> {user?.priimek ?? '—'}
+                  <span className="font-medium text-slate-900 dark:text-white">Priimek:</span> {user?.priimek ?? '—'}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-900">E-pošta:</span> {user?.email ?? '—'}
+                  <span className="font-medium text-slate-900 dark:text-white">E-pošta:</span> {user?.email ?? '—'}
                 </p>
               </div>
             </div>
           </section>
 
-          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          <section className="rounded-3xl border border-white/70 dark:border-slate-800 bg-white dark:bg-slate-900/90 dark:bg-slate-900/80 p-6 shadow-xl shadow-slate-200/70 dark:shadow-black/30 backdrop-blur">
             <div>
               <h2 className="text-xl font-semibold">Statistika</h2>
-              <p className="text-sm text-slate-600">Povzetek tvojih prehranskih vnosov.</p>
+              <p className="text-sm text-slate-600 dark:text-slate-300">Povzetek tvojih prehranskih vnosov.</p>
             </div>
 
-            <div className="mt-6 space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm text-slate-700">
-                <span className="font-medium text-slate-900">Povprečen dnevni vnos:</span>{' '}
+            <div className="mt-6 space-y-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 p-4">
+              <p className="text-sm text-slate-700 dark:text-slate-200">
+                <span className="font-medium text-slate-900 dark:text-white">Povprečen dnevni vnos:</span>{' '}
                 {averageCalories !== null ? `${averageCalories} kcal` : 'Nalaganje...'}
               </p>
-              <p className="text-sm text-slate-700">
-                <span className="font-medium text-slate-900">Zabeleženi dnevi:</span>{' '}
+              <p className="text-sm text-slate-700 dark:text-slate-200">
+                <span className="font-medium text-slate-900 dark:text-white">Zabeleženi dnevi:</span>{' '}
                 {loggedDays !== null ? loggedDays : 'Nalaganje...'}
               </p>
             </div>
@@ -232,3 +232,4 @@ export default function ProfilePage() {
     </main>
   );
 }
+

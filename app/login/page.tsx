@@ -46,10 +46,10 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="relative min-h-screen bg-slate-50 text-slate-900">
+    <main className="relative min-h-screen bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white dark:bg-slate-950 dark:text-white">
       {/* Dekorativni background elementi */}
-      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl dark:opacity-0" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl dark:opacity-0" />
 
       {/* Navigacija */}
       <Navbar />
@@ -57,19 +57,19 @@ export default function LoginPage() {
       {/* Login card */}
       <div className="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center px-6 py-16">
         <div className="w-full max-w-md">
-          <div className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/90 p-8 shadow-xl shadow-slate-200/70 backdrop-blur">
+          <div className="relative overflow-hidden rounded-3xl border border-white/70 dark:border-slate-800 bg-white dark:bg-slate-900/90 dark:bg-slate-900/80 p-8 shadow-xl shadow-slate-200/70 dark:shadow-black/30 backdrop-blur">
             <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-200/30 blur-3xl" />
 
             <div className="relative space-y-6">
               {/* Naslov */}
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600">
+                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-300">
                   Prijava
                 </div>
                 <h1 className="mt-4 text-3xl font-semibold">
                   Dobrodošel nazaj
                 </h1>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   Vpiši se in nadaljuj s spremljanjem prehrane.
                 </p>
               </div>
@@ -88,7 +88,7 @@ export default function LoginPage() {
               >
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                     E-pošta
                   </label>
                   <input
@@ -96,13 +96,13 @@ export default function LoginPage() {
                     placeholder="vnesi e-pošto"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
 
                 {/* Geslo */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
                     Geslo
                   </label>
                   <input
@@ -110,7 +110,7 @@ export default function LoginPage() {
                     placeholder="vnesi geslo"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="mt-1 block w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
 
@@ -127,13 +127,13 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => signIn("google", { callbackUrl: "/" })}
-                  className="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-slate-700 transition hover:bg-slate-100"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 py-2.5 text-slate-700 dark:text-slate-200 transition hover:bg-slate-100 dark:bg-slate-800/60"
                 >
                   Prijava z Googlom
                 </button>
 
                 {/* Link na registracijo */}
-                <div className="text-center text-sm text-slate-600">
+                <div className="text-center text-sm text-slate-600 dark:text-slate-300">
                   Nimaš računa?{" "}
                   <Link
                     href="/register"
@@ -150,3 +150,4 @@ export default function LoginPage() {
     </main>
   );
 }
+

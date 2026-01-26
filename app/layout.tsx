@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className="min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-50 text-gray-900 antialiased"
+        className="min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-50 text-gray-900 antialiased dark:bg-slate-950 dark:text-white"
         suppressHydrationWarning
       >
         {children}
