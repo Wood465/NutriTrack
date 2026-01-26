@@ -1,10 +1,12 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/app/ui/navbar";
 
 export default function MealsPage() {
+  const router = useRouter();
   const [meals, setMeals] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("0");
@@ -53,6 +55,10 @@ export default function MealsPage() {
 
   const handleAddMeal = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      router.push("/register");
+      return;
+    }
     if (!name.trim() || !calories.trim()) return;
 
     const newMeal = {
