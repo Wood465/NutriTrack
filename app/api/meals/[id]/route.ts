@@ -1,40 +1,61 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import postgres from "postgres";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-export async function DELETE(
-  _req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  // 1. preberi ID (UUID ali string)
-  const { id } = await params;
-
-  // 2. preveri session
+async function getUserFromSession() {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
 
   if (!token) {
-    return NextResponse.json(
-      { error: "Niste prijavljeni." },
-      { status: 401 }
-    );
+    return { error: NextResponse.json({ error: "Niste prijavljeni." }, { status: 401 }) };
   }
 
-  // 3. preberi user iz JWT
-  let user: any;
   try {
-    user = jwt.verify(token, process.env.JWT_SECRET!);
+    const user = jwt.verify(token, process.env.JWT_SECRET!);
+    return { user };
   } catch {
-    return NextResponse.json(
-      { error: "Neveljavna seja." },
-      { status: 401 }
-    );
+    return { error: NextResponse.json({ error: "Neveljavna seja." }, { status: 401 }) };
+  }
+}
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const session = await getUserFromSession();
+  if ("error" in session) return session.error;
+
+  const [meal] = await sql`
+    SELECT id, user_id, naziv, kalorije, beljakovine, ogljikovi_hidrati, mascobe, cas
+    FROM meals
+    WHERE id = ${id}
+  `;
+
+  if (!meal) {
+    return NextResponse.json({ error: "Obrok ne obstaja." }, { status: 404 });
   }
 
-  // 4. preveri, ali obrok obstaja in komu pripada
+  if (String(meal.user_id) !== String((session.user as any).id)) {
+    return NextResponse.json({ error: "Nimate dovoljenja za ogled." }, { status: 403 });
+  }
+
+  return NextResponse.json(meal);
+}
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const session = await getUserFromSession();
+  if ("error" in session) return session.error;
+
+  const body = await req.json();
+
   const [meal] = await sql`
     SELECT user_id
     FROM meals
@@ -42,20 +63,50 @@ export async function DELETE(
   `;
 
   if (!meal) {
-    return NextResponse.json(
-      { error: "Obrok ne obstaja." },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "Obrok ne obstaja." }, { status: 404 });
   }
 
-  if (meal.user_id !== user.id) {
-    return NextResponse.json(
-      { error: "Nimate dovoljenja za brisanje." },
-      { status: 403 }
-    );
+  if (String(meal.user_id) !== String((session.user as any).id)) {
+    return NextResponse.json({ error: "Nimate dovoljenja za urejanje." }, { status: 403 });
   }
 
-  // 5. izbriši obrok
+  const [updated] = await sql`
+    UPDATE meals
+    SET
+      naziv = ${body.naziv},
+      kalorije = ${body.kalorije},
+      beljakovine = ${body.beljakovine},
+      ogljikovi_hidrati = ${body.ogljikovi_hidrati},
+      mascobe = ${body.mascobe}
+    WHERE id = ${id}
+    RETURNING id, naziv, kalorije, beljakovine, ogljikovi_hidrati, mascobe, cas
+  `;
+
+  return NextResponse.json(updated);
+}
+
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const session = await getUserFromSession();
+  if ("error" in session) return session.error;
+
+  const [meal] = await sql`
+    SELECT user_id
+    FROM meals
+    WHERE id = ${id}
+  `;
+
+  if (!meal) {
+    return NextResponse.json({ error: "Obrok ne obstaja." }, { status: 404 });
+  }
+
+  if (String(meal.user_id) !== String((session.user as any).id)) {
+    return NextResponse.json({ error: "Nimate dovoljenja za brisanje." }, { status: 403 });
+  }
+
   await sql`
     DELETE FROM meals
     WHERE id = ${id}

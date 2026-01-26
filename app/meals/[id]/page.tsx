@@ -1,62 +1,59 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/app/ui/navbar";
 
-export default function MealsPage() {
-  const [meals, setMeals] = useState<any[]>([]);
+export default function EditMealPage() {
+  const router = useRouter();
+  const params = useParams();
+  const rawId = params?.id;
+  const id = Array.isArray(rawId) ? rawId[0] : rawId;
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("0");
   const [note, setNote] = useState("");
   const [protein, setProtein] = useState("0");
   const [carbs, setCarbs] = useState("0");
   const [fat, setFat] = useState("0");
-  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    async function loadUser() {
-      const res = await fetch("/api/session", { cache: "no-cache" });
-      const data = await res.json();
-      setUser(data.user);
+    if (!id) return;
+
+    async function loadMeal() {
+      try {
+        const res = await fetch(`/api/meals/${id}`, { cache: "no-store" });
+        if (!res.ok) {
+          setError("Obrok ne obstaja ali nimaš dostopa.");
+          return;
+        }
+        const meal = await res.json();
+        setName(meal.naziv ?? "");
+        setCalories(String(meal.kalorije ?? 0));
+        setProtein(String(meal.beljakovine ?? 0));
+        setCarbs(String(meal.ogljikovi_hidrati ?? 0));
+        setFat(String(meal.mascobe ?? 0));
+        setNote(meal.note ?? "");
+      } catch {
+        setError("Napaka pri nalaganju obroka.");
+      } finally {
+        setLoading(false);
+      }
     }
 
-    loadUser();
-  }, []);
+    loadMeal();
+  }, [id]);
 
-  const handleDeleteMeal = async (id: number) => {
-    const ok = confirm("Res želiš izbrisati ta obrok?");
-    if (!ok) return;
-
-    const res = await fetch(`/api/meals/${id}`, {
-      method: "DELETE",
-    });
-
-    if (!res.ok) {
-      alert("Brisanje ni uspelo");
-      return;
-    }
-
-    setMeals((prev) => prev.filter((m) => m.id !== id));
-  };
-
-  const loadMeals = async (userId: string) => {
-    const res = await fetch(`/api/meals?user_id=${userId}`);
-    const data = await res.json();
-    setMeals(data);
-  };
-
-  useEffect(() => {
-    if (!user) return;
-    loadMeals(user.id);
-  }, [user]);
-
-  const handleAddMeal = async (e: React.FormEvent) => {
+  async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !calories.trim()) return;
+    setSaving(true);
+    setError("");
 
-    const newMeal = {
-      user_id: user.id,
+    const payload = {
       naziv: name,
       kalorije: parseFloat(calories) || 0,
       beljakovine: parseFloat(protein) || 0,
@@ -65,26 +62,20 @@ export default function MealsPage() {
       note,
     };
 
-    const res = await fetch("/api/meals", {
-      method: "POST",
+    const res = await fetch(`/api/meals/${id}`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newMeal),
+      body: JSON.stringify(payload),
     });
 
-    const saved = await res.json();
-
-    if (!saved?.id) {
-      await loadMeals(user.id);
-    } else {
-      setMeals((prev) => [saved, ...prev]);
+    if (!res.ok) {
+      setError("Shranjevanje ni uspelo.");
+      setSaving(false);
+      return;
     }
-    setName("");
-    setCalories("");
-    setProtein("");
-    setCarbs("");
-    setFat("");
-    setNote("");
-  };
+
+    router.push("/meals");
+  }
 
   return (
     <main className="relative min-h-screen bg-slate-50 text-slate-900">
@@ -100,20 +91,26 @@ export default function MealsPage() {
 
           <div className="relative max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-100">
-              Moji obroki
+              Uredi obrok
             </div>
-            <h1 className="text-3xl font-semibold md:text-5xl">Dodaj obroke</h1>
+            <h1 className="text-3xl font-semibold md:text-5xl">Uredi obrok</h1>
             <p className="text-blue-100">
-              Hitro dodaj obrok, spremljaj kalorije in hranila ter ohrani pregled.
+              Posodobi podatke o obroku in shrani spremembe.
             </p>
           </div>
         </section>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1.4fr]">
-          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
-            <h2 className="text-xl font-semibold">Dodaj obrok</h2>
+        <section className="mt-10 max-w-2xl rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          {error && (
+            <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+              {error}
+            </div>
+          )}
 
-            <form onSubmit={handleAddMeal} className="mt-6 space-y-4">
+          {loading ? (
+            <p className="text-slate-600">Nalaganje...</p>
+          ) : (
+            <form onSubmit={handleSave} className="mt-4 space-y-4">
               <div>
                 <label
                   htmlFor="name"
@@ -124,7 +121,6 @@ export default function MealsPage() {
                 <input
                   id="name"
                   type="text"
-                  placeholder="npr. Zajtrk"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
@@ -141,7 +137,6 @@ export default function MealsPage() {
                 <input
                   id="calories"
                   type="number"
-                  placeholder="npr. 350"
                   value={calories}
                   onChange={(e) => setCalories(e.target.value)}
                   className="mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
@@ -195,83 +190,31 @@ export default function MealsPage() {
                 </label>
                 <textarea
                   id="note"
-                  placeholder="kratek opis obroka"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   className="mt-1 block min-h-[96px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700"
-              >
-                Dodaj obrok
-              </button>
-            </form>
-          </section>
-
-          <section className="rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Dodani obroki</h2>
-              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                {meals.length} skupaj
-              </span>
-            </div>
-
-            {meals.length === 0 ? (
-              <div className="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-6 text-sm text-slate-600">
-                Še nimaš dodanih obrokov. Ko dodaš novega, se bo prikazal tukaj.
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="rounded-xl bg-blue-600 px-5 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700 disabled:opacity-60"
+                >
+                  {saving ? "Shranjujem..." : "Shrani spremembe"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push("/meals")}
+                  className="rounded-xl border border-slate-200 px-5 py-2.5 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                >
+                  Prekliči
+                </button>
               </div>
-            ) : (
-              <ul className="mt-6 space-y-3">
-                {meals.map((meal, index) => (
-                  <li
-                    key={meal.id ?? `${meal.naziv ?? "meal"}-${meal.cas ?? index}-${index}`}
-                    className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-base font-semibold text-slate-900">
-                          {meal.naziv}
-                        </p>
-                        <p className="text-sm text-slate-600">{meal.kalorije} kcal</p>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        <Link
-                          href={`/meals/${meal.id}`}
-                          className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-                        >
-                          Uredi
-                        </Link>
-                        <button
-                          onClick={() => handleDeleteMeal(meal.id)}
-                          className="rounded-full border border-rose-200 px-3 py-1 text-xs font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700"
-                        >
-                          Izbriši
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-3">
-                      <p>Beljakovine: {meal.beljakovine} g</p>
-                      <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
-                      <p>Maščobe: {meal.mascobe} g</p>
-                    </div>
-
-                    <p className="mt-3 text-xs text-slate-500">
-                      Čas vnosa: {new Date(meal.cas).toLocaleString()}
-                    </p>
-
-                    {meal.note && (
-                      <p className="mt-2 text-sm text-slate-600">Opis: {meal.note}</p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-        </div>
+            </form>
+          )}
+        </section>
       </div>
     </main>
   );
