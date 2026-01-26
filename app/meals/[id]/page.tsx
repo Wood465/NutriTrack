@@ -4,16 +4,28 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Navbar from "@/app/ui/navbar";
 
+/**
+ * EditMealPage
+ *
+ * Namen:
+ * - prikaže formo za urejanje obroka
+ * - ob odprtju strani naloži obrok iz /api/meals/[id]
+ * - ob shranjevanju pošlje PUT na /api/meals/[id]
+ */
 export default function EditMealPage() {
   const router = useRouter();
   const params = useParams();
+
+  // ID iz URL-ja (lahko je string ali array -> zato normaliziramo)
   const rawId = params?.id;
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
 
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+  // UI stanja
+  const [loading, setLoading] = useState(true); // nalaganje obroka
+  const [saving, setSaving] = useState(false); // shranjevanje sprememb
+  const [error, setError] = useState(""); // sporočilo napake
 
+  // Polja forme
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("0");
   const [note, setNote] = useState("");
@@ -21,16 +33,21 @@ export default function EditMealPage() {
   const [carbs, setCarbs] = useState("0");
   const [fat, setFat] = useState("0");
 
+  // Ko se stran odpre (in imamo id), naložimo obrok iz API-ja
   useEffect(() => {
     if (!id) return;
 
     async function loadMeal() {
       try {
         const res = await fetch(`/api/meals/${id}`, { cache: "no-store" });
+
+        // Če obrok ne obstaja ali user nima pravic, vrnemo napako
         if (!res.ok) {
           setError("Obrok ne obstaja ali nimaš dostopa.");
           return;
         }
+
+        // Napolnimo formo s podatki iz baze
         const meal = await res.json();
         setName(meal.naziv ?? "");
         setCalories(String(meal.kalorije ?? 0));
@@ -48,11 +65,18 @@ export default function EditMealPage() {
     loadMeal();
   }, [id]);
 
+  /**
+   * Shrani spremembe:
+   * - pretvori številke iz string v number
+   * - pošlje PUT na /api/meals/[id]
+   * - ob uspehu preusmeri nazaj na /meals
+   */
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
     setError("");
 
+    // Pripravimo payload za API
     const payload = {
       naziv: name,
       kalorije: parseFloat(calories) || 0,
@@ -68,12 +92,14 @@ export default function EditMealPage() {
       body: JSON.stringify(payload),
     });
 
+    // Če shranjevanje ne uspe, pokažemo napako
     if (!res.ok) {
       setError("Shranjevanje ni uspelo.");
       setSaving(false);
       return;
     }
 
+    // Uspeh -> nazaj na seznam obrokov
     router.push("/meals");
   }
 
@@ -101,16 +127,19 @@ export default function EditMealPage() {
         </section>
 
         <section className="mt-10 max-w-2xl rounded-3xl border border-white/70 bg-white/90 p-6 shadow-xl shadow-slate-200/70 backdrop-blur">
+          {/* Prikaz napak */}
           {error && (
             <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
               {error}
             </div>
           )}
 
+          {/* Če se še nalaga, pokaži tekst */}
           {loading ? (
             <p className="text-slate-600">Nalaganje...</p>
           ) : (
             <form onSubmit={handleSave} className="mt-4 space-y-4">
+              {/* Ime obroka */}
               <div>
                 <label
                   htmlFor="name"
@@ -127,6 +156,7 @@ export default function EditMealPage() {
                 />
               </div>
 
+              {/* Kalorije */}
               <div>
                 <label
                   htmlFor="calories"
@@ -143,6 +173,7 @@ export default function EditMealPage() {
                 />
               </div>
 
+              {/* Makro hranila */}
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
                   <label className="block text-sm font-medium text-slate-700">
@@ -181,6 +212,7 @@ export default function EditMealPage() {
                 </div>
               </div>
 
+              {/* Opomba */}
               <div>
                 <label
                   htmlFor="note"
@@ -196,6 +228,7 @@ export default function EditMealPage() {
                 />
               </div>
 
+              {/* Gumbi */}
               <div className="flex flex-wrap gap-3">
                 <button
                   type="submit"
@@ -204,6 +237,7 @@ export default function EditMealPage() {
                 >
                   {saving ? "Shranjujem..." : "Shrani spremembe"}
                 </button>
+
                 <button
                   type="button"
                   onClick={() => router.push("/meals")}
