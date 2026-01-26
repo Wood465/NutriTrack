@@ -1,33 +1,84 @@
 'use client';
-import CaloriesChart from './CaloriesChart';
 
 import { useEffect, useState } from 'react';
+import CaloriesChart from './CaloriesChart';
 
+// Tipi za podatke iz API-ja (namesto any)
 type DayStat = {
   date: string;
   calories: number;
 };
 
+type TodayStats = {
+  calories: number;
+  meals: number;
+  protein: number;
+};
+
+type WeekStats = {
+  avgCalories: number;
+  totalCalories: number;
+  avgProtein: number;
+  days: number;
+};
+
+type WeeklyStatsResponse = {
+  today: TodayStats;
+  week: WeekStats;
+  chart: DayStat[];
+};
+
 export default function StatsPage() {
-  const [daily, setDaily] = useState<any>(null);
-  const [weekly, setWeekly] = useState<any>(null);
+  // Bolj striktno tipiziranje (namesto any)
+  const [daily, setDaily] = useState<TodayStats | null>(null);
+  const [weekly, setWeekly] = useState<WeekStats | null>(null);
   const [chart, setChart] = useState<DayStat[]>([]);
 
-  useEffect(() => {
-    async function loadStats() {
-      const res = await fetch('/api/stats/weekly', { cache: 'no-store' });
-      const data = await res.json();
+  // Optional UI state za bolj varen fetch
+  const [error, setError] = useState<string>('');
 
-      setDaily(data.today);
-      setWeekly(data.week);
-      setChart(data.chart);
+  useEffect(() => {
+    let isMounted = true; // prepreči setState po unmountu
+
+    async function loadStats() {
+      try {
+        setError('');
+
+        const res = await fetch('/api/stats/weekly', { cache: 'no-store' });
+        const data: WeeklyStatsResponse = await res.json();
+
+        if (!res.ok) {
+          // Če backend vrne error field, ga pokažemo, sicer fallback
+          const msg = (data as any)?.error || 'Napaka pri nalaganju statistike.';
+          if (isMounted) setError(msg);
+          return;
+        }
+
+        // Nastavi state-e samo, če je komponenta še mountana
+        if (!isMounted) return;
+
+        setDaily(data.today);
+        setWeekly(data.week);
+        setChart(Array.isArray(data.chart) ? data.chart : []);
+      } catch {
+        if (isMounted) setError('Napaka pri nalaganju statistike.');
+      }
     }
 
     loadStats();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
+  // Loading stanje (ohranjeno)
   if (!daily || !weekly) {
-    return <p className="p-6">Nalaganje statistike …</p>;
+    return (
+      <p className="p-6">
+        {error ? error : 'Nalaganje statistike …'}
+      </p>
+    );
   }
 
   return (
@@ -61,7 +112,7 @@ export default function StatsPage() {
   );
 }
 
-function StatBox({ title, value }: { title: string; value: any }) {
+function StatBox({ title, value }: { title: string; value: string | number }) {
   return (
     <div className="rounded-lg border p-4 bg-white shadow-sm">
       <p className="text-sm text-gray-500">{title}</p>
