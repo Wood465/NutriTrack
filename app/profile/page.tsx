@@ -9,6 +9,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const [averageCalories, setAverageCalories] = useState<number | null>(null);
   const [loggedDays, setLoggedDays] = useState<number | null>(null);
+  const [avatarSrc, setAvatarSrc] = useState("/default-avatar.svg");
 
   useEffect(() => {
     async function loadUserAndStats() {
@@ -43,6 +44,10 @@ export default function ProfilePage() {
 
     loadUserAndStats();
   }, []);
+
+  useEffect(() => {
+    setAvatarSrc(`/api/profile/avatar/view?key=${avatarKey}`);
+  }, [avatarKey]);
 
   async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -104,9 +109,10 @@ export default function ProfilePage() {
             <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-center">
               <div className="flex items-center gap-4">
                 <img
-                  src={`/api/profile/avatar/view?key=${avatarKey}`}
+                  src={avatarSrc}
                   alt="Profilna slika"
                   className="h-24 w-24 rounded-2xl object-cover border border-slate-200"
+                  onError={() => setAvatarSrc("/default-avatar.svg")}
                 />
                 <label className="cursor-pointer rounded-full border border-blue-200 px-3 py-1 text-sm text-blue-700 transition hover:bg-blue-50">
                   Spremeni sliko
