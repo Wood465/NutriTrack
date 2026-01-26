@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
-import BackButton from '../ui/BackButton';
+import Navbar from "@/app/ui/navbar";
 
 export default function RegisterPage() {
   const [ime, setIme] = useState('');
@@ -47,91 +47,117 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="p-8 flex justify-center">
-      <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-2xl font-semibold mb-6 text-center">Registracija</h1>
+    <main className="relative min-h-screen bg-slate-50 text-slate-900">
+      <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-          {error && (
-            <div className="bg-red-100 text-red-700 p-2 rounded">{error}</div>
-          )}
+      <Navbar />
 
-          {success && (
-            <div className="bg-green-100 text-green-700 p-2 rounded">{success}</div>
-          )}
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center px-6 py-16">
+        <div className="w-full max-w-md">
+          <div className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/90 p-8 shadow-xl shadow-slate-200/70 backdrop-blur">
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-200/30 blur-3xl" />
 
-          <div>
-            <label className="block text-sm font-medium">Ime</label>
-            <input
-              type="text"
-              value={ime}
-              onChange={(e) => setIme(e.target.value)}
-              className="mt-1 w-full border rounded-md p-2"
-              placeholder="vnesi ime"
-            />
+            <div className="relative space-y-6">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600">
+                  Registracija
+                </div>
+                <h1 className="mt-4 text-3xl font-semibold">Ustvari račun</h1>
+                <p className="mt-2 text-sm text-slate-600">
+                  Začni s sledenjem prehrani v nekaj korakih.
+                </p>
+              </div>
+
+              {error && (
+                <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                  {success}
+                </div>
+              )}
+
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700">Ime</label>
+                    <input
+                      type="text"
+                      value={ime}
+                      onChange={(e) => setIme(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      placeholder="vnesi ime"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700">Priimek</label>
+                    <input
+                      type="text"
+                      value={priimek}
+                      onChange={(e) => setPriimek(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                      placeholder="vnesi priimek"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700">E-pošta</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    placeholder="vnesi e-pošto"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700">Geslo</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    placeholder="vnesi geslo"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700">Potrdi geslo</label>
+                  <input
+                    type="password"
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    placeholder="ponovno vnesi geslo"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleRegister}
+                  className="w-full rounded-xl bg-blue-600 py-2.5 text-white shadow-lg shadow-blue-200/70 transition hover:bg-blue-700"
+                >
+                  Registracija
+                </button>
+
+                <div className="text-center text-sm text-slate-600">
+                  Že imaš račun?{' '}
+                  <Link href="/login" className="text-blue-600 hover:underline">
+                    Prijava
+                  </Link>
+                </div>
+
+              </form>
+            </div>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium">Priimek</label>
-            <input
-              type="text"
-              value={priimek}
-              onChange={(e) => setPriimek(e.target.value)}
-              className="mt-1 w-full border rounded-md p-2"
-              placeholder="vnesi priimek"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">E-pošta</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full border rounded-md p-2"
-              placeholder="vnesi e-pošto"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Geslo</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full border rounded-md p-2"
-              placeholder="vnesi geslo"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Potrdi geslo</label>
-            <input
-              type="password"
-              value={confirm}
-              onChange={(e) => setConfirm(e.target.value)}
-              className="mt-1 w-full border rounded-md p-2"
-              placeholder="ponovno vnesi geslo"
-            />
-          </div>
-
-          <button
-            type="button"
-            onClick={handleRegister}
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Registracija
-          </button>
-
-          <div className="text-center text-sm text-gray-600">
-            Že imaš račun?{' '}
-            <Link href="/login" className="text-blue-600 hover:underline">
-              Prijava
-            </Link>
-          </div>
-
-          <BackButton />
-        </form>
+        </div>
       </div>
     </main>
   );
