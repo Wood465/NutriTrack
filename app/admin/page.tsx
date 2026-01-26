@@ -6,71 +6,73 @@ import Navbar from "@/app/ui/navbar";
 
 export default function AdminPage() {
   const router = useRouter();
+
+  // UI stanje
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
-  const [users, setUsers] = useState<any[]>([]);
   const [error, setError] = useState("");
 
+  // Podatki
+  const [users, setUsers] = useState<any[]>([]);
+
+  // Ko se stran odpre:
+  // 1) preveri, če je uporabnik admin
+  // 2) če ni admin -> preusmeri domov
+  // 3) če je admin -> naloži uporabnike
   useEffect(() => {
-    async function checkAuth() {
+    (async () => {
       try {
-        const res = await fetch("/api/session");
-        const data = await res.json();
-        if (!data.user || data.user.role !== "admin") {
+        setError("");
+
+        const sessionRes = await fetch("/api/session");
+        const session = await sessionRes.json();
+
+        // Če ni prijavljen ali ni admin, nima dostopa do te strani
+        if (!session.user || session.user.role !== "admin") {
           router.push("/");
           return;
         }
 
-        setUser(data.user);
-        await loadUsers();
-      } catch (err) {
+        // Naloži seznam uporabnikov
+        const usersRes = await fetch("/api/admin/users");
+        const list = await usersRes.json();
+        setUsers(list);
+      } catch {
         setError("Failed to load data");
       } finally {
         setLoading(false);
       }
-    }
-
-    checkAuth();
+    })();
   }, [router]);
 
-  async function loadUsers() {
-    try {
-      const res = await fetch("/api/admin/users");
-      const list = await res.json();
-      setUsers(list);
-    } catch {
-      setError("Could not load users");
-    }
-  }
-
+  // Izbriše uporabnika in ga odstrani iz seznama (če API uspe)
   async function deleteUser(id: string) {
-    const res = await fetch(`/api/admin/users/${id}`, {
-      method: "POST",
-    });
+    const res = await fetch(`/api/admin/users/${id}`, { method: "POST" });
 
-    if (res.ok) {
-      setUsers(users.filter((u) => u.id !== id));
-    } else {
-      alert("Delete failed");
-    }
+    if (!res.ok) return alert("Delete failed");
+
+    // Posodobi UI (varno: uporabi prev state)
+    setUsers((prev) => prev.filter((u) => u.id !== id));
   }
 
+  // Preklopi vlogo uporabnika: admin <-> user
   async function toggleRole(id: string, currentRole: string) {
     const newRole = currentRole === "admin" ? "user" : "admin";
 
     const res = await fetch(`/api/admin/users/${id}/role`, {
       method: "POST",
-      body: JSON.stringify({ role: newRole }),
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role: newRole }),
     });
 
-    if (res.ok) {
-      setUsers(users.map((u) => (u.id === id ? { ...u, role: newRole } : u)));
-    } else {
-      alert("Role update failed");
-    }
+    if (!res.ok) return alert("Role update failed");
+
+    // Posodobi UI (varno: uporabi prev state)
+    setUsers((prev) =>
+      prev.map((u) => (u.id === id ? { ...u, role: newRole } : u))
+    );
   }
 
+  // Loading stanje
   if (loading) {
     return (
       <main className="relative min-h-screen bg-slate-50 text-slate-900">
@@ -82,6 +84,7 @@ export default function AdminPage() {
     );
   }
 
+  // Error stanje
   if (error) {
     return (
       <main className="relative min-h-screen bg-slate-50 text-slate-900">
@@ -93,6 +96,7 @@ export default function AdminPage() {
     );
   }
 
+  // Glavni UI (CSS pusti enak)
   return (
     <main className="relative min-h-screen bg-slate-50 text-slate-900">
       <div className="pointer-events-none absolute -top-32 right-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl" />
@@ -160,6 +164,15 @@ export default function AdminPage() {
                     </td>
                   </tr>
                 ))}
+
+                {/* Če ni uporabnikov, pokaži sporočilo */}
+                {users.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-4 py-6 text-slate-500">
+                      Ni uporabnikov za prikaz.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
