@@ -8,6 +8,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [user, setUser] = useState<any>(null);
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
     async function loadUser() {
@@ -18,6 +19,32 @@ export default function Navbar() {
     loadUser();
   }, []);
 
+  useEffect(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') {
+      setTheme(saved);
+      if (saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
   const links = [
     { href: '/', label: 'Domov' },
     { href: '/about', label: 'O aplikaciji' },
@@ -26,7 +53,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-gray-100 text-gray-900 px-6 py-4 rounded-lg shadow-md">
+    <nav className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 px-6 py-4 rounded-lg shadow-md">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold tracking-tight">NutriTrack</h1>
 
@@ -97,6 +124,16 @@ export default function Navbar() {
               </Link>
             </li>
           )}
+
+          <li className="ml-4 flex items-center">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="px-3 py-1 rounded-md text-sm bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+            >
+              {theme === 'light' ? 'Dark mode' : 'Light mode'}
+            </button>
+          </li>
         </ul>
       </div>
 
@@ -149,6 +186,16 @@ export default function Navbar() {
               <Link href="/login">Prijava</Link>
             </li>
           )}
+
+          <li className="pt-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="px-3 py-1 rounded-md text-sm bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+            >
+              {theme === 'light' ? 'Dark mode' : 'Light mode'}
+            </button>
+          </li>
         </ul>
       )}
     </nav>
