@@ -69,3 +69,4 @@ function StatBox({ title, value }: { title: string; value: any }) {
     </div>
   );
 }
+

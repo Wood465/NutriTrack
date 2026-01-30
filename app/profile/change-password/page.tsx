@@ -49,7 +49,7 @@ export default function ChangePasswordPage() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+        <section className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -116,3 +116,4 @@ export default function ChangePasswordPage() {
     </main>
   );
 }
+

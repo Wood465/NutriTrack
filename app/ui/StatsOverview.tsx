@@ -24,7 +24,7 @@ export default function StatsOverview() {
 
   if (!daily || !weekly) {
     return (
-      <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80 dark:text-gray-300">
+      <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80 dark:text-gray-300">
         Nalaganje statistike ...
       </div>
     );
@@ -80,7 +80,7 @@ export default function StatsOverview() {
             Teden
           </span>
         </div>
-        <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
+        <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
           <CaloriesChart data={chart} />
         </div>
       </div>
@@ -98,7 +98,7 @@ function StatBox({
   note: string;
 }) {
   return (
-    <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+    <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
       <div className="mb-3 h-1 w-12 rounded-full bg-blue-500/70" />
       <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
         {title}
@@ -110,3 +110,4 @@ function StatBox({
     </div>
   );
 }
+

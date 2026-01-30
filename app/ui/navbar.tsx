@@ -55,7 +55,7 @@ export default function Navbar() {
   return (
     <nav className="sticky top-4 z-40">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="rounded-2xl border border-gray-200/70 bg-white/80 px-5 py-4 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+        <div className="rounded-2xl border border-gray-200/70 bg-white/95 px-5 py-4 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight md:text-2xl">
               NutriTrack
@@ -214,3 +214,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

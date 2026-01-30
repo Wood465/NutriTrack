@@ -102,7 +102,7 @@ export default function MealsPage() {
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_1.4fr]">
-          <div className="rounded-3xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+          <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Dodaj nov obrok
             </h2>
@@ -208,7 +208,7 @@ export default function MealsPage() {
             </form>
           </div>
 
-          <div className="rounded-3xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+          <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Dodani obroki
@@ -227,7 +227,7 @@ export default function MealsPage() {
                 {meals.map((meal) => (
                   <li
                     key={meal.id}
-                    className="rounded-2xl border border-gray-200/70 bg-white/70 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60"
+                    className="rounded-2xl border border-gray-200/70 bg-white/90 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
@@ -271,3 +271,4 @@ export default function MealsPage() {
     </main>
   );
 }
+

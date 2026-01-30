@@ -20,7 +20,7 @@ export default function AboutPage() {
         </section>
 
         <section className="grid gap-6 md:grid-cols-3">
-          <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+          <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
             <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
               Kaj lahko delas
             </p>
@@ -35,7 +35,7 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+          <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
             <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
               Zakaj obstaja
             </p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+          <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
             <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
               Komu je namenjena
             </p>
@@ -62,12 +62,12 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+        <section className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
             Kako deluje
           </h2>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border border-gray-200/70 bg-white/60 p-4 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60 dark:text-gray-300">
+            <div className="rounded-xl border border-gray-200/70 bg-white/90 p-4 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60 dark:text-gray-300">
               <p className="font-semibold text-gray-900 dark:text-gray-100">
                 1. Vnos obrokov
               </p>
@@ -75,7 +75,7 @@ export default function AboutPage() {
                 Dodaj obrok, kalorije in hranila v nekaj klikih.
               </p>
             </div>
-            <div className="rounded-xl border border-gray-200/70 bg-white/60 p-4 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60 dark:text-gray-300">
+            <div className="rounded-xl border border-gray-200/70 bg-white/90 p-4 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60 dark:text-gray-300">
               <p className="font-semibold text-gray-900 dark:text-gray-100">
                 2. Pregled statistike
               </p>
@@ -83,7 +83,7 @@ export default function AboutPage() {
                 Sistem pripravi dnevne in tedenske povprecne vrednosti.
               </p>
             </div>
-            <div className="rounded-xl border border-gray-200/70 bg-white/60 p-4 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60 dark:text-gray-300">
+            <div className="rounded-xl border border-gray-200/70 bg-white/90 p-4 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60 dark:text-gray-300">
               <p className="font-semibold text-gray-900 dark:text-gray-100">
                 3. Napredek
               </p>
@@ -97,3 +97,4 @@ export default function AboutPage() {
     </main>
   );
 }
+

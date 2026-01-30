@@ -87,7 +87,7 @@ export default function ProfilePage() {
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-3xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+          <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Osebni podatki
             </h2>
@@ -139,12 +139,12 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+          <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Statistika
             </h2>
             <div className="mt-6 space-y-4">
-              <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
+              <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                   Povprecen dnevni vnos
                 </p>
@@ -155,7 +155,7 @@ export default function ProfilePage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
+              <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                   Zabelezeni dnevi
                 </p>
@@ -170,3 +170,4 @@ export default function ProfilePage() {
     </main>
   );
 }
+

@@ -65,7 +65,7 @@ export default function Page() {
 
         {!user && (
           <section className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+            <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
               <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
                 Hiter zacetek
               </p>
@@ -78,7 +78,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+            <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
               <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
                 Statistika
               </p>
@@ -91,7 +91,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+            <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
               <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
                 Fokus
               </p>
@@ -107,7 +107,7 @@ export default function Page() {
         )}
 
         {user && (
-          <section className="rounded-3xl border border-gray-200/70 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+          <section className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <StatsOverview />
           </section>
         )}
@@ -115,3 +115,4 @@ export default function Page() {
     </main>
   );
 }
+
