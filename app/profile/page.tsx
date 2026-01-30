@@ -6,9 +6,13 @@ import Navbar from '@/app/ui/navbar';
 
 export default function ProfilePage() {
   const [avatarKey, setAvatarKey] = useState(0);
+  const [avatarSrc, setAvatarSrc] = useState(
+    `/api/profile/avatar/view?key=0`
+  );
   const [user, setUser] = useState<any>(null);
   const [averageCalories, setAverageCalories] = useState<number | null>(null);
   const [loggedDays, setLoggedDays] = useState<number | null>(null);
+  const defaultAvatarSrc = "/avatar-default.svg";
 
   useEffect(() => {
     if (!user) return;
@@ -49,6 +53,10 @@ export default function ProfilePage() {
     }
     loadUser();
   }, []);
+
+  useEffect(() => {
+    setAvatarSrc(`/api/profile/avatar/view?key=${avatarKey}`);
+  }, [avatarKey]);
 
   async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -114,9 +122,14 @@ export default function ProfilePage() {
 
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <img
-                src={`/api/profile/avatar/view?key=${avatarKey}`}
+                src={avatarSrc}
                 alt="Profilna slika"
                 className="h-20 w-20 rounded-full border border-gray-200 object-cover dark:border-gray-800"
+                onError={() => {
+                  if (avatarSrc !== defaultAvatarSrc) {
+                    setAvatarSrc(defaultAvatarSrc);
+                  }
+                }}
               />
 
               <label className="cursor-pointer rounded-full border border-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-blue-700 transition hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40">
