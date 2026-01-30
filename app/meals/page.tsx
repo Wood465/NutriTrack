@@ -55,13 +55,32 @@ export default function MealsPage() {
     e.preventDefault();
     if (!name.trim() || !calories.trim()) return;
 
+    const parsedCalories = Number(calories);
+    const parsedProtein = Number(protein);
+    const parsedCarbs = Number(carbs);
+    const parsedFat = Number(fat);
+
+    if (
+      !Number.isFinite(parsedCalories) ||
+      !Number.isFinite(parsedProtein) ||
+      !Number.isFinite(parsedCarbs) ||
+      !Number.isFinite(parsedFat) ||
+      parsedCalories < 0 ||
+      parsedProtein < 0 ||
+      parsedCarbs < 0 ||
+      parsedFat < 0
+    ) {
+      alert("Vrednosti ne smejo biti negativne.");
+      return;
+    }
+
     const newMeal = {
       user_id: user.id,
       naziv: name,
-      kalorije: parseFloat(calories) || 0,
-      beljakovine: parseFloat(protein) || 0,
-      ogljikovi_hidrati: parseFloat(carbs) || 0,
-      mascobe: parseFloat(fat) || 0,
+      kalorije: parsedCalories || 0,
+      beljakovine: parsedProtein || 0,
+      ogljikovi_hidrati: parsedCarbs || 0,
+      mascobe: parsedFat || 0,
       note,
     };
 
@@ -138,6 +157,7 @@ export default function MealsPage() {
                 <input
                   id="calories"
                   type="number"
+                  min={0}
                   placeholder="npr. 350"
                   value={calories}
                   onChange={(e) => setCalories(e.target.value)}
@@ -152,6 +172,7 @@ export default function MealsPage() {
                   </label>
                   <input
                     type="number"
+                    min={0}
                     value={protein}
                     onChange={(e) => setProtein(e.target.value)}
                     className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
@@ -164,6 +185,7 @@ export default function MealsPage() {
                   </label>
                   <input
                     type="number"
+                    min={0}
                     value={carbs}
                     onChange={(e) => setCarbs(e.target.value)}
                     className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
@@ -176,6 +198,7 @@ export default function MealsPage() {
                   </label>
                   <input
                     type="number"
+                    min={0}
                     value={fat}
                     onChange={(e) => setFat(e.target.value)}
                     className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"

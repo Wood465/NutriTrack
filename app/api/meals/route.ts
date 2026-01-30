@@ -22,18 +22,43 @@ export async function POST(request: Request) {
 
     console.log("POST /meals body:", body);
 
+    const naziv = typeof body.naziv === "string" ? body.naziv.trim() : "";
+    const userId = Number(body.user_id);
+    const kalorije = Number(body.kalorije);
+    const beljakovine = Number(body.beljakovine);
+    const ogljikovi_hidrati = Number(body.ogljikovi_hidrati);
+    const mascobe = Number(body.mascobe);
+
+    if (
+      !naziv ||
+      !Number.isFinite(userId) ||
+      !Number.isFinite(kalorije) ||
+      !Number.isFinite(beljakovine) ||
+      !Number.isFinite(ogljikovi_hidrati) ||
+      !Number.isFinite(mascobe) ||
+      kalorije < 0 ||
+      beljakovine < 0 ||
+      ogljikovi_hidrati < 0 ||
+      mascobe < 0
+    ) {
+      return Response.json(
+        { error: "Invalid input" },
+        { status: 400 }
+      );
+    }
+
     const result = await sql`
         INSERT INTO meals (
         user_id, naziv, kalorije,
         beljakovine, ogljikovi_hidrati, mascobe, cas
         )
         VALUES (
-        ${body.user_id},
-        ${body.naziv},
-        ${body.kalorije},
-        ${body.beljakovine},
-        ${body.ogljikovi_hidrati},
-        ${body.mascobe},
+        ${userId},
+        ${naziv},
+        ${kalorije},
+        ${beljakovine},
+        ${ogljikovi_hidrati},
+        ${mascobe},
         NOW()
         )
         RETURNING id, naziv, kalorije, beljakovine, ogljikovi_hidrati, mascobe, cas
