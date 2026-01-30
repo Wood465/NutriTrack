@@ -30,3 +30,4 @@ export default function CaloriesChart({ data }: { data: any[] }) {
     />
   );
 }
+

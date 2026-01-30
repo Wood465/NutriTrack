@@ -1,47 +1,45 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import BackButton from '../ui/BackButton';
 import Link from 'next/link';
-
-
+import Navbar from '@/app/ui/navbar';
 
 export default function ProfilePage() {
   const [avatarKey, setAvatarKey] = useState(0);
   const [user, setUser] = useState<any>(null);
   const [averageCalories, setAverageCalories] = useState<number | null>(null);
-const [loggedDays, setLoggedDays] = useState<number | null>(null);
+  const [loggedDays, setLoggedDays] = useState<number | null>(null);
 
-useEffect(() => {
-  if (!user) return;
+  useEffect(() => {
+    if (!user) return;
 
-  async function loadStats() {
-    const res = await fetch(`/api/meals?user_id=${user.id}`, { cache: "no-store" });
-    const meals = await res.json();
+    async function loadStats() {
+      const res = await fetch(`/api/meals?user_id=${user.id}`, {
+        cache: 'no-store',
+      });
+      const meals = await res.json();
 
-    if (meals.length === 0) {
-      setAverageCalories(0);
-      setLoggedDays(0);
-      return;
+      if (meals.length === 0) {
+        setAverageCalories(0);
+        setLoggedDays(0);
+        return;
+      }
+
+      const total = meals.reduce(
+        (sum: number, meal: any) => sum + parseFloat(meal.kalorije || 0),
+        0,
+      );
+
+      const days = new Set(
+        meals.map((m: any) => new Date(m.cas).toISOString().slice(0, 10)),
+      );
+
+      setLoggedDays(days.size);
+      setAverageCalories(Math.round(total / days.size));
     }
 
-    // skupne kalorije
- const total = meals.reduce(
-  (sum: number, meal: any) => sum + parseFloat(meal.kalorije || 0),
-  0
-);
-    // unikatni dnevi vnosa
-    const days = new Set(
-      meals.map((m: any) => new Date(m.cas).toISOString().slice(0, 10))
-    );
-
-    setLoggedDays(days.size);
-    setAverageCalories(Math.round(total / days.size));
-  }
-
-  loadStats();
-}, [user]);
-
+    loadStats();
+  }, [user]);
 
   useEffect(() => {
     async function loadUser() {
@@ -52,94 +50,124 @@ useEffect(() => {
     loadUser();
   }, []);
 
+  async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const res = await fetch('/api/profile/avatar', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (res.ok) {
+      setAvatarKey(Date.now());
+    } else {
+      alert('Upload ni uspel');
+    }
+  }
+
   return (
-    <main className="p-8 max-w-2xl mx-auto space-y-6">
-      <h1 className="text-3xl font-semibold">Profil</h1>
+    <main className="min-h-screen">
+      <Navbar />
 
-      <section className="space-y-3">
-        <h2 className="text-xl font-medium">Osebni podatki</h2>
-        <div className="rounded-lg border p-4 bg-white shadow-sm space-y-1">
-          <p><span className="font-medium">Ime:</span> {user?.ime ?? '—'}</p>
-          <p><span className="font-medium">Priimek:</span> {user?.priimek ?? '—'}</p>
-          <p><span className="font-medium">E-pošta:</span> {user?.email ?? '—'}</p>
-          <div className="flex items-center gap-4 mt-3">
-          <img
-            src={`/api/profile/avatar/view?key=${avatarKey}`}
-            alt="Profilna slika"
-            className="w-24 h-24 rounded-full object-cover border"
-          />
+      <div className="mx-auto max-w-6xl space-y-10 px-4 pb-16 pt-10 md:px-6">
+        <section className="rounded-3xl border border-blue-200/50 bg-gradient-to-br from-blue-600 via-blue-500 to-sky-500 p-8 text-white shadow-lg md:p-12">
+          <div className="max-w-3xl space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-100">
+              Profil
+            </p>
+            <h1 className="text-3xl font-semibold md:text-4xl">Tvoj racun</h1>
+            <p className="text-base text-blue-100 md:text-lg">
+              Uredi podatke in spremljaj povprecje vnosa.
+            </p>
+          </div>
+        </section>
 
-          <label className="cursor-pointer text-blue-600 hover:underline text-sm">
-            Spremeni sliko
-            <input
-              type="file"
-              name="avatar"
-              accept="image/*"
-              className="hidden"
-              onChange={uploadAvatar}
-            />
-          </label>
-        </div>
+        <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              Osebni podatki
+            </h2>
+            <div className="mt-5 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              <p>
+                <span className="font-medium text-gray-900 dark:text-gray-100">
+                  Ime:
+                </span>{' '}
+                {user?.ime ?? '--'}
+              </p>
+              <p>
+                <span className="font-medium text-gray-900 dark:text-gray-100">
+                  Priimek:
+                </span>{' '}
+                {user?.priimek ?? '--'}
+              </p>
+              <p>
+                <span className="font-medium text-gray-900 dark:text-gray-100">
+                  E-posta:
+                </span>{' '}
+                {user?.email ?? '--'}
+              </p>
+            </div>
 
-        </div>
-      </section>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <img
+                src={`/api/profile/avatar/view?key=${avatarKey}`}
+                alt="Profilna slika"
+                className="h-20 w-20 rounded-full border border-gray-200 object-cover dark:border-gray-800"
+              />
 
-        <Link 
-        href="/profile/change-password" 
-        className="text-blue-600 hover:underline block mt-2"
-        >
-        Spremeni geslo
-        </Link>
+              <label className="cursor-pointer rounded-full border border-blue-200 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-blue-700 transition hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40">
+                Spremeni sliko
+                <input
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={uploadAvatar}
+                />
+              </label>
 
-  
+              <Link
+                href="/profile/change-password"
+                className="rounded-full border border-gray-200 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-700 transition hover:bg-gray-100 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+              >
+                Spremeni geslo
+              </Link>
+            </div>
+          </div>
 
+          <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              Statistika
+            </h2>
+            <div className="mt-6 space-y-4">
+              <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  Povprecen dnevni vnos
+                </p>
+                <p className="mt-2 text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                  {averageCalories !== null
+                    ? `${averageCalories} kcal`
+                    : 'Nalaganje...'}
+                </p>
+              </div>
 
-      <section className="space-y-3">
-        <h2 className="text-xl font-medium">Statistika</h2>
-        <div className="rounded-lg border p-4 bg-white shadow-sm space-y-1">
-                <p>
-          <span className="font-medium">Povprečen dnevni vnos:</span>{' '}
-          {averageCalories !== null ? `${averageCalories} kcal` : 'Nalaganje...'}
-        </p>
-
-        <p>
-          <span className="font-medium">Zabeleženi dnevi:</span>{' '}
-          {loggedDays !== null ? loggedDays : 'Nalaganje...'}
-        </p>
-
-
-        </div>
-      </section>
-
-
-      <BackButton />
+              <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  Zabelezeni dnevi
+                </p>
+                <p className="mt-2 text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                  {loggedDays !== null ? loggedDays : 'Nalaganje...'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   );
- async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
-  const file = e.target.files?.[0];
-  console.log("DEBUG selected file:", file);
-
-  if (!file) return;
-
-  const formData = new FormData();
-  formData.append("avatar", file);
-
-  const res = await fetch("/api/profile/avatar", {
-    method: "POST",
-    body: formData,
-  });
-
-  console.log("DEBUG upload status:", res.status);
-
-  if (res.ok) {
-    setAvatarKey(Date.now());
-  } else {
-    const err = await res.json();
-    console.log("UPLOAD ERROR:", err);
-    alert("Upload ni uspel");
-  }
 }
-
-}
-
 

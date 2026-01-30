@@ -23,45 +23,91 @@ export default function StatsOverview() {
   }, []);
 
   if (!daily || !weekly) {
-    return <p>Nalaganje statistike …</p>;
+    return (
+      <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80 dark:text-gray-300">
+        Nalaganje statistike ...
+      </div>
+    );
   }
 
   return (
-    <section className="space-y-6">
-      <h2 className="text-2xl font-semibold">Pregled</h2>
-
-      {/* Dnevno */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatBox title="Današnje kalorije" value={`${daily.calories} kcal`} />
-        <StatBox title="Obroki danes" value={daily.meals} />
-        <StatBox title="Beljakovine danes" value={`${daily.protein} g`} />
+    <section className="space-y-8">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          Pregled
+        </h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Zadnja osvezitev: danes
+        </p>
       </div>
 
-      {/* Tedensko */}
-      <div>
-        <h3 className="text-lg font-medium mb-3">Zadnjih 7 dni</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatBox title="Povp. kalorije" value={`${weekly.avgCalories} kcal`} />
-          <StatBox title="Skupaj kalorij" value={`${weekly.totalCalories} kcal`} />
-          <StatBox title="Povp. beljakovine" value={`${weekly.avgProtein} g`} />
-          <StatBox title="Aktivni dnevi" value={weekly.days} />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <StatBox title="Danes" value={`${daily.calories} kcal`} note="Kalorije" />
+        <StatBox title="Obroki" value={daily.meals} note="Danes" />
+        <StatBox title="Beljakovine" value={`${daily.protein} g`} note="Danes" />
+      </div>
+
+      <div className="space-y-3">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+          Zadnjih 7 dni
+        </h3>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <StatBox
+            title="Povp. kalorije"
+            value={`${weekly.avgCalories} kcal`}
+            note="Na dan"
+          />
+          <StatBox
+            title="Skupaj kalorij"
+            value={`${weekly.totalCalories} kcal`}
+            note="Skupno"
+          />
+          <StatBox
+            title="Povp. beljakovine"
+            value={`${weekly.avgProtein} g`}
+            note="Na dan"
+          />
+          <StatBox title="Aktivni dnevi" value={weekly.days} note="Od 7" />
         </div>
       </div>
 
-      {/* Graf */}
-      <div>
-        <h3 className="text-lg font-medium mb-2">Kalorije po dnevih</h3>
-        <CaloriesChart data={chart} />
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+            Kalorije po dnevih
+          </h3>
+          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700 dark:bg-blue-950/40 dark:text-blue-200">
+            Teden
+          </span>
+        </div>
+        <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80">
+          <CaloriesChart data={chart} />
+        </div>
       </div>
     </section>
   );
 }
 
-function StatBox({ title, value }: { title: string; value: any }) {
+function StatBox({
+  title,
+  value,
+  note,
+}: {
+  title: string;
+  value: any;
+  note: string;
+}) {
   return (
-    <div className="rounded-lg border p-4 bg-white shadow-sm">
-      <p className="text-sm text-gray-500">{title}</p>
-      <p className="text-xl font-semibold">{value}</p>
+    <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-4 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+      <div className="mb-3 h-1 w-12 rounded-full bg-blue-500/70" />
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        {title}
+      </p>
+      <p className="mt-2 text-2xl font-semibold text-gray-900 dark:text-gray-100">
+        {value}
+      </p>
+      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{note}</p>
     </div>
   );
 }
+
