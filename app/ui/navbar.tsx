@@ -53,151 +53,164 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 px-6 py-4 rounded-lg shadow-md">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">NutriTrack</h1>
+    <nav className="sticky top-4 z-40">
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <div className="rounded-2xl border border-gray-200/70 bg-white/80 px-5 py-4 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-semibold tracking-tight md:text-2xl">
+              NutriTrack
+            </h1>
 
-        {/* Hamburger (mobile) */}
-        <button
-          className="md:hidden text-2xl"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          ☰
-        </button>
+            <button
+              className="md:hidden rounded-md border border-gray-200 px-3 py-1 text-sm font-medium text-gray-700 shadow-sm dark:border-gray-800 dark:text-gray-200"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              Menu
+            </button>
 
-        {/* Desktop menu */}
-        <ul className="hidden md:flex gap-6 items-center">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={`hover:text-blue-600 ${
-                  pathname === link.href
-                    ? 'border-b-2 border-blue-600 pb-1 text-blue-600'
-                    : ''
-                }`}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+            <ul className="hidden items-center gap-6 text-sm font-medium md:flex">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`transition-colors hover:text-blue-600 ${
+                      pathname === link.href
+                        ? 'text-blue-600'
+                        : 'text-gray-700 dark:text-gray-200'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
 
-          {/* Admin link */}
-          {user?.role === 'admin' && (
-            <li>
-              <Link
-                href="/admin"
-                className={`font-medium hover:text-purple-600 ${
-                  pathname === '/admin'
-                    ? 'border-b-2 border-purple-600 pb-1 text-purple-600'
-                    : ''
-                }`}
-              >
-                Admin
-              </Link>
-            </li>
-          )}
+              {user?.role === 'admin' && (
+                <li>
+                  <Link
+                    href="/admin"
+                    className={`font-medium transition-colors hover:text-blue-600 ${
+                      pathname === '/admin'
+                        ? 'text-blue-600'
+                        : 'text-gray-700 dark:text-gray-200'
+                    }`}
+                  >
+                    Admin
+                  </Link>
+                </li>
+              )}
 
-          {/* User section */}
-          {user ? (
-            <>
-              <li className="ml-4 font-medium text-gray-700">
-                Zdravo, {user.ime}
-              </li>
-              <li>
+              {user ? (
+                <>
+                  <li className="ml-2 rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 dark:bg-blue-950/40 dark:text-blue-200">
+                    Zdravo, {user.ime}
+                  </li>
+                  <li>
+                    <button
+                      onClick={async () => {
+                        await fetch('/api/logout', { method: 'POST' });
+                        window.location.href = '/login';
+                      }}
+                      className="ml-2 rounded-full border border-red-200 px-3 py-1 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:border-red-900/40 dark:text-red-300 dark:hover:bg-red-950/40"
+                    >
+                      Odjava
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link
+                    href="/login"
+                    className="rounded-full border border-blue-200 px-3 py-1 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40"
+                  >
+                    Prijava
+                  </Link>
+                </li>
+              )}
+
+              <li className="ml-2 flex items-center">
                 <button
-                  onClick={async () => {
-                    await fetch('/api/logout', { method: 'POST' });
-                    window.location.href = '/login';
-                  }}
-                  className="text-red-600 hover:underline ml-4"
+                  type="button"
+                  onClick={toggleTheme}
+                  className="rounded-full border border-gray-200 px-3 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
                 >
-                  Odjava
+                  {theme === 'light' ? 'Dark mode' : 'Light mode'}
                 </button>
               </li>
-            </>
-          ) : (
-            <li>
-              <Link href="/login" className="hover:text-blue-600">
-                Prijava
-              </Link>
-            </li>
-          )}
+            </ul>
+          </div>
 
-          <li className="ml-4 flex items-center">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="px-3 py-1 rounded-md text-sm bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-            >
-              {theme === 'light' ? 'Dark mode' : 'Light mode'}
-            </button>
-          </li>
-        </ul>
+          {open && (
+            <ul className="mt-4 space-y-3 border-t border-gray-200 pt-4 text-sm dark:border-gray-800 md:hidden">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-md px-2 py-1 transition-colors ${
+                      pathname === link.href
+                        ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-200'
+                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+
+              {user?.role === 'admin' && (
+                <li>
+                  <Link
+                    href="/admin"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-md px-2 py-1 text-blue-700 hover:bg-blue-50 dark:text-blue-200 dark:hover:bg-blue-950/40"
+                  >
+                    Admin
+                  </Link>
+                </li>
+              )}
+
+              {user ? (
+                <>
+                  <li className="text-gray-700 dark:text-gray-200">
+                    Zdravo, {user.ime}
+                  </li>
+                  <li>
+                    <button
+                      onClick={async () => {
+                        await fetch('/api/logout', { method: 'POST' });
+                        window.location.href = '/login';
+                      }}
+                      className="rounded-md border border-red-200 px-3 py-1 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-900/40 dark:text-red-300 dark:hover:bg-red-950/40"
+                    >
+                      Odjava
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link
+                    href="/login"
+                    className="rounded-md border border-blue-200 px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40"
+                  >
+                    Prijava
+                  </Link>
+                </li>
+              )}
+
+              <li className="pt-2">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="rounded-md border border-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+                >
+                  {theme === 'light' ? 'Dark mode' : 'Light mode'}
+                </button>
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <ul className="md:hidden mt-4 space-y-3 border-t pt-4">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`block ${
-                  pathname === link.href ? 'text-blue-600 font-medium' : ''
-                }`}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-
-          {user?.role === 'admin' && (
-            <li>
-              <Link
-                href="/admin"
-                onClick={() => setOpen(false)}
-                className="block text-purple-600 font-medium"
-              >
-                Admin
-              </Link>
-            </li>
-          )}
-
-          {user ? (
-            <>
-              <li className="text-gray-700">Zdravo, {user.ime}</li>
-              <li>
-                <button
-                  onClick={async () => {
-                    await fetch('/api/logout', { method: 'POST' });
-                    window.location.href = '/login';
-                  }}
-                  className="text-red-600 hover:underline"
-                >
-                  Odjava
-                </button>
-              </li>
-            </>
-          ) : (
-            <li>
-              <Link href="/login">Prijava</Link>
-            </li>
-          )}
-
-          <li className="pt-2">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="px-3 py-1 rounded-md text-sm bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-            >
-              {theme === 'light' ? 'Dark mode' : 'Light mode'}
-            </button>
-          </li>
-        </ul>
-      )}
     </nav>
   );
 }
