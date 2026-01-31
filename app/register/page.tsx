@@ -4,19 +4,41 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/app/ui/navbar';
 
+/**
+ * REGISTER PAGE (Registracija)
+ *
+ * Namen strani:
+ * - Uporabniku omogoca ustvarjanje novega racuna.
+ * - Uporabnik vnese osnovne podatke (ime, priimek, email) in izbere geslo.
+ *
+ 
+ */
+
 export default function RegisterPage() {
+  // Controlled inputs: vrednosti polj so vedno v state-u
   const [ime, setIme] = useState('');
   const [priimek, setPriimek] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+
+  // error in success sta message stringa za prikaz uporabniku
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  /**
+   * Registracija uporabnika:
+   * - validacija gesel
+   * - POST /api/register
+   * - prikaz error/success
+   * - redirect na /login po uspehu
+   */
   async function handleRegister() {
+    // Pocistimo prejsnja sporocila, da ne ostanejo stari statusi
     setError('');
     setSuccess('');
 
+    // Osnovna validacija na strani klienta: gesli se morata ujemati
     if (password !== confirm) {
       setError('Gesli se ne ujemata.');
       return;
@@ -35,11 +57,13 @@ export default function RegisterPage() {
 
     const data = await res.json();
 
+    // Ce backend vrne napako, jo prikazemo uporabniku
     if (!res.ok) {
       setError(data.error || 'Napaka pri registraciji.');
       return;
     }
 
+    // Uspeh: prikazemo sporocilo in preusmerimo na login (po 1.5s)
     setSuccess('Registracija uspesna. Preusmerjam...');
     setTimeout(() => {
       window.location.href = '/login';
@@ -48,10 +72,12 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Navigacija */}
       <Navbar />
 
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-6">
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          {/* Leva stran: opis strani */}
           <div className="rounded-3xl border border-blue-200/50 bg-gradient-to-br from-blue-600 via-blue-500 to-sky-500 p-8 text-white shadow-lg md:p-12">
             <div className="max-w-md space-y-3">
               <p className="text-sm font-semibold uppercase tracking-wide text-blue-100">
@@ -64,6 +90,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* Desna stran: obrazec */}
           <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Ustvari nov racun
@@ -72,18 +99,21 @@ export default function RegisterPage() {
               Izpolni podatke in potrdi registracijo.
             </p>
 
+            {/* Napaka */}
             {error && (
               <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-200">
                 {error}
               </div>
             )}
 
+            {/* Uspeh */}
             {success && (
               <div className="mt-4 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700 dark:border-green-900/40 dark:bg-green-950/40 dark:text-green-200">
                 {success}
               </div>
             )}
 
+            {/* Form submit preprečimo, ker registracijo sprozimo rocno z gumbom */}
             <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -145,11 +175,12 @@ export default function RegisterPage() {
                   type="password"
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
-                  className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
+                  className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
                   placeholder="ponovno vnesi geslo"
                 />
               </div>
 
+              {/* Gumb sprozi handleRegister */}
               <button
                 type="button"
                 onClick={handleRegister}
@@ -159,6 +190,7 @@ export default function RegisterPage() {
               </button>
             </form>
 
+            {/* Link na login stran */}
             <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
               Ze imas racun?{' '}
               <Link
