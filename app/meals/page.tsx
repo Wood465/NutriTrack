@@ -97,6 +97,11 @@ export default function MealsPage() {
   const handleAddMeal = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!user?.id) {
+      alert("Uporabnik ni prijavljen ali seja ni nalozena.");
+      return;
+    }
+
     // osnovna validacija
     if (!name.trim() || !calories.trim()) return;
 
@@ -138,8 +143,22 @@ export default function MealsPage() {
       body: JSON.stringify(newMeal),
     });
 
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      const fields =
+        Array.isArray(err?.fields) && err.fields.length > 0
+          ? ` (${err.fields.join(", ")})`
+          : "";
+      alert(`${err?.error || "Dodajanje ni uspelo"}${fields}`);
+      return;
+    }
+
     // backend vrne shranjen obrok (z id-jem, casom, ...)
     const saved = await res.json();
+    if (!saved || saved.id == null) {
+      alert("Obrok ni bil shranjen pravilno (manjka id).");
+      return;
+    }
 
     // UI: obrok dodamo na vrh seznama (da se vidi takoj)
     setMeals((prev) => [saved, ...prev]);
@@ -280,6 +299,7 @@ export default function MealsPage() {
 
               <button
                 type="submit"
+                disabled={!user?.id}
                 className="w-full rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
               >
                 Dodaj obrok
@@ -305,9 +325,9 @@ export default function MealsPage() {
               </div>
             ) : (
               <ul className="mt-6 space-y-4">
-                {meals.map((meal) => (
+                {meals.map((meal, index) => (
                   <li
-                    key={meal.id}
+                    key={meal.id ?? `${meal.naziv}-${meal.cas ?? "no-date"}-${index}`}
                     className="rounded-2xl border border-gray-200/70 bg-white/90 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-3">

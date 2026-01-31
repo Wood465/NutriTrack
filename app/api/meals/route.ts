@@ -23,26 +23,26 @@ export async function POST(request: Request) {
     console.log("POST /meals body:", body);
 
     const naziv = typeof body.naziv === "string" ? body.naziv.trim() : "";
-    const userId = Number(body.user_id);
+    const userId =
+      typeof body.user_id === "string" ? body.user_id.trim() : "";
     const kalorije = Number(body.kalorije);
     const beljakovine = Number(body.beljakovine);
     const ogljikovi_hidrati = Number(body.ogljikovi_hidrati);
     const mascobe = Number(body.mascobe);
 
-    if (
-      !naziv ||
-      !Number.isFinite(userId) ||
-      !Number.isFinite(kalorije) ||
-      !Number.isFinite(beljakovine) ||
-      !Number.isFinite(ogljikovi_hidrati) ||
-      !Number.isFinite(mascobe) ||
-      kalorije < 0 ||
-      beljakovine < 0 ||
-      ogljikovi_hidrati < 0 ||
-      mascobe < 0
-    ) {
+    const invalidFields: string[] = [];
+    if (!naziv) invalidFields.push("naziv");
+    if (!userId) invalidFields.push("user_id");
+    if (!Number.isFinite(kalorije) || kalorije < 0) invalidFields.push("kalorije");
+    if (!Number.isFinite(beljakovine) || beljakovine < 0)
+      invalidFields.push("beljakovine");
+    if (!Number.isFinite(ogljikovi_hidrati) || ogljikovi_hidrati < 0)
+      invalidFields.push("ogljikovi_hidrati");
+    if (!Number.isFinite(mascobe) || mascobe < 0) invalidFields.push("mascobe");
+
+    if (invalidFields.length > 0) {
       return Response.json(
-        { error: "Invalid input" },
+        { error: "Invalid input", fields: invalidFields },
         { status: 400 }
       );
     }
