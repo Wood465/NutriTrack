@@ -34,6 +34,14 @@ export default function MealsPage() {
   // Trenutno prijavljen uporabnik (rabimo user.id za nalaganje in shranjevanje obrokov)
   const [user, setUser] = useState<any>(null);
 
+  // Edit state za obrok
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editCalories, setEditCalories] = useState("0");
+  const [editProtein, setEditProtein] = useState("0");
+  const [editCarbs, setEditCarbs] = useState("0");
+  const [editFat, setEditFat] = useState("0");
+
   /**
    * 1) Nalozimo trenutno sejo
    * - /api/session vrne podatke o prijavljenem uporabniku
@@ -72,7 +80,7 @@ export default function MealsPage() {
    * - DELETE /api/meals/:id
    * - ce uspe, odstranimo obrok iz state, da se UI takoj posodobi
    */
-  const handleDeleteMeal = async (id: number) => {
+  const handleDeleteMeal = async (id: string) => {
     const ok = confirm("Res zelis izbrisati ta obrok?");
     if (!ok) return;
 
@@ -86,6 +94,80 @@ export default function MealsPage() {
     }
 
     setMeals((prev) => prev.filter((m) => m.id !== id));
+  };
+
+  const handleStartEdit = (meal: any) => {
+    setEditingId(meal.id);
+    setEditName(meal.naziv ?? "");
+    setEditCalories(String(meal.kalorije ?? 0));
+    setEditProtein(String(meal.beljakovine ?? 0));
+    setEditCarbs(String(meal.ogljikovi_hidrati ?? 0));
+    setEditFat(String(meal.mascobe ?? 0));
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditName("");
+    setEditCalories("0");
+    setEditProtein("0");
+    setEditCarbs("0");
+    setEditFat("0");
+  };
+
+  const handleSaveEdit = async (id: string) => {
+    if (!user?.id) {
+      alert("Uporabnik ni prijavljen ali seja ni nalozena.");
+      return;
+    }
+
+    if (!editName.trim() || !editCalories.trim()) return;
+
+    const parsedCalories = Number(editCalories);
+    const parsedProtein = Number(editProtein);
+    const parsedCarbs = Number(editCarbs);
+    const parsedFat = Number(editFat);
+
+    if (
+      !Number.isFinite(parsedCalories) ||
+      !Number.isFinite(parsedProtein) ||
+      !Number.isFinite(parsedCarbs) ||
+      !Number.isFinite(parsedFat) ||
+      parsedCalories < 0 ||
+      parsedProtein < 0 ||
+      parsedCarbs < 0 ||
+      parsedFat < 0
+    ) {
+      alert("Vrednosti ne smejo biti negativne.");
+      return;
+    }
+
+    const res = await fetch(`/api/meals/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        naziv: editName,
+        kalorije: parsedCalories || 0,
+        beljakovine: parsedProtein || 0,
+        ogljikovi_hidrati: parsedCarbs || 0,
+        mascobe: parsedFat || 0,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      const fields =
+        Array.isArray(err?.fields) && err.fields.length > 0
+          ? ` (${err.fields.join(", ")})`
+          : "";
+      alert(`${err?.error || "Urejanje ni uspelo"}${fields}`);
+      return;
+    }
+
+    const updated = await res.json();
+    setMeals((prev) =>
+      prev.map((m) => (m.id === updated.id ? updated : m))
+    );
+    handleCancelEdit();
   };
 
   /**
@@ -330,42 +412,133 @@ export default function MealsPage() {
                     key={meal.id ?? `${meal.naziv}-${meal.cas ?? "no-date"}-${index}`}
                     className="rounded-2xl border border-gray-200/70 bg-white/90 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div>
-                        <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                          {meal.naziv}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {meal.kalorije} kcal
-                        </p>
+                    {editingId === meal.id ? (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            Ime obroka
+                          </label>
+                          <input
+                            type="text"
+                            value={editName}
+                            onChange={(e) => setEditName(e.target.value)}
+                            className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            Kalorije
+                          </label>
+                          <input
+                            type="number"
+                            min={0}
+                            value={editCalories}
+                            onChange={(e) => setEditCalories(e.target.value)}
+                            className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
+                          />
+                        </div>
+
+                        <div className="grid gap-4 sm:grid-cols-3">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                              Beljakovine (g)
+                            </label>
+                            <input
+                              type="number"
+                              min={0}
+                              value={editProtein}
+                              onChange={(e) => setEditProtein(e.target.value)}
+                              className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                              Ogljikovi hidrati (g)
+                            </label>
+                            <input
+                              type="number"
+                              min={0}
+                              value={editCarbs}
+                              onChange={(e) => setEditCarbs(e.target.value)}
+                              className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                              Mascobe (g)
+                            </label>
+                            <input
+                              type="number"
+                              min={0}
+                              value={editFat}
+                              onChange={(e) => setEditFat(e.target.value)}
+                              className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            onClick={() => handleSaveEdit(meal.id)}
+                            className="rounded-full bg-blue-600 px-4 py-1 text-xs font-semibold text-white transition hover:bg-blue-700"
+                          >
+                            Shrani
+                          </button>
+                          <button
+                            onClick={handleCancelEdit}
+                            className="rounded-full border border-gray-200 px-4 py-1 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                          >
+                            Preklici
+                          </button>
+                        </div>
                       </div>
+                    ) : (
+                      <>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <div>
+                            <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                              {meal.naziv}
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                              {meal.kalorije} kcal
+                            </p>
+                          </div>
 
-                      {/* Brisanje posameznega obroka */}
-                      <button
-                        onClick={() => handleDeleteMeal(meal.id)}
-                        className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 dark:border-red-900/40 dark:text-red-300 dark:hover:bg-red-950/40"
-                      >
-                        Izbrisi
-                      </button>
-                    </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => handleStartEdit(meal)}
+                              className="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-600 transition hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-950/40"
+                            >
+                              Uredi
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMeal(meal.id)}
+                              className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 dark:border-red-900/40 dark:text-red-300 dark:hover:bg-red-950/40"
+                            >
+                              Izbrisi
+                            </button>
+                          </div>
+                        </div>
 
-                    {/* Makro vrednosti */}
-                    <div className="mt-4 grid gap-3 text-sm text-gray-600 dark:text-gray-300 sm:grid-cols-3">
-                      <p>Beljakovine: {meal.beljakovine} g</p>
-                      <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
-                      <p>Mascobe: {meal.mascobe} g</p>
-                    </div>
+                        <div className="mt-4 grid gap-3 text-sm text-gray-600 dark:text-gray-300 sm:grid-cols-3">
+                          <p>Beljakovine: {meal.beljakovine} g</p>
+                          <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
+                          <p>Mascobe: {meal.mascobe} g</p>
+                        </div>
 
-                    {/* Cas vnosa */}
-                    <p className="mt-3 text-xs uppercase tracking-wide text-gray-400">
-                      Cas vnosa: {new Date(meal.cas).toLocaleString()}
-                    </p>
+                        <p className="mt-3 text-xs uppercase tracking-wide text-gray-400">
+                          Cas vnosa: {new Date(meal.cas).toLocaleString()}
+                        </p>
 
-                    {/* Opis je neobvezen, zato ga izpisemo samo ce obstaja */}
-                    {meal.note && (
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                        Opis: {meal.note}
-                      </p>
+                        {meal.note && (
+                          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                            Opis: {meal.note}
+                          </p>
+                        )}
+                      </>
                     )}
                   </li>
                 ))}
