@@ -52,3 +52,39 @@ test('profile shows computed stats from meals', async ({ mount, page }) => {
   const daysCard = component.getByText('Zabelezeni dnevi').locator('..');
   await expect(daysCard.getByText('2')).toBeVisible();
 });
+
+test('profile shows zero stats when there are no meals', async ({
+  mount,
+  page,
+}) => {
+  await page.route('**/api/session', (route) =>
+    route.fulfill({
+      json: {
+        user: {
+          id: 'user-2',
+          ime: 'Tina',
+          priimek: 'Horvat',
+          email: 'tina@example.com',
+        },
+      },
+    }),
+  );
+
+  await page.route('**/api/meals?user_id=*', (route) =>
+    route.fulfill({
+      json: [],
+    }),
+  );
+
+  const component = await mount(<ProfilePage />);
+
+  await expect(component.getByText('Ime: Tina')).toBeVisible();
+  await expect(component.getByText('Priimek: Horvat')).toBeVisible();
+  await expect(component.getByText('E-posta: tina@example.com')).toBeVisible();
+
+  const avgCard = component.getByText('Povprecen dnevni vnos').locator('..');
+  await expect(avgCard.getByText('0 kcal')).toBeVisible();
+
+  const daysCard = component.getByText('Zabelezeni dnevi').locator('..');
+  await expect(daysCard.getByText('0')).toBeVisible();
+});

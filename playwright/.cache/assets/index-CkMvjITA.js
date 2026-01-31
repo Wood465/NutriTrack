@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/page-xkDULjSi.js","assets/navbar-CE9i2Bom.js","assets/page-BRjFblYM.js","assets/page-BBjDI5Pj.js","assets/page-DZ4RanT0.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/page-Bissq01J.js","assets/navbar-BfL3QpIj.js","assets/page-CBijhQrY.js","assets/page-BU8iUBtb.js","assets/page-DAdwT2L3.js"])))=>i.map(i=>d[i]);
 true              &&(function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -17635,16 +17635,16 @@ window.playwrightUpdate = async (rootElement, component) => {
   entry.setRenderer(() => __pwRender(component));
 };
 
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar = () => __vitePreload(() => import('./navbar-CE9i2Bom.js').then(n => n.n),true              ?[]:void 0).then((mod) => mod.default);
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page = () => __vitePreload(() => import('./page-xkDULjSi.js'),true              ?__vite__mapDeps([0,1]):void 0).then((mod) => mod.default);
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_meals_page = () => __vitePreload(() => import('./page-BRjFblYM.js'),true              ?__vite__mapDeps([2,1]):void 0).then((mod) => mod.default);
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_login_page = () => __vitePreload(() => import('./page-BBjDI5Pj.js'),true              ?__vite__mapDeps([3,1]):void 0).then((mod) => mod.default);
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_register_page = () => __vitePreload(() => import('./page-DZ4RanT0.js'),true              ?__vite__mapDeps([4,1]):void 0).then((mod) => mod.default);
-__pwRegistry.initialize({ C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar,
-  C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page,
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_login_page = () => __vitePreload(() => import('./page-Bissq01J.js'),true              ?__vite__mapDeps([0,1]):void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_meals_page = () => __vitePreload(() => import('./page-CBijhQrY.js'),true              ?__vite__mapDeps([2,1]):void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar = () => __vitePreload(() => import('./navbar-BfL3QpIj.js').then(n => n.n),true              ?[]:void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page = () => __vitePreload(() => import('./page-BU8iUBtb.js'),true              ?__vite__mapDeps([3,1]):void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_register_page = () => __vitePreload(() => import('./page-DAdwT2L3.js'),true              ?__vite__mapDeps([4,1]):void 0).then((mod) => mod.default);
+__pwRegistry.initialize({ C__Users_jakob_Desktop_NutriTrack_tests_components___app_login_page,
   C__Users_jakob_Desktop_NutriTrack_tests_components___app_meals_page,
-  C__Users_jakob_Desktop_NutriTrack_tests_components___app_login_page,
+  C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar,
+  C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page,
   C__Users_jakob_Desktop_NutriTrack_tests_components___app_register_page });
 
-export { requireReact as a, getDefaultExportFromCjs as g, reactExports as r };
-//# sourceMappingURL=index-k9ZEjys9.js.map
+export { getDefaultExportFromCjs as g, reactExports as r };
+//# sourceMappingURL=index-CkMvjITA.js.map
