@@ -116,10 +116,14 @@ export default function RegisterPage() {
             {/* Form submit preprečimo, ker registracijo sprozimo rocno z gumbom */}
             <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="register-ime"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   Ime
                 </label>
                 <input
+                  id="register-ime"
                   type="text"
                   value={ime}
                   onChange={(e) => setIme(e.target.value)}
@@ -129,10 +133,14 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="register-priimek"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   Priimek
                 </label>
                 <input
+                  id="register-priimek"
                   type="text"
                   value={priimek}
                   onChange={(e) => setPriimek(e.target.value)}
@@ -142,10 +150,14 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="register-email"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   E-posta
                 </label>
                 <input
+                  id="register-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -155,10 +167,14 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="register-password"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   Geslo
                 </label>
                 <input
+                  id="register-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -168,10 +184,14 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="register-confirm"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   Potrdi geslo
                 </label>
                 <input
+                  id="register-confirm"
                   type="password"
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
