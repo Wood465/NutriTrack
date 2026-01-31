@@ -3,16 +3,42 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/app/ui/navbar";
 
+/**
+ * MEALS PAGE (Moji obroki)
+ *
+ * Namen strani:
+ * - Prijavljen uporabnik lahko:
+ *   1) Doda nov obrok (ime + kalorije + makrohranila + opis)
+ *   2) Vidi seznam vseh svojih obrokov
+ *   3) Izbrise posamezen obrok
+ *
+ * Kako deluje (flow):
+ * - Najprej preberemo sejo (/api/session), da dobimo user.id.
+ * - Ko imamo user.id, nalozimo obroke (/api/meals?user_id=...).
+ * - Pri dodajanju posljemo POST na /api/meals in dodamo vrnjen obrok v seznam.
+ * - Pri brisanju posljemo DELETE na /api/meals/:id in ga odstranimo iz seznama.
+ */
+
 export default function MealsPage() {
+  // Seznam obrokov, ki se prikaze na desni strani (tabela/lista)
   const [meals, setMeals] = useState<any[]>([]);
+
+  // Controlled inputs za dodajanje novega obroka (leva stran)
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("0");
   const [note, setNote] = useState("");
   const [protein, setProtein] = useState("0");
   const [carbs, setCarbs] = useState("0");
   const [fat, setFat] = useState("0");
+
+  // Trenutno prijavljen uporabnik (rabimo user.id za nalaganje in shranjevanje obrokov)
   const [user, setUser] = useState<any>(null);
 
+  /**
+   * 1) Nalozimo trenutno sejo
+   * - /api/session vrne podatke o prijavljenem uporabniku
+   * - rezultat shranimo v state "user"
+   */
   useEffect(() => {
     async function loadUser() {
       const res = await fetch("/api/session", { cache: "no-cache" });
@@ -23,6 +49,29 @@ export default function MealsPage() {
     loadUser();
   }, []);
 
+  /**
+   * 2) Ko dobimo user, nalozimo njegove obroke
+   * - ta useEffect se izvede sele takrat, ko se "user" nastavi
+   * - s tem se izognemo klicu API-ja, dokler nimamo user.id
+   */
+  useEffect(() => {
+    if (!user) return;
+
+    async function loadMeals() {
+      const res = await fetch(`/api/meals?user_id=${user.id}`);
+      const data = await res.json();
+      setMeals(data);
+    }
+
+    loadMeals();
+  }, [user]);
+
+  /**
+   * 3) Brisanje obroka
+   * - uporabnika najprej vprasamo za potrditev (confirm)
+   * - DELETE /api/meals/:id
+   * - ce uspe, odstranimo obrok iz state, da se UI takoj posodobi
+   */
   const handleDeleteMeal = async (id: number) => {
     const ok = confirm("Res zelis izbrisati ta obrok?");
     if (!ok) return;
@@ -39,27 +88,25 @@ export default function MealsPage() {
     setMeals((prev) => prev.filter((m) => m.id !== id));
   };
 
-  useEffect(() => {
-    if (!user) return;
-
-    async function loadMeals() {
-      const res = await fetch(`/api/meals?user_id=${user.id}`);
-      const data = await res.json();
-      setMeals(data);
-    }
-
-    loadMeals();
-  }, [user]);
-
+  /**
+   * 4) Dodajanje novega obroka
+   * - validacija: ime mora biti vneseno, vrednosti ne smejo biti negativne
+   * - POST /api/meals
+   * - vrnjen obrok dodamo na vrh seznama, da je takoj viden
+   */
   const handleAddMeal = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // osnovna validacija
     if (!name.trim() || !calories.trim()) return;
 
+    // pretvorba input stringov v stevila
     const parsedCalories = Number(calories);
     const parsedProtein = Number(protein);
     const parsedCarbs = Number(carbs);
     const parsedFat = Number(fat);
 
+    // varnost: ne dovolimo negativnih ali neveljavnih vrednosti
     if (
       !Number.isFinite(parsedCalories) ||
       !Number.isFinite(parsedProtein) ||
@@ -74,6 +121,7 @@ export default function MealsPage() {
       return;
     }
 
+    // objekt, ki ga posljemo backend-u (v enaki strukturi, kot jo backend pricakuje)
     const newMeal = {
       user_id: user.id,
       naziv: name,
@@ -90,9 +138,13 @@ export default function MealsPage() {
       body: JSON.stringify(newMeal),
     });
 
+    // backend vrne shranjen obrok (z id-jem, casom, ...)
     const saved = await res.json();
 
-    setMeals([saved, ...meals]);
+    // UI: obrok dodamo na vrh seznama (da se vidi takoj)
+    setMeals((prev) => [saved, ...prev]);
+
+    // ponastavimo formo
     setName("");
     setCalories("");
     setProtein("");
@@ -103,9 +155,11 @@ export default function MealsPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Navigacija */}
       <Navbar />
 
       <div className="mx-auto max-w-6xl space-y-10 px-4 pb-16 pt-10 md:px-6">
+        {/* Naslovna (hero) sekcija strani */}
         <section className="rounded-3xl border border-blue-200/50 bg-gradient-to-br from-blue-600 via-blue-500 to-sky-500 p-8 text-white shadow-lg md:p-12">
           <div className="max-w-3xl space-y-3">
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-100">
@@ -120,7 +174,9 @@ export default function MealsPage() {
           </div>
         </section>
 
+        {/* Layout: levo forma, desno seznam obrokov */}
         <section className="grid gap-6 lg:grid-cols-[1.1fr_1.4fr]">
+          {/* LEVO: forma za dodajanje */}
           <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Dodaj nov obrok
@@ -231,6 +287,7 @@ export default function MealsPage() {
             </form>
           </div>
 
+          {/* DESNO: seznam obrokov */}
           <div className="rounded-3xl border border-gray-200/70 bg-white/95 p-6 shadow-sm backdrop-blur dark:border-gray-800/70 dark:bg-gray-900/80 md:p-8">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -241,6 +298,7 @@ export default function MealsPage() {
               </span>
             </div>
 
+            {/* Ce ni obrokov, prikazemo “empty state”, drugace seznam */}
             {meals.length === 0 ? (
               <div className="mt-6 rounded-2xl border border-dashed border-gray-200 p-6 text-sm text-gray-500 dark:border-gray-800 dark:text-gray-400">
                 Se ni dodanih obrokov. Dodaj prvega in zacni spremljati vnos.
@@ -261,6 +319,8 @@ export default function MealsPage() {
                           {meal.kalorije} kcal
                         </p>
                       </div>
+
+                      {/* Brisanje posameznega obroka */}
                       <button
                         onClick={() => handleDeleteMeal(meal.id)}
                         className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 dark:border-red-900/40 dark:text-red-300 dark:hover:bg-red-950/40"
@@ -269,16 +329,19 @@ export default function MealsPage() {
                       </button>
                     </div>
 
+                    {/* Makro vrednosti */}
                     <div className="mt-4 grid gap-3 text-sm text-gray-600 dark:text-gray-300 sm:grid-cols-3">
                       <p>Beljakovine: {meal.beljakovine} g</p>
                       <p>Ogljikovi hidrati: {meal.ogljikovi_hidrati} g</p>
                       <p>Mascobe: {meal.mascobe} g</p>
                     </div>
 
+                    {/* Cas vnosa */}
                     <p className="mt-3 text-xs uppercase tracking-wide text-gray-400">
                       Cas vnosa: {new Date(meal.cas).toLocaleString()}
                     </p>
 
+                    {/* Opis je neobvezen, zato ga izpisemo samo ce obstaja */}
                     {meal.note && (
                       <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                         Opis: {meal.note}
@@ -294,4 +357,3 @@ export default function MealsPage() {
     </main>
   );
 }
-
