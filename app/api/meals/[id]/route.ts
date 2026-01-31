@@ -79,3 +79,95 @@ export async function DELETE(
   // 6) Uspeh
   return NextResponse.json({ ok: true });
 }
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+
+  if (!token) {
+    return NextResponse.json(
+      { error: "Niste prijavljeni." },
+      { status: 401 }
+    );
+  }
+
+  let user: any;
+  try {
+    user = jwt.verify(token, process.env.JWT_SECRET!);
+  } catch {
+    return NextResponse.json(
+      { error: "Neveljavna seja." },
+      { status: 401 }
+    );
+  }
+
+  const body = await req.json();
+
+  const naziv = typeof body.naziv === "string" ? body.naziv.trim() : "";
+  const kalorije = Number(body.kalorije);
+  const beljakovine = Number(body.beljakovine);
+  const ogljikovi_hidrati = Number(body.ogljikovi_hidrati);
+  const mascobe = Number(body.mascobe);
+
+  const invalidFields: string[] = [];
+  if (!naziv) invalidFields.push("naziv");
+  if (!Number.isFinite(kalorije) || kalorije < 0) invalidFields.push("kalorije");
+  if (!Number.isFinite(beljakovine) || beljakovine < 0)
+    invalidFields.push("beljakovine");
+  if (!Number.isFinite(ogljikovi_hidrati) || ogljikovi_hidrati < 0)
+    invalidFields.push("ogljikovi_hidrati");
+  if (!Number.isFinite(mascobe) || mascobe < 0) invalidFields.push("mascobe");
+
+  if (invalidFields.length > 0) {
+    return NextResponse.json(
+      { error: "Invalid input", fields: invalidFields },
+      { status: 400 }
+    );
+  }
+
+  const [meal] = await sql`
+    SELECT user_id
+    FROM meals
+    WHERE id = ${id}
+  `;
+
+  if (!meal) {
+    return NextResponse.json(
+      { error: "Obrok ne obstaja." },
+      { status: 404 }
+    );
+  }
+
+  if (meal.user_id !== user.id) {
+    return NextResponse.json(
+      { error: "Nimate dovoljenja za urejanje." },
+      { status: 403 }
+    );
+  }
+
+  const result = await sql`
+    UPDATE meals
+    SET
+      naziv = ${naziv},
+      kalorije = ${kalorije},
+      beljakovine = ${beljakovine},
+      ogljikovi_hidrati = ${ogljikovi_hidrati},
+      mascobe = ${mascobe}
+    WHERE id = ${id}
+    RETURNING
+      id,
+      naziv,
+      kalorije,
+      beljakovine,
+      ogljikovi_hidrati,
+      mascobe,
+      cas
+  `;
+
+  return NextResponse.json(result[0]);
+}
