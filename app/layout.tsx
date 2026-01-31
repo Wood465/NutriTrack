@@ -23,7 +23,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html:
-              "document.querySelectorAll('[bis_skin_checked]').forEach(function(el){el.removeAttribute('bis_skin_checked');});",
+              "(function(){var scrub=function(){document.querySelectorAll('[bis_skin_checked]').forEach(function(el){el.removeAttribute('bis_skin_checked');});};scrub();try{var obs=new MutationObserver(function(){scrub();});obs.observe(document.documentElement,{attributes:true,childList:true,subtree:true});}catch(e){}})();",
           }}
         />
       </head>
