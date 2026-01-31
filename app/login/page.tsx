@@ -98,10 +98,14 @@ export default function LoginPage() {
             >
               {/* Email input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="login-email"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   E-posta
                 </label>
                 <input
+                  id="login-email"
                   type="email"
                   placeholder="vnesi e-posto"
                   value={email}
@@ -112,10 +116,14 @@ export default function LoginPage() {
 
               {/* Password input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                <label
+                  htmlFor="login-password"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
                   Geslo
                 </label>
                 <input
+                  id="login-password"
                   type="password"
                   placeholder="vnesi geslo"
                   value={password}

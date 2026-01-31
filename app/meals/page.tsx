@@ -324,10 +324,14 @@ export default function MealsPage() {
 
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <label
+                    htmlFor="protein"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  >
                     Beljakovine (g)
                   </label>
                   <input
+                    id="protein"
                     type="number"
                     min={0}
                     value={protein}
@@ -337,10 +341,14 @@ export default function MealsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <label
+                    htmlFor="carbs"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  >
                     Ogljikovi hidrati (g)
                   </label>
                   <input
+                    id="carbs"
                     type="number"
                     min={0}
                     value={carbs}
@@ -350,10 +358,14 @@ export default function MealsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <label
+                    htmlFor="fat"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  >
                     Mascobe (g)
                   </label>
                   <input
+                    id="fat"
                     type="number"
                     min={0}
                     value={fat}
@@ -415,10 +427,14 @@ export default function MealsPage() {
                     {editingId === meal.id ? (
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                          <label
+                            htmlFor={`edit-name-${meal.id}`}
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                          >
                             Ime obroka
                           </label>
                           <input
+                            id={`edit-name-${meal.id}`}
                             type="text"
                             value={editName}
                             onChange={(e) => setEditName(e.target.value)}
@@ -427,10 +443,14 @@ export default function MealsPage() {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                          <label
+                            htmlFor={`edit-calories-${meal.id}`}
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                          >
                             Kalorije
                           </label>
                           <input
+                            id={`edit-calories-${meal.id}`}
                             type="number"
                             min={0}
                             value={editCalories}
@@ -441,10 +461,14 @@ export default function MealsPage() {
 
                         <div className="grid gap-4 sm:grid-cols-3">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <label
+                              htmlFor={`edit-protein-${meal.id}`}
+                              className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                            >
                               Beljakovine (g)
                             </label>
                             <input
+                              id={`edit-protein-${meal.id}`}
                               type="number"
                               min={0}
                               value={editProtein}
@@ -454,10 +478,14 @@ export default function MealsPage() {
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <label
+                              htmlFor={`edit-carbs-${meal.id}`}
+                              className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                            >
                               Ogljikovi hidrati (g)
                             </label>
                             <input
+                              id={`edit-carbs-${meal.id}`}
                               type="number"
                               min={0}
                               value={editCarbs}
@@ -467,10 +495,14 @@ export default function MealsPage() {
                           </div>
 
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <label
+                              htmlFor={`edit-fat-${meal.id}`}
+                              className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                            >
                               Mascobe (g)
                             </label>
                             <input
+                              id={`edit-fat-${meal.id}`}
                               type="number"
                               min={0}
                               value={editFat}

@@ -118,10 +118,14 @@ export default function ChangePasswordPage() {
           {/* Input polja + gumb */}
           <div className="mt-6 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              <label
+                htmlFor="old-password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
                 Staro geslo
               </label>
               <input
+                id="old-password"
                 type="password"
                 className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
                 value={oldPassword}
@@ -130,10 +134,14 @@ export default function ChangePasswordPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              <label
+                htmlFor="new-password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
                 Novo geslo
               </label>
               <input
+                id="new-password"
                 type="password"
                 className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900"
                 value={newPassword}
@@ -154,4 +162,3 @@ export default function ChangePasswordPage() {
     </main>
   );
 }
-``
