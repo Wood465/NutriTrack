@@ -22,6 +22,11 @@
       "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_login_page",
       "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\login.ct.spec.tsx",
       "importSource": "@/app/login/page"
+    },
+    {
+      "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_register_page",
+      "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\register-password-mismatch.ct.spec.tsx",
+      "importSource": "@/app/register/page"
     }
   ],
   "sources": {
@@ -31,17 +36,23 @@
     "C:/Users/jakob/Desktop/NutriTrack/playwright/index.tsx": {
       "timestamp": 1769871002595.0728
     },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/index.js": {
+      "timestamp": 1769529448158.2627
+    },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/client.js": {
       "timestamp": 1769529448979.3423
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/index.js": {
-      "timestamp": 1769529448158.2627
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react.production.js": {
+      "timestamp": 1769529448189.5122
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/app/ui/navbar.tsx": {
+      "timestamp": 1769861097704.5007
     },
     "C:/Users/jakob/Desktop/NutriTrack/app/login/page.tsx": {
       "timestamp": 1769866279420.8433
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/ui/navbar.tsx": {
-      "timestamp": 1769861097704.5007
+    "C:/Users/jakob/Desktop/NutriTrack/app/register/page.tsx": {
+      "timestamp": 1769866279423.8188
     },
     "C:/Users/jakob/Desktop/NutriTrack/app/profile/page.tsx": {
       "timestamp": 1769861097696.31
@@ -52,11 +63,11 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom-client.production.js": {
       "timestamp": 1769529448991.2007
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react.production.js": {
-      "timestamp": 1769529448189.5122
-    },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/jsx-runtime.js": {
       "timestamp": 1769529448158.2627
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/app/ui/global.css": {
+      "timestamp": 1769438035593.1045
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/next-auth@4.24.13_@auth+cor_917164b1f298435347c2f15187a1c06e/node_modules/next-auth/react/index.js": {
       "timestamp": 1769529448240.2383
@@ -67,29 +78,29 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/index.js": {
       "timestamp": 1769529448979.3423
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/ui/global.css": {
-      "timestamp": 1769438035593.1045
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react-jsx-runtime.production.js": {
+      "timestamp": 1769529448173.8892
     },
     "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-link.tsx": {
       "timestamp": 1769871011429.0293
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react-jsx-runtime.production.js": {
-      "timestamp": 1769529448173.8892
+    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-navigation.ts": {
+      "timestamp": 1769871005552.165
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/interopRequireDefault.js": {
-      "timestamp": 1769529454166.6074
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom.production.js": {
+      "timestamp": 1769529449136.4446
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/typeof.js": {
       "timestamp": 1769529455710.2144
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/defineProperty.js": {
-      "timestamp": 1769529453220.8113
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/interopRequireDefault.js": {
+      "timestamp": 1769529454166.6074
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/regenerator/index.js": {
       "timestamp": 1769529453911.5986
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/asyncToGenerator.js": {
-      "timestamp": 1769529452598.1086
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.production.js": {
+      "timestamp": 1769529455474.4807
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/slicedToArray.js": {
       "timestamp": 1769529455583.7532
@@ -97,8 +108,14 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/next-auth@4.24.13_@auth+cor_917164b1f298435347c2f15187a1c06e/node_modules/next-auth/utils/logger.js": {
       "timestamp": 1769529448249.8418
     },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/asyncToGenerator.js": {
+      "timestamp": 1769529452598.1086
+    },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/next-auth@4.24.13_@auth+cor_917164b1f298435347c2f15187a1c06e/node_modules/next-auth/utils/parse-url.js": {
       "timestamp": 1769529448267.5137
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/defineProperty.js": {
+      "timestamp": 1769529453220.8113
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/next-auth@4.24.13_@auth+cor_917164b1f298435347c2f15187a1c06e/node_modules/next-auth/client/_utils.js": {
       "timestamp": 1769529448142.639
@@ -106,50 +123,62 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/next-auth@4.24.13_@auth+cor_917164b1f298435347c2f15187a1c06e/node_modules/next-auth/react/types.js": {
       "timestamp": 1769529448251.8828
     },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-navigation.ts": {
-      "timestamp": 1769871005552.165
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/arrayWithHoles.js": {
-      "timestamp": 1769529452574.1006
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/toPropertyKey.js": {
-      "timestamp": 1769529455667.4712
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/iterableToArrayLimit.js": {
-      "timestamp": 1769529454235.6455
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/nonIterableRest.js": {
-      "timestamp": 1769529454654.153
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorRuntime.js": {
+      "timestamp": 1769529463365.4517
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js": {
       "timestamp": 1769529455757.126
     },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/iterableToArrayLimit.js": {
+      "timestamp": 1769529454235.6455
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/arrayWithHoles.js": {
+      "timestamp": 1769529452574.1006
+    },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/next-auth@4.24.13_@auth+cor_917164b1f298435347c2f15187a1c06e/node_modules/next-auth/core/errors.js": {
       "timestamp": 1769529448205.1372
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorRuntime.js": {
-      "timestamp": 1769529463365.4517
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/nonIterableRest.js": {
+      "timestamp": 1769529454654.153
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.production.js": {
-      "timestamp": 1769529455474.4807
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/toPropertyKey.js": {
+      "timestamp": 1769529455667.4712
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom.production.js": {
-      "timestamp": 1769529449136.4446
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/OverloadYield.js": {
+      "timestamp": 1769529454727.6414
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorAsync.js": {
+      "timestamp": 1769529463318.5369
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regenerator.js": {
+      "timestamp": 1769529463316.3198
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorAsyncGen.js": {
+      "timestamp": 1769529463318.5369
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorAsyncIterator.js": {
+      "timestamp": 1769529463334.1968
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorValues.js": {
+      "timestamp": 1769529463381.072
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorKeys.js": {
+      "timestamp": 1769529463349.828
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/arrayLikeToArray.js": {
       "timestamp": 1769529452572.1006
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/classCallCheck.js": {
-      "timestamp": 1769529452729.3577
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/toPrimitive.js": {
-      "timestamp": 1769529455667.4712
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/possibleConstructorReturn.js": {
+      "timestamp": 1769529454891.3347
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/createClass.js": {
       "timestamp": 1769529453161.7546
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/possibleConstructorReturn.js": {
-      "timestamp": 1769529454891.3347
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/classCallCheck.js": {
+      "timestamp": 1769529452729.3577
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/getPrototypeOf.js": {
+      "timestamp": 1769529453710.579
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/inherits.js": {
       "timestamp": 1769529454124.5144
@@ -157,28 +186,10 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/wrapNativeSuper.js": {
       "timestamp": 1769529455909.2163
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/OverloadYield.js": {
-      "timestamp": 1769529454727.6414
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/toPrimitive.js": {
+      "timestamp": 1769529455667.4712
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/getPrototypeOf.js": {
-      "timestamp": 1769529453710.579
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regenerator.js": {
-      "timestamp": 1769529463316.3198
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorAsync.js": {
-      "timestamp": 1769529463318.5369
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorAsyncGen.js": {
-      "timestamp": 1769529463318.5369
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorKeys.js": {
-      "timestamp": 1769529463349.828
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorValues.js": {
-      "timestamp": 1769529463381.072
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorAsyncIterator.js": {
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorDefine.js": {
       "timestamp": 1769529463334.1968
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/assertThisInitialized.js": {
@@ -187,14 +198,11 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/setPrototypeOf.js": {
       "timestamp": 1769529455556.7173
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/regeneratorDefine.js": {
-      "timestamp": 1769529463334.1968
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/isNativeFunction.js": {
+      "timestamp": 1769529454229.0947
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/construct.js": {
       "timestamp": 1769529453108.0876
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/isNativeFunction.js": {
-      "timestamp": 1769529454229.0947
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/@babel+runtime@7.28.4/node_modules/@babel/runtime/helpers/isNativeReflectConstruct.js": {
       "timestamp": 1769529454229.0947
@@ -220,6 +228,12 @@
     ],
     "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\login\\page.tsx": [
       "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\login\\page.tsx",
+      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
+      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
+      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts"
+    ],
+    "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\register\\page.tsx": [
+      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\register\\page.tsx",
       "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
       "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
       "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts"

@@ -1,5 +1,5 @@
-import { j as jsxRuntimeExports, N as Navbar, L as Link } from './navbar-CrM7jzyw.js';
-import { r as reactExports } from './index-CyJl5tEP.js';
+import { j as jsxRuntimeExports, N as Navbar, L as Link } from './navbar-CE9i2Bom.js';
+import { r as reactExports } from './index-k9ZEjys9.js';
 
 "use client";
 function ProfilePage() {
@@ -143,4 +143,4 @@ function ProfilePage() {
 }
 
 export { ProfilePage as default };
-//# sourceMappingURL=page-DYjXTQhw.js.map
+//# sourceMappingURL=page-xkDULjSi.js.map
