@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 import bcrypt from 'bcrypt';
 
 /**
@@ -12,10 +12,9 @@ import bcrypt from 'bcrypt';
  * - Novemu uporabniku dodeli privzeto vlogo "user".
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 export async function POST(request: Request) {
   try {
+    const sql = getSql();
     /**
      * 1) Preberemo podatke iz body-ja
      * - ime, priimek, email, password pridejo iz registracijskega obrazca

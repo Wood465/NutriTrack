@@ -1,4 +1,4 @@
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 
 /**
  * API: /api/meals
@@ -12,8 +12,6 @@ import postgres from 'postgres';
  *   (user_id pride iz seje na klientu).
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 /**
  * GET /api/meals?user_id=...
  *
@@ -22,6 +20,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
  */
 export async function GET(request: Request) {
   try {
+    const sql = getSql();
     // user_id dobimo iz query parametra
     const userId = new URL(request.url).searchParams.get('user_id');
 
@@ -56,6 +55,7 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
+    const sql = getSql();
     // Preberemo podatke iz request body-ja
     const body = await request.json();
 

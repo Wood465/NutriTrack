@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 
 /**
  * API: GET /api/profile/avatar/view
@@ -21,10 +21,9 @@ import postgres from 'postgres';
  * 5) Ce avatar ne obstaja -> 404.
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 export async function GET() {
   try {
+    const sql = getSql();
     // 1) Preverimo, ali je uporabnik prijavljen
     const cookieStore = await cookies();
     const token = cookieStore.get('session')?.value;

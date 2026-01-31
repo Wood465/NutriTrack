@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -17,9 +17,8 @@ import jwt from 'jsonwebtoken';
  * - cookie vsebuje JWT, iz katerega dobimo user.id
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 export async function GET() {
+  const sql = getSql();
   // 1) Preberemo JWT iz cookie-ja "session"
   const cookieStore = await cookies();
   const token = cookieStore.get('session')?.value;

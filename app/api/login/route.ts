@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -19,13 +19,12 @@ import jwt from 'jsonwebtoken';
  * 5) JWT vrnemo kot httpOnly cookie (session), da ga JS ne more prebrati.
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 // JWT secret je kljuc za podpis tokena (v produkciji mora biti v ENV)
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_key';
 
 export async function POST(request: Request) {
   try {
+    const sql = getSql();
     // 1) Preberemo prijavne podatke iz body-ja
     const { email, password } = await request.json();
 

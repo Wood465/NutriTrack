@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
@@ -25,8 +25,6 @@ import { cookies } from 'next/headers';
  * 5) Nastavi cookie "session" (httpOnly), ki ga potem uporabljajo ostali endpointi.
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 const handler = NextAuth({
   providers: [
     // Google OAuth provider (clientId/secret sta v .env)
@@ -49,6 +47,7 @@ const handler = NextAuth({
      * - ustvarimo lasten JWT cookie "session"
      */
     async signIn({ user }) {
+      const sql = getSql();
       // Google mora vrniti email, ker je to nas unikatni identifikator
       if (!user.email) return false;
 

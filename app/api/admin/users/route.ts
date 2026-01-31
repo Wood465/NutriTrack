@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import postgres from "postgres";
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+import { getSql } from "@/app/lib/db";
 
 export async function GET() {
   try {
+    const sql = getSql();
     const users = await sql`
       SELECT id, ime, priimek, email, role
       FROM users

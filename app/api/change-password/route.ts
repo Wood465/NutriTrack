@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -21,11 +21,11 @@ import jwt from 'jsonwebtoken';
  * - Gesla nikoli ne shranjujemo v cisti obliki, vedno samo bcrypt hash.
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_key';
 
 export async function POST(request: Request) {
   try {
+    const sql = getSql();
     // 1) Preberemo podatke iz request body-ja
     const { oldPassword, newPassword } = await request.json();
 

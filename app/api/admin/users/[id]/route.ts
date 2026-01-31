@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import postgres from "postgres";
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+import { getSql } from "@/app/lib/db";
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params; // ← THIS IS CRITICAL FIX
@@ -13,6 +11,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   }
 
   try {
+    const sql = getSql();
     await sql`
       DELETE FROM users WHERE id = ${id}
     `;

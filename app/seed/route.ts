@@ -1,10 +1,8 @@
 import bcrypt from "bcrypt";
-import postgres from "postgres";
+import { getSql } from "@/app/lib/db";
 import { users, meals } from "../lib/placeholder-data";
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
-
-async function seedUsers() {
+async function seedUsers(sql: ReturnType<typeof getSql>) {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await sql`
@@ -31,7 +29,7 @@ async function seedUsers() {
   return insertedUsers;
 }
 
-async function seedMeals() {
+async function seedMeals(sql: ReturnType<typeof getSql>) {
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 //await sql`DROP TABLE IF EXISTS meals;`;
  await sql`
@@ -76,9 +74,10 @@ async function seedMeals() {
 
 export async function GET() {
   try {
+    const sql = getSql();
     await sql.begin((sql) => [
-      seedUsers(),
-      seedMeals(),
+      seedUsers(sql),
+      seedMeals(sql),
     ]);
 
     return Response.json({ message: "Database seeded successfully" });

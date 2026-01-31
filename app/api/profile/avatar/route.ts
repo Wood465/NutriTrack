@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 
 /**
  * API: POST /api/profile/avatar
@@ -23,10 +23,9 @@ import postgres from 'postgres';
  * 5) Vrnemo success ali error.
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 export async function POST(request: Request) {
   try {
+    const sql = getSql();
     // 1) Preberemo session cookie in preverimo, ali je uporabnik prijavljen
     // (v Next 16 je cookies() async)
     const cookieStore = await cookies();

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-import postgres from 'postgres';
+import { getSql } from '@/app/lib/db';
 
 /**
  * API: DELETE /api/meals/[id]
@@ -23,12 +23,11 @@ import postgres from 'postgres';
  * 5) Ce je obrok od uporabnika -> izvedemo DELETE.
  */
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
 export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const sql = getSql();
   // 1) ID obroka dobimo iz URL parametra (/api/meals/:id)
   const { id } = await params;
 
@@ -84,6 +83,7 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const sql = getSql();
   const { id } = await params;
 
   const cookieStore = await cookies();
