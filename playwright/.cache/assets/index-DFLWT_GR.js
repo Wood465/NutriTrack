@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/page-WR2s0xMt.js","assets/navbar-BNoPslg0.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/page-BKWEJPGH.js","assets/navbar-RY8SBUpz.js","assets/page-B-4nbIsX.js"])))=>i.map(i=>d[i]);
 true              &&(function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -17635,10 +17635,12 @@ window.playwrightUpdate = async (rootElement, component) => {
   entry.setRenderer(() => __pwRender(component));
 };
 
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar = () => __vitePreload(() => import('./navbar-BNoPslg0.js').then(n => n.n),true              ?[]:void 0).then((mod) => mod.default);
-const C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page = () => __vitePreload(() => import('./page-WR2s0xMt.js'),true              ?__vite__mapDeps([0,1]):void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar = () => __vitePreload(() => import('./navbar-RY8SBUpz.js').then(n => n.n),true              ?[]:void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page = () => __vitePreload(() => import('./page-BKWEJPGH.js'),true              ?__vite__mapDeps([0,1]):void 0).then((mod) => mod.default);
+const C__Users_jakob_Desktop_NutriTrack_tests_components___app_meals_page = () => __vitePreload(() => import('./page-B-4nbIsX.js'),true              ?__vite__mapDeps([2,1]):void 0).then((mod) => mod.default);
 __pwRegistry.initialize({ C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar,
-  C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page });
+  C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page,
+  C__Users_jakob_Desktop_NutriTrack_tests_components___app_meals_page });
 
 export { getDefaultExportFromCjs as g, reactExports as r };
-//# sourceMappingURL=index-DGuZ2R34.js.map
+//# sourceMappingURL=index-DFLWT_GR.js.map
