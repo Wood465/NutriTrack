@@ -19,6 +19,10 @@ export default defineConfig({
             __dirname,
             'tests/components/mocks/next-link.tsx',
           ),
+          'next-auth/react': path.resolve(
+            __dirname,
+            'tests/components/mocks/next-auth-react.ts',
+          ),
         },
       },
     },
