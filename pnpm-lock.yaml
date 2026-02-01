@@ -781,7 +781,6 @@ packages:
     resolution: {integrity: sha512-5+g9sEoUJ4LUT0QmxHSZ2DfS/uu6YTC8tj/Cbmz99AtVSx6Ecn/sdt1s4dmbI4v7qdv4NG+yuFe7eELjPEeZ4g==}
     engines: {node: '>=18'}
     hasBin: true
-
   '@playwright/test@1.58.1':
     resolution: {integrity: sha512-6LdVIUERWxQMmUSSQi0I53GgCBYgM2RpGngCPY7hSeju+VrKjq3lvs7HpJoPbDiY5QM5EYRtRX5fvrinnMAz3w==}
     engines: {node: '>=18'}
