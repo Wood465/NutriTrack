@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/app/ui/navbar";
+import { fetchWithTimeout } from "@/app/lib/fetch-timeout";
 
 /**
  * MEALS PAGE (Moji obroki)
@@ -51,9 +52,21 @@ export default function MealsPage() {
    */
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch("/api/session", { cache: "no-cache" });
-      const data = await res.json();
-      setUser(data.user);
+      try {
+        const res = await fetchWithTimeout(
+          "/api/session",
+          { cache: "no-cache" },
+          5000,
+        );
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+        const data = await res.json();
+        setUser(data.user ?? null);
+      } catch {
+        setUser(null);
+      }
     }
 
     loadUser();
@@ -68,9 +81,22 @@ export default function MealsPage() {
     if (!user) return;
 
     async function loadMeals() {
-      const res = await fetch(`/api/meals?user_id=${user.id}`);
-      const data = await res.json();
-      setMeals(data);
+      try {
+        const res = await fetchWithTimeout(
+          `/api/meals?user_id=${user.id}`,
+          {},
+          7000,
+        );
+        if (!res.ok) {
+          setMeals([]);
+          return;
+        }
+
+        const data = await res.json();
+        setMeals(Array.isArray(data) ? data : []);
+      } catch {
+        setMeals([]);
+      }
     }
 
     loadMeals();

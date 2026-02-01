@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Navbar from '@/app/ui/navbar';
 import StatsOverview from '@/app/ui/StatsOverview';
+import { fetchWithTimeout } from '@/app/lib/fetch-timeout';
 
 /**
  * DOMOV STRAN (Home / Landing)
@@ -30,11 +31,21 @@ export default function Page() {
     async function loadUser() {
       try {
         // cache: 'no-store' pomeni: vedno vzemi sveze podatke (ne iz cachea).
-        const res = await fetch('/api/session', { cache: 'no-store' });
-        const data = await res.json();
+        const res = await fetchWithTimeout(
+          '/api/session',
+          { cache: 'no-store' },
+          5000,
+        );
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
 
+        const data = await res.json();
         // Ce API vrne user, ga shranimo, drugace ostane null.
         setUser(data.user ?? null);
+      } catch {
+        setUser(null);
       } finally {
         // Ne glede na to, ali klic uspe ali pade, oznacimo da je preverjanje koncano.
         setChecked(true);

@@ -2,25 +2,46 @@
 
 import { useEffect, useState } from 'react';
 import CaloriesChart from '../stats/CaloriesChart';
+import { fetchWithTimeout } from '@/app/lib/fetch-timeout';
 
 export default function StatsOverview() {
   const [daily, setDaily] = useState<any>(null);
   const [weekly, setWeekly] = useState<any>(null);
   const [chart, setChart] = useState<any[]>([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function loadStats() {
-      const res = await fetch('/api/stats/weekly', { cache: 'no-store' });
-      if (!res.ok) return;
+      try {
+        const res = await fetchWithTimeout(
+          '/api/stats/weekly',
+          { cache: 'no-store' },
+          7000,
+        );
+        if (!res.ok) {
+          setError(true);
+          return;
+        }
 
-      const data = await res.json();
-      setDaily(data.today);
-      setWeekly(data.week);
-      setChart(data.chart);
+        const data = await res.json();
+        setDaily(data.today);
+        setWeekly(data.week);
+        setChart(data.chart);
+      } catch {
+        setError(true);
+      }
     }
 
     loadStats();
   }, []);
+
+  if (error) {
+    return (
+      <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80 dark:text-gray-300">
+        Statistika trenutno ni na voljo.
+      </div>
+    );
+  }
 
   if (!daily || !weekly) {
     return (

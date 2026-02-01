@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '@/app/lib/fetch-timeout';
 
 /**
  * NAVBAR (Glavna navigacija)
@@ -36,9 +37,21 @@ export default function Navbar() {
    */
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch('/api/session', { cache: 'no-cache' });
-      const data = await res.json();
-      setUser(data.user);
+      try {
+        const res = await fetchWithTimeout(
+          '/api/session',
+          { cache: 'no-cache' },
+          5000,
+        );
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+        const data = await res.json();
+        setUser(data.user ?? null);
+      } catch {
+        setUser(null);
+      }
     }
 
     loadUser();

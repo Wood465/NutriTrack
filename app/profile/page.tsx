@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/app/ui/navbar';
+import { fetchWithTimeout } from '@/app/lib/fetch-timeout';
 
 /**
  * PROFILE PAGE (Profil)
@@ -50,9 +51,21 @@ export default function ProfilePage() {
    */
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch('/api/session', { cache: 'no-store' });
-      const data = await res.json();
-      setUser(data.user);
+      try {
+        const res = await fetchWithTimeout(
+          '/api/session',
+          { cache: 'no-store' },
+          5000,
+        );
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+        const data = await res.json();
+        setUser(data.user ?? null);
+      } catch {
+        setUser(null);
+      }
     }
 
     loadUser();
@@ -69,17 +82,20 @@ export default function ProfilePage() {
     async function loadStats() {
       let meals: any = [];
       try {
-        const res = await fetch(`/api/meals?user_id=${user.id}`, {
-          cache: 'no-store',
-        });
+        const res = await fetchWithTimeout(
+          `/api/meals?user_id=${user.id}`,
+          { cache: 'no-store' },
+          7000,
+        );
 
         if (!res.ok) {
-          throw new Error(`Meals fetch failed: ${res.status}`);
+          setAverageCalories(0);
+          setLoggedDays(0);
+          return;
         }
 
         meals = await res.json();
       } catch (err) {
-        console.error('Failed to load meals for stats:', err);
         setAverageCalories(0);
         setLoggedDays(0);
         return;
