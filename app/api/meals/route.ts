@@ -1,4 +1,5 @@
 import { getSql } from '@/app/lib/db';
+import { withTimeout } from '@/app/lib/with-timeout';
 
 /**
  * API: /api/meals
@@ -23,25 +24,34 @@ export async function GET(request: Request) {
     const sql = getSql();
     // user_id dobimo iz query parametra
     const userId = new URL(request.url).searchParams.get('user_id');
+    if (!userId) {
+      return Response.json({ error: 'Missing user_id' }, { status: 400 });
+    }
 
-    const rows = await sql`
-      SELECT
-        id,
-        naziv,
-        kalorije,
-        beljakovine,
-        ogljikovi_hidrati,
-        mascobe,
-        cas
-      FROM meals
-      WHERE user_id = ${userId}
-      ORDER BY cas DESC
-    `;
+    const rows = await withTimeout(
+      sql`
+        SELECT
+          id,
+          naziv,
+          kalorije,
+          beljakovine,
+          ogljikovi_hidrati,
+          mascobe,
+          cas
+        FROM meals
+        WHERE user_id = ${userId}
+        ORDER BY cas DESC
+      `,
+      5000,
+      'Database timeout (meals)',
+    );
 
     return Response.json(rows);
   } catch (e) {
     console.error('GET /meals error:', e);
-    return Response.json({ error: 'Database error' }, { status: 500 });
+    const message = e instanceof Error ? e.message : 'Database error';
+    const status = message.includes('timeout') ? 503 : 500;
+    return Response.json({ error: message }, { status });
   }
 }
 

@@ -31,10 +31,10 @@
   ],
   "sources": {
     "C:/Users/jakob/Desktop/NutriTrack/playwright/index.html": {
-      "timestamp": 1769902053398.4214
+      "timestamp": 1769947430537.9214
     },
     "C:/Users/jakob/Desktop/NutriTrack/playwright/index.tsx": {
-      "timestamp": 1769902053399.42
+      "timestamp": 1769947430538.9216
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/index.js": {
       "timestamp": 1769529448158.2627
@@ -43,22 +43,22 @@
       "timestamp": 1769529448979.3423
     },
     "C:/Users/jakob/Desktop/NutriTrack/app/ui/global.css": {
-      "timestamp": 1769438035593.1045
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/app/login/page.tsx": {
-      "timestamp": 1769866279420.8433
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/app/profile/page.tsx": {
-      "timestamp": 1769861097696.31
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/app/ui/navbar.tsx": {
-      "timestamp": 1769861097704.5007
+      "timestamp": 1769947427405.8423
     },
     "C:/Users/jakob/Desktop/NutriTrack/app/register/page.tsx": {
-      "timestamp": 1769866279423.8188
+      "timestamp": 1769947430333.4475
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/app/login/page.tsx": {
+      "timestamp": 1769947430329.7944
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/app/ui/navbar.tsx": {
+      "timestamp": 1769947430345.0464
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/app/profile/page.tsx": {
+      "timestamp": 1769947430333.4475
     },
     "C:/Users/jakob/Desktop/NutriTrack/app/meals/page.tsx": {
-      "timestamp": 1769866279421.8552
+      "timestamp": 1769947430331.2903
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react.production.js": {
       "timestamp": 1769529448189.5122
@@ -69,29 +69,29 @@
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/jsx-runtime.js": {
       "timestamp": 1769529448158.2627
     },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-auth-react.ts": {
-      "timestamp": 1769902053434.4175
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/index.js": {
-      "timestamp": 1769529448979.3423
+    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-link.tsx": {
+      "timestamp": 1769947430549.1794
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/index.js": {
       "timestamp": 1769529454019.7832
     },
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/index.js": {
+      "timestamp": 1769529448979.3423
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-navigation.ts": {
+      "timestamp": 1769947430549.1794
+    },
+    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-auth-react.ts": {
+      "timestamp": 1769947430549.1794
+    },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react-jsx-runtime.production.js": {
       "timestamp": 1769529448173.8892
     },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-navigation.ts": {
-      "timestamp": 1769902053435.4146
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-link.tsx": {
-      "timestamp": 1769902053435.4146
+    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom.production.js": {
+      "timestamp": 1769529449136.4446
     },
     "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.production.js": {
       "timestamp": 1769529455474.4807
-    },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom.production.js": {
-      "timestamp": 1769529449136.4446
     }
   },
   "deps": {

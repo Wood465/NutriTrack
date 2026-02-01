@@ -67,13 +67,25 @@ export default function ProfilePage() {
     if (!user) return;
 
     async function loadStats() {
-      const res = await fetch(`/api/meals?user_id=${user.id}`, {
-        cache: 'no-store',
-      });
+      let meals: any = [];
+      try {
+        const res = await fetch(`/api/meals?user_id=${user.id}`, {
+          cache: 'no-store',
+        });
 
-      const meals = await res.json();
+        if (!res.ok) {
+          throw new Error(`Meals fetch failed: ${res.status}`);
+        }
 
-      if (meals.length === 0) {
+        meals = await res.json();
+      } catch (err) {
+        console.error('Failed to load meals for stats:', err);
+        setAverageCalories(0);
+        setLoggedDays(0);
+        return;
+      }
+
+      if (!Array.isArray(meals) || meals.length === 0) {
         setAverageCalories(0);
         setLoggedDays(0);
         return;
@@ -90,8 +102,9 @@ export default function ProfilePage() {
         meals.map((m: any) => new Date(m.cas).toISOString().slice(0, 10)),
       );
 
-      setLoggedDays(uniqueDays.size);
-      setAverageCalories(Math.round(totalCalories / uniqueDays.size));
+      const daysCount = uniqueDays.size;
+      setLoggedDays(daysCount);
+      setAverageCalories(daysCount > 0 ? Math.round(totalCalories / daysCount) : 0);
     }
 
     loadStats();
