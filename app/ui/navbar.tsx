@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 /**
  * NAVBAR (Glavna navigacija)
@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react';
 export default function Navbar() {
   // pathname uporabimo za highlight aktivne strani v meniju
   const pathname = usePathname();
+  const router = useRouter();
 
   // user je null, ce ni prijave; ce je prijava, vsebuje podatke (ime, role, ...)
   const [user, setUser] = useState<any>(null);
@@ -95,6 +96,47 @@ export default function Navbar() {
     { href: '/profile', label: 'Profil' },
   ];
 
+  const handleNav = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+    closeMenu = false
+  ) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.shiftKey
+    ) {
+      return;
+    }
+
+    if (closeMenu) {
+      setOpen(false);
+    }
+
+    if (href === pathname) {
+      event.preventDefault();
+      return;
+    }
+
+    if ('startViewTransition' in document) {
+      event.preventDefault();
+      // @ts-expect-error View Transition API is not in TS lib yet.
+      document.startViewTransition(() => {
+        router.push(href);
+      });
+      return;
+    }
+
+    event.preventDefault();
+    document.documentElement.classList.add('route-leaving');
+    window.setTimeout(() => {
+      router.push(href);
+    }, 140);
+  };
+
   return (
     // suppressHydrationWarning: ker temni nacin spreminja HTML class po mount-u,
     // lahko pride do hydration warninga (razlika med server/client renderjem).
@@ -123,6 +165,8 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    prefetch
+                    onClick={(event) => handleNav(event, link.href)}
                     className={`transition-colors hover:text-blue-600 ${
                       pathname === link.href
                         ? 'text-blue-600'
@@ -139,6 +183,8 @@ export default function Navbar() {
                 <li>
                   <Link
                     href="/admin"
+                    prefetch
+                    onClick={(event) => handleNav(event, '/admin')}
                     className={`font-medium transition-colors hover:text-blue-600 ${
                       pathname === '/admin'
                         ? 'text-blue-600'
@@ -176,6 +222,8 @@ export default function Navbar() {
                 <li>
                   <Link
                     href="/login"
+                    prefetch
+                    onClick={(event) => handleNav(event, '/login')}
                     className="rounded-full border border-blue-200 px-3 py-1 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40"
                   >
                     Prijava
@@ -204,7 +252,8 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    onClick={() => setOpen(false)} // zapremo meni po kliku
+                    prefetch
+                    onClick={(event) => handleNav(event, link.href, true)}
                     className={`block rounded-md px-2 py-1 transition-colors ${
                       pathname === link.href
                         ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-200'
@@ -221,7 +270,8 @@ export default function Navbar() {
                 <li>
                   <Link
                     href="/admin"
-                    onClick={() => setOpen(false)}
+                    prefetch
+                    onClick={(event) => handleNav(event, '/admin', true)}
                     className="block rounded-md px-2 py-1 text-blue-700 hover:bg-blue-50 dark:text-blue-200 dark:hover:bg-blue-950/40"
                   >
                     Admin
@@ -252,6 +302,8 @@ export default function Navbar() {
                 <li>
                   <Link
                     href="/login"
+                    prefetch
+                    onClick={(event) => handleNav(event, '/login', true)}
                     className="rounded-md border border-blue-200 px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40"
                   >
                     Prijava

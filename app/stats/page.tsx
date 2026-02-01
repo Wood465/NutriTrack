@@ -29,6 +29,10 @@ export default function StatsPage() {
 
   // chart: podatki za graf (kalorije po dnevih)
   const [chart, setChart] = useState<DayStat[]>([]);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
+    'loading'
+  );
+  const [reloadKey, setReloadKey] = useState(0);
 
   /**
    * Nalozimo statistiko samo enkrat (ko se stran odpre).
@@ -36,20 +40,51 @@ export default function StatsPage() {
    */
   useEffect(() => {
     async function loadStats() {
-      const res = await fetch('/api/stats/weekly', { cache: 'no-store' });
-      const data = await res.json();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4000);
 
-      setDaily(data.today);
-      setWeekly(data.week);
-      setChart(data.chart);
+      try {
+        setStatus('loading');
+        const res = await fetch('/api/stats/weekly', {
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error('Failed to load stats');
+        const data = await res.json();
+
+        setDaily(data.today);
+        setWeekly(data.week);
+        setChart(data.chart);
+        setStatus('ready');
+      } catch {
+        setStatus('error');
+      } finally {
+        clearTimeout(timeout);
+      }
     }
 
     loadStats();
-  }, []);
+  }, [reloadKey]);
 
-  // Dokler se podatki ne nalozijo, prikazemo enostaven loading tekst
-  if (!daily || !weekly) {
+  if (status === 'loading') {
     return <p className="p-6">Nalaganje statistike …</p>;
+  }
+
+  if (status === 'error' || !daily || !weekly) {
+    return (
+      <div className="p-6">
+        <div className="flex flex-col gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/80 p-6 text-sm text-amber-900 shadow-sm dark:border-amber-900/40 dark:bg-amber-950/40 dark:text-amber-100">
+          <p>Statistika trenutno ni dosegljiva.</p>
+          <button
+            type="button"
+            onClick={() => setReloadKey((value) => value + 1)}
+            className="w-fit rounded-full border border-amber-300/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 transition-colors hover:bg-amber-100/80 dark:border-amber-800/60 dark:text-amber-100 dark:hover:bg-amber-900/40"
+          >
+            Poskusi ponovno
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

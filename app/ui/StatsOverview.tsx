@@ -7,25 +7,58 @@ export default function StatsOverview() {
   const [daily, setDaily] = useState<any>(null);
   const [weekly, setWeekly] = useState<any>(null);
   const [chart, setChart] = useState<any[]>([]);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
+    'loading'
+  );
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     async function loadStats() {
-      const res = await fetch('/api/stats/weekly', { cache: 'no-store' });
-      if (!res.ok) return;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4000);
 
-      const data = await res.json();
-      setDaily(data.today);
-      setWeekly(data.week);
-      setChart(data.chart);
+      try {
+        setStatus('loading');
+        const res = await fetch('/api/stats/weekly', {
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error('Failed to load stats');
+
+        const data = await res.json();
+        setDaily(data.today);
+        setWeekly(data.week);
+        setChart(data.chart);
+        setStatus('ready');
+      } catch {
+        setStatus('error');
+      } finally {
+        clearTimeout(timeout);
+      }
     }
 
     loadStats();
-  }, []);
+  }, [reloadKey]);
 
-  if (!daily || !weekly) {
+  if (status === 'loading') {
     return (
       <div className="rounded-2xl border border-gray-200/70 bg-white/95 p-6 text-sm text-gray-600 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/80 dark:text-gray-300">
         Nalaganje statistike ...
+      </div>
+    );
+  }
+
+  if (status === 'error' || !daily || !weekly) {
+    return (
+      <div className="flex flex-col gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/80 p-6 text-sm text-amber-900 shadow-sm dark:border-amber-900/40 dark:bg-amber-950/40 dark:text-amber-100">
+        <p>Statistika trenutno ni dosegljiva.</p>
+        <button
+          type="button"
+          onClick={() => setReloadKey((value) => value + 1)}
+          className="w-fit rounded-full border border-amber-300/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 transition-colors hover:bg-amber-100/80 dark:border-amber-800/60 dark:text-amber-100 dark:hover:bg-amber-900/40"
+        >
+          Poskusi ponovno
+        </button>
       </div>
     );
   }
