@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSql } from '@/app/lib/db';
+import { withTimeout } from '@/app/lib/with-timeout';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
@@ -18,36 +19,41 @@ import jwt from 'jsonwebtoken';
  */
 
 export async function GET() {
-  const sql = getSql();
-  // 1) Preberemo JWT iz cookie-ja "session"
-  const cookieStore = await cookies();
-  const token = cookieStore.get('session')?.value;
+  try {
+    const sql = getSql();
+    // 1) Preberemo JWT iz cookie-ja "session"
+    const cookieStore = await cookies();
+    const token = cookieStore.get('session')?.value;
 
-  // Ce ni tokena, uporabnik ni prijavljen -> 401 Unauthorized
-  if (!token) return NextResponse.json({}, { status: 401 });
+    // Ce ni tokena, uporabnik ni prijavljen -> 401 Unauthorized
+    if (!token) return NextResponse.json({}, { status: 401 });
 
-  // 2) Preverimo JWT in dobimo podatke o uporabniku (najpomembnejse: user.id)
-  const user: any = jwt.verify(token, process.env.JWT_SECRET!);
+    // 2) Preverimo JWT in dobimo podatke o uporabniku (najpomembnejse: user.id)
+    const user: any = jwt.verify(token, process.env.JWT_SECRET!);
 
-  /**
-   * 3) Query: agregiramo obroke po dnevih za zadnjih 7 dni
-   * - DATE(cas) -> dan (YYYY-MM-DD)
-   * - SUM(kalorije) -> skupne kalorije za tisti dan
-   * - SUM(beljakovine) -> skupne beljakovine za tisti dan
-   * - COUNT(*) -> koliko obrokov je bilo tisti dan
-   */
-  const rows = await sql`
-    SELECT
-      DATE(cas) as day,
-      SUM(kalorije) as calories,
-      SUM(beljakovine) as protein,
-      COUNT(*) as meals
-    FROM meals
-    WHERE user_id = ${user.id}
-      AND cas >= NOW() - INTERVAL '7 days'
-    GROUP BY day
-    ORDER BY day
-  `;
+    /**
+     * 3) Query: agregiramo obroke po dnevih za zadnjih 7 dni
+     * - DATE(cas) -> dan (YYYY-MM-DD)
+     * - SUM(kalorije) -> skupne kalorije za tisti dan
+     * - SUM(beljakovine) -> skupne beljakovine za tisti dan
+     * - COUNT(*) -> koliko obrokov je bilo tisti dan
+     */
+    const rows = await withTimeout(
+      sql`
+        SELECT
+          DATE(cas) as day,
+          SUM(kalorije) as calories,
+          SUM(beljakovine) as protein,
+          COUNT(*) as meals
+        FROM meals
+        WHERE user_id = ${user.id}
+          AND cas >= NOW() - INTERVAL '7 days'
+        GROUP BY day
+        ORDER BY day
+      `,
+      5000,
+      'Database timeout (stats)',
+    );
 
   /**
    * 4) "today" vzamemo kot zadnji dan v rezultatu (ker je ORDER BY day)
@@ -76,21 +82,27 @@ export async function GET() {
    * - week: totals + averages + days
    * - chart: podatki za graf
    */
-  return NextResponse.json({
-    today: {
-      calories: Number(today.calories),
-      protein: Number(today.protein),
-      meals: Number(today.meals),
-    },
-    week: {
-      totalCalories,
-      avgCalories,
-      avgProtein,
-      days: daysCount,
-    },
-    chart: rows.map((r) => ({
-      date: r.day,
-      calories: Number(r.calories),
-    })),
-  });
+    return NextResponse.json({
+      today: {
+        calories: Number(today.calories),
+        protein: Number(today.protein),
+        meals: Number(today.meals),
+      },
+      week: {
+        totalCalories,
+        avgCalories,
+        avgProtein,
+        days: daysCount,
+      },
+      chart: rows.map((r) => ({
+        date: r.day,
+        calories: Number(r.calories),
+      })),
+    });
+  } catch (err) {
+    console.error('GET /stats/weekly error:', err);
+    const message = err instanceof Error ? err.message : 'Database error';
+    const status = message.includes('timeout') ? 503 : 500;
+    return NextResponse.json({ error: message }, { status });
+  }
 }

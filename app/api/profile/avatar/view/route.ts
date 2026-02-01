@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { getSql } from '@/app/lib/db';
+import { withTimeout } from '@/app/lib/with-timeout';
 
 /**
  * API: GET /api/profile/avatar/view
@@ -36,11 +37,15 @@ export async function GET() {
     const user: any = jwt.verify(token, process.env.JWT_SECRET!);
 
     // 3) Preberemo avatar iz baze
-    const [row] = await sql`
-      SELECT avatar
-      FROM users
-      WHERE id = ${user.id}
-    `;
+    const [row] = await withTimeout(
+      sql`
+        SELECT avatar
+        FROM users
+        WHERE id = ${user.id}
+      `,
+      5000,
+      'Database timeout (avatar)',
+    );
 
     // 4) Ce uporabnik nima shranjenega avatarja
     if (!row?.avatar) {
@@ -61,6 +66,8 @@ export async function GET() {
   } catch (err) {
     // Napaka pri JWT, bazi ali response-u
     console.error('Avatar fetch error:', err);
-    return new NextResponse(null, { status: 500 });
+    const message = err instanceof Error ? err.message : 'Database error';
+    const status = message.includes('timeout') ? 503 : 500;
+    return new NextResponse(null, { status });
   }
 }
