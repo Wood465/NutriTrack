@@ -22,6 +22,8 @@ import Navbar from "@/app/ui/navbar";
 export default function MealsPage() {
   // Seznam obrokov, ki se prikaze na desni strani (tabela/lista)
   const [meals, setMeals] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const mealsPerPage = 3;
 
   // Controlled inputs za dodajanje novega obroka (leva stran)
   const [name, setName] = useState("");
@@ -73,6 +75,13 @@ export default function MealsPage() {
 
     loadMeals();
   }, [user]);
+
+  useEffect(() => {
+    const totalPages = Math.max(1, Math.ceil(meals.length / mealsPerPage));
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [meals.length, currentPage]);
 
   /**
    * 3) Brisanje obroka
@@ -244,6 +253,7 @@ export default function MealsPage() {
 
     // UI: obrok dodamo na vrh seznama (da se vidi takoj)
     setMeals((prev) => [saved, ...prev]);
+    setCurrentPage(1);
 
     // ponastavimo formo
     setName("");
@@ -418,8 +428,14 @@ export default function MealsPage() {
                 Se ni dodanih obrokov. Dodaj prvega in zacni spremljati vnos.
               </div>
             ) : (
-              <ul className="mt-6 space-y-4">
-                {meals.map((meal, index) => (
+              <>
+                <ul className="mt-6 space-y-4">
+                  {meals
+                    .slice(
+                      (currentPage - 1) * mealsPerPage,
+                      currentPage * mealsPerPage,
+                    )
+                    .map((meal, index) => (
                   <li
                     key={meal.id ?? `${meal.naziv}-${meal.cas ?? "no-date"}-${index}`}
                     className="rounded-2xl border border-gray-200/70 bg-white/90 p-4 shadow-sm dark:border-gray-800/70 dark:bg-gray-900/60"
@@ -574,7 +590,41 @@ export default function MealsPage() {
                     )}
                   </li>
                 ))}
-              </ul>
+                </ul>
+
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-300">
+                  <span>
+                    Stran {currentPage} /{" "}
+                    {Math.max(1, Math.ceil(meals.length / mealsPerPage))}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="rounded-full border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800"
+                    >
+                      Prejsnja
+                    </button>
+                    <button
+                      onClick={() =>
+                        setCurrentPage((p) =>
+                          Math.min(
+                            Math.max(1, Math.ceil(meals.length / mealsPerPage)),
+                            p + 1,
+                          ),
+                        )
+                      }
+                      disabled={
+                        currentPage ===
+                        Math.max(1, Math.ceil(meals.length / mealsPerPage))
+                      }
+                      className="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-950/40"
+                    >
+                      Naslednja
+                    </button>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </section>
