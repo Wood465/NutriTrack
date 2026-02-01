@@ -126,3 +126,83 @@ NutriTrack je funkcionalna in sodobna spletna aplikacija, ki uporabnikom omogoč
 Aplikacija združuje praktične funkcionalnosti, pregledno statistiko in razumljiv uporabniški vmesnik.
 
 NutriTrack predstavlja dobro osnovo za resno prehransko aplikacijo in hkrati prikazuje uporabo sodobnih spletnih tehnologij v praksi.
+
+
+
+# NutriTrack – Development Summary
+
+## Povzetek projekta
+Projekt NutriTrack sem razvijal z uporabo sodobnih spletnih tehnologij. Razvoj je potekal organizirano po branchih (feature, fix, refactor, test), kar je omogočalo preglednost, varnost in lažje testiranje funkcionalnosti.
+
+---
+
+## Opravljeno delo po branchih
+
+### backup-vceraj
+- Ustvaril sem varnostno kopijo projekta (backup branch) pred večjimi spremembami in merge-i.
+
+### feature/add-meals-minus-stevila
+- Implementiral sem možnost zmanjševanja in pravilnega urejanja številskih vrednosti pri obrokih.
+- Dodal sem validacijo vnosov in stabilno računanje podatkov.
+
+### feature/default-profile-picture
+- Dodal sem privzeto (default) profilno sliko za uporabnike brez svoje slike.
+- Poskrbel sem za enoten prikaz avatarja v aplikaciji.
+
+### feature/edit-meals
+- Implementiral sem urejanje obrokov z vnaprej izpolnjeno formo.
+- Omogočil sem shranjevanje sprememb in izboljšal uporabniško izkušnjo.
+
+### feature/lightmode
+- Dodal sem podporo za light mode.
+- Prilagodil sem barvno shemo in kontraste komponent.
+
+### feature/vec-strani-na-mealih
+- Razdelil sem funkcionalnost obrokov na več strani.
+- Izboljšal sem strukturo in preglednost aplikacije.
+
+### fix/Popravljen-hydration-error
+- Odpravil sem Next.js hydration error (neskladje med server in client renderjem).
+- Prilagodil sem client-only logiko za stabilen prikaz strani.
+
+### fix/optimizacija
+- Optimiziral sem delovanje aplikacije.
+- Zmanjšal sem nepotrebne ponovne izrise (rerenderje).
+
+### fix/popravilo-css
+- Popravil sem CSS napake in izboljšal responsive izgled.
+- Poskrbel sem za vizualno konsistenco komponent.
+
+### fix/start-error
+- Odpravil sem napake, ki so preprečevale zagon ali build aplikacije.
+- Uredil sem konfiguracijo za pravilno delovanje lokalno in na produkciji.
+
+### refactoring/api
+- Refactoriral sem API strukturo.
+- Izboljšal sem preglednost, ponovno uporabnost in error handling.
+
+### refactoring/pages
+- Refactoriral sem strani in UI komponente.
+- Zmanjšal sem podvajanje kode in poenostavil strukturo projekta.
+
+### test/component
+- Nastavil sem Playwright Component Testing.
+- Dodal sem teste za posamezne UI komponente.
+
+Zagon component testov:
+
+"npx playwright test tests/components/ --config playwright-ct.config.ts --ui"
+
+### test/e2e 
+- Nastavil sem Playwright End-to-End (E2E) teste.
+
+- Dodal sem osnovne testne scenarije za celoten uporabniški tok (navigacija, delo z obroki, osnovne funkcionalnosti).
+
+Zagon E2E testov:
+npm run test:e2e:ui
+
+### vercel-fix
+
+- Popravil sem napake povezane z Vercel deployem.
+
+- Uredil sem environment variable in build nastavitve za uspešno produkcijsko objavo.

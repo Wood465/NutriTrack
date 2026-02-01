@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import postgres from "postgres";
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+import { getSql } from "@/app/lib/db";
 
 export async function POST(request: Request, context: any) {
   const { id } = await context.params;
@@ -9,6 +7,7 @@ export async function POST(request: Request, context: any) {
   const role = body.role;
 
   try {
+    const sql = getSql();
     await sql`
       UPDATE users SET role = ${role} WHERE id = ${id}
     `;
