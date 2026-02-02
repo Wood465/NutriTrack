@@ -26,6 +26,8 @@ export default defineConfig({
         },
       },
     },
+    video: 'on',
+    trace: 'on-first-retry',
   },
   projects: [
     {

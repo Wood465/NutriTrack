@@ -4,134 +4,134 @@
   "registerSourceHash": "ea233d95b980072c81eb49458aee55f5d33fdb02",
   "components": [
     {
-      "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_login_page",
-      "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\login.ct.spec.tsx",
+      "id": "C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_login_page",
+      "filename": "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\login.ct.spec.tsx",
       "importSource": "@/app/login/page"
     },
     {
-      "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_meals_page",
-      "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\meals-add.ct.spec.tsx",
+      "id": "C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_meals_page",
+      "filename": "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\meals-load-error.ct.spec.tsx",
       "importSource": "@/app/meals/page"
     },
     {
-      "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_ui_navbar",
-      "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\navbar.ct.spec.tsx",
+      "id": "C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_ui_navbar",
+      "filename": "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\navbar.ct.spec.tsx",
       "importSource": "@/app/ui/navbar"
     },
     {
-      "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_profile_page",
-      "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\profile.ct.spec.tsx",
+      "id": "C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_profile_page",
+      "filename": "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\profile.ct.spec.tsx",
       "importSource": "@/app/profile/page"
     },
     {
-      "id": "C__Users_jakob_Desktop_NutriTrack_tests_components___app_register_page",
-      "filename": "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\register-password-mismatch.ct.spec.tsx",
+      "id": "C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_register_page",
+      "filename": "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\register-password-mismatch.ct.spec.tsx",
       "importSource": "@/app/register/page"
     }
   ],
   "sources": {
-    "C:/Users/jakob/Desktop/NutriTrack/playwright/index.html": {
-      "timestamp": 1769947430537.9214
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/playwright/index.html": {
+      "timestamp": 1770033837600.7627
     },
-    "C:/Users/jakob/Desktop/NutriTrack/playwright/index.tsx": {
-      "timestamp": 1769947430538.9216
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/playwright/index.tsx": {
+      "timestamp": 1770033837600.7627
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/index.js": {
-      "timestamp": 1769529448158.2627
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/index.js": {
+      "timestamp": 1768220564943.8113
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/client.js": {
-      "timestamp": 1769529448979.3423
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/client.js": {
+      "timestamp": 1768220564943.8113
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/ui/global.css": {
-      "timestamp": 1769947427405.8423
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/register/page.tsx": {
+      "timestamp": 1770033837470.8508
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/login/page.tsx": {
-      "timestamp": 1769947430329.7944
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/ui/navbar.tsx": {
+      "timestamp": 1770033837470.8508
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/register/page.tsx": {
-      "timestamp": 1769947430333.4475
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/login/page.tsx": {
+      "timestamp": 1770033837460.819
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/ui/navbar.tsx": {
-      "timestamp": 1769967711627.7097
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/profile/page.tsx": {
+      "timestamp": 1770033837470.8508
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/profile/page.tsx": {
-      "timestamp": 1769967706297.9827
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/meals/page.tsx": {
+      "timestamp": 1770033837470.8508
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/meals/page.tsx": {
-      "timestamp": 1769967698527.0996
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/cjs/react.production.js": {
+      "timestamp": 1768220565398.4934
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react.production.js": {
-      "timestamp": 1769529448189.5122
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/cjs/react-dom-client.production.js": {
+      "timestamp": 1768220565637.6157
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom-client.production.js": {
-      "timestamp": 1769529448991.2007
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/jsx-runtime.js": {
+      "timestamp": 1768220565018.8303
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/jsx-runtime.js": {
-      "timestamp": 1769529448158.2627
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/ui/global.css": {
+      "timestamp": 1768219312141.8987
     },
-    "C:/Users/jakob/Desktop/NutriTrack/app/lib/fetch-timeout.ts": {
-      "timestamp": 1769967682236.2285
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/lib/fetch-timeout.ts": {
+      "timestamp": 1770033837460.819
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/index.js": {
-      "timestamp": 1769529454019.7832
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/scheduler/index.js": {
+      "timestamp": 1768220564811.5095
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/index.js": {
-      "timestamp": 1769529448979.3423
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/index.js": {
+      "timestamp": 1768220564993.6985
     },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-link.tsx": {
-      "timestamp": 1769947430549.1794
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/tests/components/mocks/next-navigation.ts": {
+      "timestamp": 1770033837722.353
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react-jsx-runtime.production.js": {
-      "timestamp": 1769529448173.8892
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/tests/components/mocks/next-link.tsx": {
+      "timestamp": 1770033837722.353
     },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-navigation.ts": {
-      "timestamp": 1769947430549.1794
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/tests/components/mocks/next-auth-react.ts": {
+      "timestamp": 1770033837722.353
     },
-    "C:/Users/jakob/Desktop/NutriTrack/tests/components/mocks/next-auth-react.ts": {
-      "timestamp": 1769947430549.1794
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/cjs/react-jsx-runtime.production.js": {
+      "timestamp": 1768220565273.7637
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.production.js": {
-      "timestamp": 1769529455474.4807
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/cjs/react-dom.production.js": {
+      "timestamp": 1768220566324.6768
     },
-    "C:/Users/jakob/Desktop/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom.production.js": {
-      "timestamp": 1769529449136.4446
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/scheduler/cjs/scheduler.production.js": {
+      "timestamp": 1768220565102.7993
     }
   },
   "deps": {
-    "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\login\\page.tsx": [
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\login\\page.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\lib\\fetch-timeout.ts",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-auth-react.ts"
+    "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\login\\page.tsx": [
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\login\\page.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\ui\\navbar.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\lib\\fetch-timeout.ts",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-auth-react.ts"
     ],
-    "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\meals\\page.tsx": [
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\meals\\page.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\lib\\fetch-timeout.ts"
+    "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\meals\\page.tsx": [
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\meals\\page.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\ui\\navbar.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\lib\\fetch-timeout.ts"
     ],
-    "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx": [
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\lib\\fetch-timeout.ts"
+    "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\ui\\navbar.tsx": [
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\ui\\navbar.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\lib\\fetch-timeout.ts"
     ],
-    "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\profile\\page.tsx": [
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\profile\\page.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\lib\\fetch-timeout.ts"
+    "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\profile\\page.tsx": [
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\profile\\page.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\ui\\navbar.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\lib\\fetch-timeout.ts"
     ],
-    "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\register\\page.tsx": [
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\register\\page.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\ui\\navbar.tsx",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
-      "C:\\Users\\jakob\\Desktop\\NutriTrack\\app\\lib\\fetch-timeout.ts"
+    "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\register\\page.tsx": [
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\register\\page.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-link.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\ui\\navbar.tsx",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\tests\\components\\mocks\\next-navigation.ts",
+      "C:\\Users\\Jakob Meh\\Desktop\\projekt\\NutriTrack\\app\\lib\\fetch-timeout.ts"
     ]
   }
 }
