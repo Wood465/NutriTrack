@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/page-BXL13cuP.js","assets/navbar-C1xIDx52.js","assets/page-BhkzOqJI.js","assets/page-b3GG_1Y5.js","assets/page-C-Lx7s_z.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/page-DvoAmVpn.js","assets/navbar-C_KlYmOI.js","assets/page-B4cvGLJo.js","assets/page-DFg4a9b9.js","assets/page-DI57pVkZ.js"])))=>i.map(i=>d[i]);
 true              &&(function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -704,7 +704,7 @@ function requireReact_production () {
 	react_production.useTransition = function () {
 	  return ReactSharedInternals.H.useTransition();
 	};
-	react_production.version = "19.2.3";
+	react_production.version = "19.2.1";
 	return react_production;
 }
 
@@ -1319,7 +1319,7 @@ function requireReactDom_production () {
 	reactDom_production.useFormStatus = function () {
 	  return ReactSharedInternals.H.useHostTransitionStatus();
 	};
-	reactDom_production.version = "19.2.3";
+	reactDom_production.version = "19.2.1";
 	return reactDom_production;
 }
 
@@ -17276,14 +17276,14 @@ function requireReactDomClient_production () {
 	};
 	var isomorphicReactPackageVersion$jscomp$inline_1840 = React.version;
 	if (
-	  "19.2.3" !==
+	  "19.2.1" !==
 	  isomorphicReactPackageVersion$jscomp$inline_1840
 	)
 	  throw Error(
 	    formatProdErrorMessage(
 	      527,
 	      isomorphicReactPackageVersion$jscomp$inline_1840,
-	      "19.2.3"
+	      "19.2.1"
 	    )
 	  );
 	ReactDOMSharedInternals.findDOMNode = function (componentOrElement) {
@@ -17305,10 +17305,10 @@ function requireReactDomClient_production () {
 	};
 	var internals$jscomp$inline_2347 = {
 	  bundleType: 0,
-	  version: "19.2.3",
+	  version: "19.2.1",
 	  rendererPackageName: "react-dom",
 	  currentDispatcherRef: ReactSharedInternals,
-	  reconcilerVersion: "19.2.3"
+	  reconcilerVersion: "19.2.1"
 	};
 	if ("undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) {
 	  var hook$jscomp$inline_2348 = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -17406,7 +17406,7 @@ function requireReactDomClient_production () {
 	  listenToAllSupportedEvents(container);
 	  return new ReactDOMHydrationRoot(initialChildren);
 	};
-	reactDomClient_production.version = "19.2.3";
+	reactDomClient_production.version = "19.2.1";
 	return reactDomClient_production;
 }
 
@@ -17635,11 +17635,11 @@ window.playwrightUpdate = async (rootElement, component) => {
   entry.setRenderer(() => __pwRender(component));
 };
 
-const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_login_page = () => __vitePreload(() => import('./page-BXL13cuP.js'),true              ?__vite__mapDeps([0,1]):void 0).then((mod) => mod.default);
-const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_meals_page = () => __vitePreload(() => import('./page-BhkzOqJI.js'),true              ?__vite__mapDeps([2,1]):void 0).then((mod) => mod.default);
-const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_ui_navbar = () => __vitePreload(() => import('./navbar-C1xIDx52.js').then(n => n.n),true              ?[]:void 0).then((mod) => mod.default);
-const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_profile_page = () => __vitePreload(() => import('./page-b3GG_1Y5.js'),true              ?__vite__mapDeps([3,1]):void 0).then((mod) => mod.default);
-const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_register_page = () => __vitePreload(() => import('./page-C-Lx7s_z.js'),true              ?__vite__mapDeps([4,1]):void 0).then((mod) => mod.default);
+const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_login_page = () => __vitePreload(() => import('./page-DvoAmVpn.js'),true              ?__vite__mapDeps([0,1]):void 0).then((mod) => mod.default);
+const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_meals_page = () => __vitePreload(() => import('./page-B4cvGLJo.js'),true              ?__vite__mapDeps([2,1]):void 0).then((mod) => mod.default);
+const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_ui_navbar = () => __vitePreload(() => import('./navbar-C_KlYmOI.js').then(n => n.n),true              ?[]:void 0).then((mod) => mod.default);
+const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_profile_page = () => __vitePreload(() => import('./page-DFg4a9b9.js'),true              ?__vite__mapDeps([3,1]):void 0).then((mod) => mod.default);
+const C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_register_page = () => __vitePreload(() => import('./page-DI57pVkZ.js'),true              ?__vite__mapDeps([4,1]):void 0).then((mod) => mod.default);
 __pwRegistry.initialize({ C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_login_page,
   C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_meals_page,
   C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_ui_navbar,
@@ -17647,4 +17647,4 @@ __pwRegistry.initialize({ C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_co
   C__Users_Jakob_Meh_Desktop_projekt_NutriTrack_tests_components___app_register_page });
 
 export { getDefaultExportFromCjs as g, reactExports as r };
-//# sourceMappingURL=index-CZlEtJHu.js.map
+//# sourceMappingURL=index-CkaTFfit.js.map

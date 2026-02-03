@@ -1,5 +1,5 @@
-import { j as jsxRuntimeExports, N as Navbar, L as Link } from './navbar-C1xIDx52.js';
-import { r as reactExports } from './index-CZlEtJHu.js';
+import { j as jsxRuntimeExports, N as Navbar, L as Link } from './navbar-C_KlYmOI.js';
+import { r as reactExports } from './index-CkaTFfit.js';
 
 "use client";
 function RegisterPage() {
@@ -184,4 +184,4 @@ function RegisterPage() {
 }
 
 export { RegisterPage as default };
-//# sourceMappingURL=page-C-Lx7s_z.js.map
+//# sourceMappingURL=page-DI57pVkZ.js.map

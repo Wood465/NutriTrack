@@ -1,5 +1,5 @@
-import { j as jsxRuntimeExports, N as Navbar, L as Link } from './navbar-C1xIDx52.js';
-import { r as reactExports } from './index-CZlEtJHu.js';
+import { j as jsxRuntimeExports, N as Navbar, L as Link } from './navbar-C_KlYmOI.js';
+import { r as reactExports } from './index-CkaTFfit.js';
 
 const getStore = () => {
   const store = globalThis;
@@ -142,4 +142,4 @@ function LoginPage() {
 }
 
 export { LoginPage as default };
-//# sourceMappingURL=page-BXL13cuP.js.map
+//# sourceMappingURL=page-DvoAmVpn.js.map

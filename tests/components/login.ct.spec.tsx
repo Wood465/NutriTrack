@@ -28,4 +28,4 @@ test('login shows error on invalid credentials', async ({ mount, page }) => {
   await expect(component.getByText('Napacni podatki')).toBeVisible();
 });
 
-// Google sign-in test removed per request.
+

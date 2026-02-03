@@ -1,5 +1,5 @@
-import { j as jsxRuntimeExports, N as Navbar, f as fetchWithTimeout } from './navbar-C1xIDx52.js';
-import { r as reactExports } from './index-CZlEtJHu.js';
+import { j as jsxRuntimeExports, N as Navbar, f as fetchWithTimeout } from './navbar-C_KlYmOI.js';
+import { r as reactExports } from './index-CkaTFfit.js';
 
 "use client";
 function MealsPage() {
@@ -572,4 +572,4 @@ function MealsPage() {
 }
 
 export { MealsPage as default };
-//# sourceMappingURL=page-BhkzOqJI.js.map
+//# sourceMappingURL=page-B4cvGLJo.js.map

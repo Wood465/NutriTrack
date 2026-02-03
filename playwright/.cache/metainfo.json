@@ -36,47 +36,41 @@
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/playwright/index.tsx": {
       "timestamp": 1770033837600.7627
     },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/index.js": {
-      "timestamp": 1768220564943.8113
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/index.js": {
+      "timestamp": 1757934810279.3118
     },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/client.js": {
-      "timestamp": 1768220564943.8113
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/client.js": {
+      "timestamp": 1757934815266.7527
+    },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/login/page.tsx": {
+      "timestamp": 1770033837460.819
     },
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/register/page.tsx": {
+      "timestamp": 1770033837470.8508
+    },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/profile/page.tsx": {
       "timestamp": 1770033837470.8508
     },
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/ui/navbar.tsx": {
       "timestamp": 1770033837470.8508
     },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/login/page.tsx": {
-      "timestamp": 1770033837460.819
-    },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/profile/page.tsx": {
-      "timestamp": 1770033837470.8508
-    },
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/meals/page.tsx": {
       "timestamp": 1770033837470.8508
-    },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/cjs/react.production.js": {
-      "timestamp": 1768220565398.4934
-    },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/cjs/react-dom-client.production.js": {
-      "timestamp": 1768220565637.6157
-    },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/jsx-runtime.js": {
-      "timestamp": 1768220565018.8303
     },
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/ui/global.css": {
       "timestamp": 1768219312141.8987
     },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react.production.js": {
+      "timestamp": 1770037899929.8074
+    },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom-client.production.js": {
+      "timestamp": 1770037899889.8286
+    },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/jsx-runtime.js": {
+      "timestamp": 1757934810289.3594
+    },
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/app/lib/fetch-timeout.ts": {
       "timestamp": 1770033837460.819
-    },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/scheduler/index.js": {
-      "timestamp": 1768220564811.5095
-    },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/index.js": {
-      "timestamp": 1768220564993.6985
     },
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/tests/components/mocks/next-navigation.ts": {
       "timestamp": 1770033837722.353
@@ -87,14 +81,20 @@
     "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/tests/components/mocks/next-auth-react.ts": {
       "timestamp": 1770033837722.353
     },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react/cjs/react-jsx-runtime.production.js": {
-      "timestamp": 1768220565273.7637
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/index.js": {
+      "timestamp": 1757934811178.9272
     },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/react-dom/cjs/react-dom.production.js": {
-      "timestamp": 1768220566324.6768
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/index.js": {
+      "timestamp": 1757934815268.7678
     },
-    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/scheduler/cjs/scheduler.production.js": {
-      "timestamp": 1768220565102.7993
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react@19.2.1/node_modules/react/cjs/react-jsx-runtime.production.js": {
+      "timestamp": 1757934810319.3071
+    },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.production.js": {
+      "timestamp": 1757934811198.9111
+    },
+    "C:/Users/Jakob Meh/Desktop/projekt/NutriTrack/node_modules/.pnpm/react-dom@19.2.1_react@19.2.1/node_modules/react-dom/cjs/react-dom.production.js": {
+      "timestamp": 1770037899938.1638
     }
   },
   "deps": {
